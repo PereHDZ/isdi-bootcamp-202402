@@ -1,0 +1,111 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+    
+    
+.octopus
+    background-color: teal
+    @include full--size(500px, 500px)
+    
+
+
+    &__bubble 
+        background-color: aquamarine
+        border-radius: 100%
+        border: 5px solid aliceblue
+        position: absolute
+
+
+    .bubble--top 
+        @include full--size(50px, 50px)        
+        @include location(50px, 150px)        
+
+
+
+    .bubble--middle 
+        @include full--size(10px, 10px)        
+        @include location(110px, 140px)        
+
+
+    .bubble--bottom 
+        @include full--size(20px, 20px)
+        @include location(120px, 170px)     
+
+
+    &__tentacle 
+        background-color: magenta
+        width: 30px
+        border-radius: 30px
+        position: absolute
+        top: 300px
+        border: 5px solid rgb(163, 238, 230)
+
+
+    &__tentacle--left 
+        left: 159px
+        height: 100px
+        transform: rotate(15deg)
+
+
+    &__tentacle--left-center 
+        left: 194px
+        height: 115px
+        transform: rotate(10deg)
+
+
+    &__tentacle--center 
+        left: 234px
+        height: 120px
+
+
+    &__tentacle--right-center 
+        left: 274px
+        height: 115px
+        transform: rotate(-10deg)
+
+
+    &__tentacle--right 
+        left: 309px
+        height: 100px
+        transform: rotate(-15deg)
+
+
+    &__head 
+        background-color: purple
+        @include full--size(200px, 200px)        
+        position: relative
+        @include location(130px, 140px)        
+        border-top-left-radius: 100%
+        border-top-right-radius: 100%
+        border-bottom-left-radius: 40%
+        border-bottom-right-radius: 40%
+        border: 5px palevioletred solid
+
+
+    &__eye 
+        background-color: black
+        @include full--size(30px, 30px)        
+        position: absolute
+        top: 100px
+        border-radius: 100%
+
+
+    &__eye--left 
+        left: 10px
+
+
+    &__eye--right 
+        left: 160px
+
+
+    &__pupil 
+        background-color: aliceblue
+        @include full--size(15px, 15px)        
+        border-radius: 100%
+        position: absolute
+        @include location(3px, 2px)
+        

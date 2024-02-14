@@ -1,0 +1,56 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+    
+    
+.amongus
+    background-color: gray
+    @include full--size(50px, 50px)    
+    position: relative
+
+    &__backpack 
+        background-color: red
+        @include full--size(15px, 5px)        
+        position: absolute
+        @include location(18px, 10px)        
+        border-top-left-radius: 2px
+        border-bottom-left-radius: 2px
+        border: 1px solid black
+
+    &__body 
+        background-color: red
+        @include full--size(30px, 20px)        
+        position: absolute
+        @include location(5px, 15px)        
+        border-top-left-radius: 10px
+        border-top-right-radius: 10px
+        border: 1px solid black
+
+    &__leg 
+        background-color: red
+        @include full--size(5px, 8px)        
+        position: absolute
+        top: 36px
+        border-bottom-right-radius: 2px
+        border-bottom-left-radius: 2px
+        border-bottom: 1px solid black
+        border-left: 1px solid black
+        border-right: 1px solid black
+
+    &__leg--left 
+        left: 15px
+
+    &__leg--right 
+        left: 27px
+
+    &__mask 
+        background-color: aqua
+        @include full--size(10px, 17px)        
+        position: absolute
+        @include location(12px, 22px)        
+        border-radius: 10px
+        border: 1px solid black

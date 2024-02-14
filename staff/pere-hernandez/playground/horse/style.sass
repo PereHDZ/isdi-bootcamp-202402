@@ -1,0 +1,145 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+    
+    
+    
+.horse
+    background-color: goldenrod
+    @include full--size(500px, 500px)    
+    position: relative
+
+
+    &__neck 
+        @include full--size(0px, 150px)        
+        border-right: 10px solid transparent
+        border-left: 10px solid transparent
+        border-bottom: 100px solid burlywood
+        position: absolute
+        @include location(400px, 165px)        
+
+
+    &__ear 
+        background-color: burlywood
+        position: absolute
+        border-radius: 30%
+        top: 30px
+        border: 5px brown solid
+
+
+    &__ear--left 
+        left: 120px 
+        @include full--size(90px, 70px)        
+        -moz-border-radius: 0 50% / 0 100%
+        -webkit-border-radius: 0 50% / 0 100%
+        border-radius: 0 50% / 0 100%
+
+
+    &__ear--right 
+        left: 300px
+        @include full--size(90px, 70px)  
+        -moz-border-radius: 50% 0 / 100% 0
+        -webkit-border-radius: 50% 0 / 100% 0
+        border-radius: 50% 0 / 100% 0
+
+
+    .ear__inner 
+        background-color: pink
+        position: absolute
+        border-radius: 30%
+        top: 10px
+
+
+    .ear__inner--left 
+        left: 10px
+        @include full--size(70px, 40px)        
+        -moz-border-radius: 0 50% / 0 100%
+        -webkit-border-radius: 0 50% / 0 100%
+        border-radius: 0 50% / 0 100%
+
+
+    .ear__inner--right 
+        left: 20px
+        @include full--size(70px, 40px) 
+        -moz-border-radius: 50% 0 / 100% 0
+        -webkit-border-radius: 50% 0 / 100% 0
+        border-radius: 50% 0 / 100% 0
+
+
+    &__head 
+        background-color: burlywood
+        @include full--size(400px, 200px)        
+        border-top-left-radius: 40%
+        border-top-right-radius: 40%
+        border-bottom-left-radius: 80%
+        border-bottom-right-radius: 80%
+        position: absolute
+        @include location(50px, 145px)        
+        border: 5px brown solid
+
+
+    &__mane 
+        background-color: rgba(44, 43, 42, 0.988)
+        @include full--size(80px, 100px)        
+        position: absolute
+        left: 47px
+        border-bottom-left-radius: 20%
+        border-bottom-right-radius: 20%
+        border-bottom: 5px black solid
+        border-left: 5px black solid
+        border-right: 5px black solid
+
+
+    &__eye 
+        background-color: black
+        @include full--size(40px, 40px)        
+        border-radius: 100%
+        position: absolute
+        top: 120px
+
+
+    &__eye--left 
+        left: 10px
+
+
+    &__eye--right 
+        left: 150px
+
+
+    .eye__pupil 
+        background-color: white
+        @include full--size(20px, 20px)        
+        border-radius: 100%
+        position: absolute
+        @include location(5px, 5px)
+        
+
+
+    &__spot 
+        background-color: rgba(245, 245, 220, 0.712)
+        @include full--size(200px, 50px)        
+        border-radius: 50px
+        position: absolute
+        @include location(100px, 75px)        
+
+
+    &__nostril 
+        background-color: black
+        @include full--size(20px, 10px)        
+        border-radius: 100%
+        position: absolute
+        top: 350px
+
+
+    &__nostril--left 
+        left: 70px
+        transform: rotate(-25deg)
+
+
+    &__nostril--right 
+        left: 120px
+        transform: rotate(25deg)

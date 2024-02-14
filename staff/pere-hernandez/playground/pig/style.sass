@@ -1,0 +1,102 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left
+
+@keyframes roll
+    0%
+        top: 7px
+
+    25%
+        left: 7px
+        top: 3.5px
+
+    50%
+        top: 0px
+
+    75%
+        left: 0px
+
+    100%
+        top: 7px
+
+.pig
+    background-color: aquamarine
+    @include full--size(75px, 75px)
+
+    &__ear
+        background-color: rgba(255, 218, 185, 0.885)
+        position: absolute
+        border-radius: 30%
+        top: 25px
+        border: 1px rgba(185, 255, 214, 0.612) solid
+
+    &__ear--left
+        left: 10px
+        @include full--size(20px, 30px)
+        -moz-border-radius: 0 50% / 0 100%
+        -webkit-border-radius: 0 50% / 0 100%
+        border-radius: 0 50% / 0 100%
+
+    &__ear--right
+        left: 47px
+        @include full--size(20px, 30px)
+        -moz-border-radius: 50% 0 / 100% 0
+        -webkit-border-radius: 50% 0 / 100% 0
+        border-radius: 50% 0 / 100% 0
+        /*transform: rotate(-65deg)*/
+
+    &__head
+        background-color: peachpuff
+        @include full--size(50px, 50px)
+        border-radius: 100%
+        position: relative
+        @include location(15px, 10px)
+        border: 1px rgba(185, 255, 214, 0.612) solid
+
+    &__eye
+        background-color: aliceblue
+        @include full--size(10px, 10px)
+        border-radius: 100%
+        position: absolute
+        top: 15px
+        border: 1px papayawhip solid
+
+    &__pupil
+        background-color: black
+        @include full--size(3px, 3px)
+        border-radius: 100%
+        position: absolute
+        @include location(3.5px, 3.5px)
+        animation-duration: 3s
+        animation-name: roll
+
+    &__eye--left
+        left: 9px
+
+    &__eye--right
+        left: 29px
+
+    &__nose
+        background-color: pink
+        @include full--size(20px, 27px)
+        border-radius: 100%
+        position: absolute
+        @include location(26px, 11px)
+        border: 1px rgba(235, 169, 180, 0.874) solid
+
+    &__nostril
+        background-color: black
+        @include full--size(7px, 3px)
+        border-radius: 75%
+        position: absolute
+        top: 6px
+
+    &__nostril--left
+        left: 8.5px
+
+    &__nostril--right
+        left: 14.5px

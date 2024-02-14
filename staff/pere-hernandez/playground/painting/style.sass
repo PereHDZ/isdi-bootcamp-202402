@@ -1,0 +1,49 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+
+.painting 
+    @include full--size(20px, 20px)
+    background-color: chartreuse
+    border: 1px solid black
+    display: flex
+    flex-direction: row
+
+.left
+    width: 40%
+    display: flex
+    flex-direction: column
+
+.left--top
+    height: 50%
+    background-color: yellow
+    border-right: 1px solid black
+    border-bottom: 1px solid black
+
+.left--center
+    height: 25%
+    background-color: white
+    border-right: 1px solid black
+    border-bottom: 1px solid black
+
+.left--bottom
+    height: 15%
+    background-color: blue
+    border-right: 1px solid black
+
+.right
+    @include full--size(100%, 100%)
+    background-color: white  
+
+.right--top
+    height: 80%
+    background-color: red
+    border-bottom: 1px solid black
+
+.right--bottom--center
+    @include full--size(15%, 60%)  
+    border-right: 1px solid black

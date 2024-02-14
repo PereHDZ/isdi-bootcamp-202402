@@ -1,0 +1,67 @@
+.building {
+  height: 500px;
+  width: 500px;
+  background-color: darkseagreen;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.building__main {
+  height: 300px;
+  width: 200px;
+  background-color: darkkhaki;
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUKwKvLk2y57BfPZ3VBK3GvU1f-gizLvwktQ&usqp=CAU");
+  background-position: center;
+}
+.building__roof {
+  height: 10px;
+  width: 220px;
+  background-color: brown;
+  border-radius: 10px;
+}
+.building__stair {
+  height: 30px;
+}
+.building__stair--1 {
+  width: 220px;
+  background-color: darkgray;
+}
+.building__stair--2 {
+  width: 240px;
+  background-color: rgb(157, 151, 151);
+}
+
+.floor {
+  height: 30px;
+  width: 100%;
+  /*border: 1px solid black*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.window {
+  height: 13px;
+  width: 8px;
+  background-color: teal;
+  background-image: url("window.png");
+  background-position: center;
+  background-size: wrap;
+}
+
+.lit {
+  background-color: yellow;
+}
+
+.door {
+  height: 90%;
+  width: 12px;
+  background-color: brown;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  align-self: flex-end;
+}
+
+/*# sourceMappingURL=style.css.map */

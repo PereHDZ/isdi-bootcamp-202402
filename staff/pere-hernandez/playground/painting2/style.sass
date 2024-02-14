@@ -1,0 +1,20 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+
+.painting2 
+    @include full--size(20px, 20px)
+    background-color: chartreuse
+    border: 1px solid black
+    grid-template-areas: 
+        'yellow red red'
+        'white red red'
+        'blue white white';
+    grid-template-columns: 25% 55% 20%
+
+
+    

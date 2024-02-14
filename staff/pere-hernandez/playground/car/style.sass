@@ -1,0 +1,100 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+
+    
+.car
+    background-color: aliceblue
+    @include full--size(300px, 500px)    
+    position: relative
+
+
+    &__bottom 
+        background-color: red
+        @include full--size(90px, 450px)        
+        position: absolute
+        @include location(150px, 20px)        
+        border-top-right-radius: 30%
+        border-top-left-radius: 10%
+        border-bottom-left-radius: 30%
+        border-bottom-right-radius: 10%
+
+
+    &__top
+        @include full--size(0px, 200px)        
+        position: absolute
+        @include location(70px, 80px)        
+        border-right: 60px solid transparent
+        border-left: 10px solid transparent
+        border-bottom: 100px solid red
+        border-top-left-radius: 30px
+
+
+    &__handle 
+        background-color: silver
+        @include full--size(5px, 15px)        
+        position: absolute
+        top: 15px
+
+
+    .handle--left 
+        left: 130px
+
+
+    .handle--right 
+        left: 215px
+
+
+    &__wheel 
+        background-color: black
+        @include full--size(80px, 80px)        
+        position: absolute
+        border-radius: 100%
+        top: 200px
+
+
+    .wheel--left 
+        left: 90px
+
+
+    .wheel--right 
+        left: 300px
+
+
+    .wheel__cover 
+        background-color: darkgray
+        @include full--size(50px, 50px)        
+        border-radius: 100% 
+        position: absolute
+        @include location(15px, 15px)        
+
+
+    .window 
+        @include full--size(60px, 70px)        
+        position: absolute
+        top: 20px
+        border-radius: 10%
+
+
+    .window--left 
+        left: 10px
+        background-color: aquamarine    
+
+
+    .window--right 
+        left: 95px
+        background-color: aquamarine    
+
+
+    .windshield 
+        position: absolute
+        @include location(20px, 180px)        
+        border-radius: 10%
+        @include full--size(0px, 10px)        
+        border-right: 60px solid transparent
+        border-left: 5px solid aquamarine
+        border-bottom: 100px solid aquamarine

@@ -1,0 +1,46 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+
+.painting1 
+    @include full--size(20px, 20px)
+    background-color: white
+    border: 1px solid black
+    display: grid
+    grid-template-columns: 25% 55% 20%
+    
+
+.left
+    border-right: 1px solid black   
+
+.left__top
+    background-color: yellow
+    border-bottom: 1px solid black
+    height: 50%
+
+.left__center
+    background-color: white
+    border-bottom: 1px solid black
+    height: 27%
+
+.left__bottom
+    background-color: blue
+    height: 13%
+
+.center__top
+    background-color: red
+    height: 50%
+    
+
+.center__center
+    background-color: red
+    height: 31.5%
+    border-bottom:1px solid black
+
+.center__bottom
+    height: 15%
+    border-right: 1px solid black

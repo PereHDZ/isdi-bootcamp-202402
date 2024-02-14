@@ -1,0 +1,93 @@
+.car {
+  background-color: aliceblue;
+  height: 300px;
+  width: 500px;
+  position: relative;
+}
+.car__bottom {
+  background-color: red;
+  height: 90px;
+  width: 450px;
+  position: absolute;
+  top: 150px;
+  left: 20px;
+  border-top-right-radius: 30%;
+  border-top-left-radius: 10%;
+  border-bottom-left-radius: 30%;
+  border-bottom-right-radius: 10%;
+}
+.car__top {
+  height: 0px;
+  width: 200px;
+  position: absolute;
+  top: 70px;
+  left: 80px;
+  border-right: 60px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 100px solid red;
+  border-top-left-radius: 30px;
+}
+.car__handle {
+  background-color: silver;
+  height: 5px;
+  width: 15px;
+  position: absolute;
+  top: 15px;
+}
+.car .handle--left {
+  left: 130px;
+}
+.car .handle--right {
+  left: 215px;
+}
+.car__wheel {
+  background-color: black;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  border-radius: 100%;
+  top: 200px;
+}
+.car .wheel--left {
+  left: 90px;
+}
+.car .wheel--right {
+  left: 300px;
+}
+.car .wheel__cover {
+  background-color: darkgray;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+.car .window {
+  height: 60px;
+  width: 70px;
+  position: absolute;
+  top: 20px;
+  border-radius: 10%;
+}
+.car .window--left {
+  left: 10px;
+  background-color: aquamarine;
+}
+.car .window--right {
+  left: 95px;
+  background-color: aquamarine;
+}
+.car .windshield {
+  position: absolute;
+  top: 20px;
+  left: 180px;
+  border-radius: 10%;
+  height: 0px;
+  width: 10px;
+  border-right: 60px solid transparent;
+  border-left: 5px solid aquamarine;
+  border-bottom: 100px solid aquamarine;
+}
+
+/*# sourceMappingURL=style.css.map */

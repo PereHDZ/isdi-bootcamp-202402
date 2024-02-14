@@ -1,0 +1,58 @@
+.amongus {
+  background-color: gray;
+  height: 50px;
+  width: 50px;
+  position: relative;
+}
+.amongus__backpack {
+  background-color: red;
+  height: 15px;
+  width: 5px;
+  position: absolute;
+  top: 18px;
+  left: 10px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border: 1px solid black;
+}
+.amongus__body {
+  background-color: red;
+  height: 30px;
+  width: 20px;
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border: 1px solid black;
+}
+.amongus__leg {
+  background-color: red;
+  height: 5px;
+  width: 8px;
+  position: absolute;
+  top: 36px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+.amongus__leg--left {
+  left: 15px;
+}
+.amongus__leg--right {
+  left: 27px;
+}
+.amongus__mask {
+  background-color: aqua;
+  height: 10px;
+  width: 17px;
+  position: absolute;
+  top: 12px;
+  left: 22px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+/*# sourceMappingURL=style.css.map */

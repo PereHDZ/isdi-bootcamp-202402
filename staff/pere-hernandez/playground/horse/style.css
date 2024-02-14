@@ -1,0 +1,136 @@
+.horse {
+  background-color: goldenrod;
+  height: 500px;
+  width: 500px;
+  position: relative;
+}
+.horse__neck {
+  height: 0px;
+  width: 150px;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 100px solid burlywood;
+  position: absolute;
+  top: 400px;
+  left: 165px;
+}
+.horse__ear {
+  background-color: burlywood;
+  position: absolute;
+  border-radius: 30%;
+  top: 30px;
+  border: 5px brown solid;
+}
+.horse__ear--left {
+  left: 120px;
+  height: 90px;
+  width: 70px;
+  -moz-border-radius: 0 50%/0 100%;
+  -webkit-border-radius: 0 50%/0 100%;
+  border-radius: 0 50%/0 100%;
+}
+.horse__ear--right {
+  left: 300px;
+  height: 90px;
+  width: 70px;
+  -moz-border-radius: 50% 0/100% 0;
+  -webkit-border-radius: 50% 0/100% 0;
+  border-radius: 50% 0/100% 0;
+}
+.horse .ear__inner {
+  background-color: pink;
+  position: absolute;
+  border-radius: 30%;
+  top: 10px;
+}
+.horse .ear__inner--left {
+  left: 10px;
+  height: 70px;
+  width: 40px;
+  -moz-border-radius: 0 50%/0 100%;
+  -webkit-border-radius: 0 50%/0 100%;
+  border-radius: 0 50%/0 100%;
+}
+.horse .ear__inner--right {
+  left: 20px;
+  height: 70px;
+  width: 40px;
+  -moz-border-radius: 50% 0/100% 0;
+  -webkit-border-radius: 50% 0/100% 0;
+  border-radius: 50% 0/100% 0;
+}
+.horse__head {
+  background-color: burlywood;
+  height: 400px;
+  width: 200px;
+  border-top-left-radius: 40%;
+  border-top-right-radius: 40%;
+  border-bottom-left-radius: 80%;
+  border-bottom-right-radius: 80%;
+  position: absolute;
+  top: 50px;
+  left: 145px;
+  border: 5px brown solid;
+}
+.horse__mane {
+  background-color: rgba(44, 43, 42, 0.988);
+  height: 80px;
+  width: 100px;
+  position: absolute;
+  left: 47px;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+  border-bottom: 5px black solid;
+  border-left: 5px black solid;
+  border-right: 5px black solid;
+}
+.horse__eye {
+  background-color: black;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  position: absolute;
+  top: 120px;
+}
+.horse__eye--left {
+  left: 10px;
+}
+.horse__eye--right {
+  left: 150px;
+}
+.horse .eye__pupil {
+  background-color: white;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+.horse__spot {
+  background-color: rgba(245, 245, 220, 0.712);
+  height: 200px;
+  width: 50px;
+  border-radius: 50px;
+  position: absolute;
+  top: 100px;
+  left: 75px;
+}
+.horse__nostril {
+  background-color: black;
+  height: 20px;
+  width: 10px;
+  border-radius: 100%;
+  position: absolute;
+  top: 350px;
+}
+.horse__nostril--left {
+  left: 70px;
+  transform: rotate(-25deg);
+}
+.horse__nostril--right {
+  left: 120px;
+  transform: rotate(25deg);
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,109 @@
+@keyframes roll {
+  0% {
+    top: 7px;
+  }
+  25% {
+    left: 7px;
+    top: 3.5px;
+  }
+  50% {
+    top: 0px;
+  }
+  75% {
+    left: 0px;
+  }
+  100% {
+    top: 7px;
+  }
+}
+.pig {
+  background-color: aquamarine;
+  height: 75px;
+  width: 75px;
+}
+.pig__ear {
+  background-color: rgba(255, 218, 185, 0.885);
+  position: absolute;
+  border-radius: 30%;
+  top: 25px;
+  border: 1px rgba(185, 255, 214, 0.612) solid;
+}
+.pig__ear--left {
+  left: 10px;
+  height: 20px;
+  width: 30px;
+  -moz-border-radius: 0 50%/0 100%;
+  -webkit-border-radius: 0 50%/0 100%;
+  border-radius: 0 50%/0 100%;
+}
+.pig__ear--right {
+  left: 47px;
+  height: 20px;
+  width: 30px;
+  -moz-border-radius: 50% 0/100% 0;
+  -webkit-border-radius: 50% 0/100% 0;
+  border-radius: 50% 0/100% 0;
+  /*transform: rotate(-65deg)*/
+}
+.pig__head {
+  background-color: peachpuff;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  position: relative;
+  top: 15px;
+  left: 10px;
+  border: 1px rgba(185, 255, 214, 0.612) solid;
+}
+.pig__eye {
+  background-color: aliceblue;
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  position: absolute;
+  top: 15px;
+  border: 1px papayawhip solid;
+}
+.pig__pupil {
+  background-color: black;
+  height: 3px;
+  width: 3px;
+  border-radius: 100%;
+  position: absolute;
+  top: 3.5px;
+  left: 3.5px;
+  animation-duration: 3s;
+  animation-name: roll;
+}
+.pig__eye--left {
+  left: 9px;
+}
+.pig__eye--right {
+  left: 29px;
+}
+.pig__nose {
+  background-color: pink;
+  height: 20px;
+  width: 27px;
+  border-radius: 100%;
+  position: absolute;
+  top: 26px;
+  left: 11px;
+  border: 1px rgba(235, 169, 180, 0.874) solid;
+}
+.pig__nostril {
+  background-color: black;
+  height: 7px;
+  width: 3px;
+  border-radius: 75%;
+  position: absolute;
+  top: 6px;
+}
+.pig__nostril--left {
+  left: 8.5px;
+}
+.pig__nostril--right {
+  left: 14.5px;
+}
+
+/*# sourceMappingURL=style.css.map */

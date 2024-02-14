@@ -1,0 +1,68 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left    
+    
+    
+.building
+    @include full--size(500px, 500px)
+    background-color: darkseagreen
+    display: flex
+    justify-content: center
+    align-items: center 
+    flex-direction: column
+
+    &__main
+        @include full--size(300px, 200px)
+        background-color: darkkhaki
+
+
+    &__roof
+        @include full--size(10px, 220px)
+        background-color: brown
+        border-radius: 10px
+
+    
+    &__stair
+        height: 30px
+
+    &__stair--1
+        width: 220px
+        background-color: darkgray
+
+    &__stair--2
+        width: 240px
+        background-color: rgb(157, 151, 151)
+
+.floor
+    height: 30px
+    width: 100%
+    /*border: 1px solid black*/
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    align-items: center 
+
+
+.window
+    @include full--size(13px, 8px)
+    background-color: teal
+    border-top-left-radius: 10px
+    border-top-right-radius: 10px
+
+
+.lit
+    background-color: yellow
+
+
+.door
+    @include full--size(90%, 12px)
+    background-color: brown
+    border-top-left-radius: 10px
+    border-top-right-radius: 10px
+    align-self: flex-end
+
+            
