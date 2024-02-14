@@ -1,0 +1,58 @@
+@mixin full--size($height, $width)
+    height: $height
+    width: $width
+
+@mixin location($top, $left)
+    top: $top
+    left: $left
+
+$ship-height: 10vh
+$ship-size-ratio: 1
+
+$enemies-height: 40vh
+$enemies-width: 80vw
+$enemies-left: 10vw
+
+$alien-heigt: 50px
+$alien-width: 60px
+
+body
+    margin: 0
+
+#space
+    background-color: black
+    @include full--size(100vh, 100vw)
+
+#ship
+    height: $ship-height
+    position: absolute
+    @include location(calc(100vh - $ship-height), calc(50vw - .5*$ship-height/$ship-size-ratio))
+
+#enemies
+    //height: $enemies-height
+    width: $enemies-width
+    position: absolute
+    left: $enemies-left
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+
+.enemy
+    height: $alien-heigt
+    width: $alien-width
+.shot
+    width: 5px
+    height: 10px
+    background-color: white
+    position: absolute
+
+.gameOver
+    height: 40vh
+    width: 80vw
+    position: absolute
+    left: 10vw
+    top: 30vh
+    background-image: url("images/game-over.jpg")
+    background-position: center
+    background-size: cover
+    border: 1px solid white
