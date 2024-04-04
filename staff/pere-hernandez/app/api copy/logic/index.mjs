@@ -142,39 +142,20 @@ function loginUser(username, password, callback) {
             callback(null, user.id)
         })
     })
-}
+}/*
 
 
-function retrieveUser(userId, callback) {
-    //validation
-    /*if (typeof userId !== 'string')
-        throw new TypeError('userId is not a string')*/
-    if (typeof callback !== 'function')
-        throw new TypeError('callback is not a Fucntion')
-
-    //logic
-    db.users.findOne(user => user.id === userId, (error, user) => {
-        if (error) {
-            callback(error)
-
-            return
-        }
-
-        if (!user) {
-            callback(new Error('user not found'))
-
-            return
-        }
-
-        delete user.id
-        delete user.password
-        delete user.status
-
-        callback(null, user)
+function retrieveUser (){
+    var user = data.users.findOne(function(user){
+        return user.id === sessionStorage.userId
     })
+
+    if (!user) throw new Error('user not found')
+
+    return user
 }
 
-/*
+
 function retrieveUsers(){
     var users = data.users.getAll()
 
@@ -366,8 +347,8 @@ function createMessage(message){
 
 const logic = {
     registerUser: registerUser,
-    loginUser: loginUser,
-    retrieveUser: retrieveUser/*,
+    loginUser: loginUser/*,
+    retrieveUser: retrieveUser,
     retrieveUsers, retrieveUsers,
     logoutUser: logoutUser,
     getLoggedInUserId: getLoggedInUserId,

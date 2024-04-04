@@ -2,11 +2,10 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node index.js",
+    "start": "node .",
     "test": "npx mocha data logic",
     "test-inspect": "npx mocha --inspect-brk data logic"
   },
@@ -14,9 +13,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.3.14",
-    "@types/mocha": "^10.0.6",
-    "@types/node": "^20.12.3",
     "chai": "^5.1.0",
     "mocha": "^10.4.0"
   },
