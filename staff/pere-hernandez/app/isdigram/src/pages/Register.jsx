@@ -1,13 +1,7 @@
 import logic from "../logic.mjs"
 
-import {Component} from "react"
-
-class Register extends Component {
-    constructor(){
-        super()
-    }
-
-    handleSubmit = event => {
+function Register (props) {
+    const handleSubmit = event => {
         event.preventDefault()
 
         const form = event.target
@@ -18,47 +12,51 @@ class Register extends Component {
         const confirm = form.confirm.value
 
         try{
-            logic.registerUser(username, email, password, confirm)
+            logic.registerUser(username, email, password, confirm, error => {
+                if (error) {
+                    alert(error.message)
+
+                    return
+                }
+            })
 
             form.reset()
 
-            this.props.onRegistered()
+            props.onRegistered()
         } catch (error) {
             alert(error.message)
         }
     }
 
-    handleLoginClick = event => {
+    const handleLoginClick = event => {
         event.preventDefault()
 
-        this.props.onLoginClick()
+        props.onLoginClick()
     }
 
-    render(){
-        return <main>
-            <img id='register-logo-img' src='../../logo.png' />
+    return <main>
+        <img id='register-logo-img' src='../../logo.png' />
 
-            <h1 className="title">Isdigram.</h1>
+        <h1 className="title">Isdigram.</h1>
 
-            <form id="register-form" onSubmit={this.handleSubmit.bind(this)}>
-                <label htmlFor="username">Write your username here</label>
-                <input id="username" type="text"></input>
+        <form id="register-form" onSubmit={handleSubmit}>
+            <label htmlFor="username">Write your username here</label>
+            <input id="username" type="text"></input>
 
-                <label htmlFor="email">Write your email here</label>
-                <input id="email" type="email"></input>
+            <label htmlFor="email">Write your email here</label>
+            <input id="email" type="email"></input>
 
-                <label htmlFor="password">Write your password here</label>
-                <input id="password" type="password"></input>
+            <label htmlFor="password">Write your password here</label>
+            <input id="password" type="password"></input>
 
-                <label htmlFor="confirm">Confirm your password</label>
-                <input id="confirm" type="password"></input>
+            <label htmlFor="confirm">Confirm your password</label>
+            <input id="confirm" type="password"></input>
 
-                <button type="submit" className="submit-button">Register</button>
-            </form>
+            <button type="submit" className="submit-button">Register</button>
+        </form>
 
-            <button className="secondary-button" onClick={this.handleLoginClick.bind(this)}>Login</button>
-        </main>
-    }
+        <button className="secondary-button" onClick={handleLoginClick}>Login</button>
+    </main>
 }
 
 export default Register

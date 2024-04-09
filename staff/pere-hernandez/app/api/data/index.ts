@@ -1,4 +1,4 @@
-import Collection from './Collection.js'
+import Collection from './Collection.ts'
 
 const db = {
     users: new Collection('users'),

@@ -1,33 +1,30 @@
-import { Component } from 'react'
+function Landing(props) {
 
-class Landing extends Component{
-    constructor(){
-        super()
-    }
-
-    handleLoginClick (event) {
+    const handleLoginClick = event => {
         event.preventDefault()
 
-        this.props.onLoginClick()
+        
+        props.onLoginClick()
     }
 
-    handleRegisterClik (event) {
+    const handleRegisterClik = event => {    
         event.preventDefault()
 
-        this.props.onRegisterClick()
+        
+        props.onRegisterClick()
     }
 
-    render(){
-        return <main>
-            <img src='../../logo.png' id='landing-img'></img>
 
-            <h1>Welcome to Isdigram.</h1>
+    return <main>
+        <img src='../../logo.png' id='landing-img'></img>
 
-            <button className='landing-button' onClick={this.handleLoginClick.bind(this)}>Log In</button>
+        <h1>Welcome to Isdigram.</h1>
 
-            <button className='landing-button' onClick={this.handleRegisterClik.bind(this)}>Register</button>
-        </main>
-    }
+        <button className='landing-button' onClick={handleLoginClick}>Log In</button>
+
+        <button className='landing-button' onClick={handleRegisterClik}>Register</button>
+    </main>
+    
 }
 
 export default Landing

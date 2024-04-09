@@ -11,39 +11,45 @@ var URL_REGEX = /^(http|https):\/\//
 
 //helpers
 
-function validateText(text, explain, checkEmptySpaceInside) {
+function validateText(text, explain = 'text', checkEmptySpaceInside) {
     if (typeof text !== 'string')
-        throw new TypeError (explain + ' ' + text + ' is not a string')
+        throw new TypeError(`${explain} ${text} is not a string`)
     if (!text.trim().length)
-        throw new Error (explain + '>' + text + '< is empty or blank')
-
+        throw new Error(`${explain} >${text}< is empty or blank`)
     if (checkEmptySpaceInside)
-        if(text.includes(' '))
-            throw new Error (explain + ' ' + text + ' has empty spaces')
+        if (text.includes(' '))
+            throw new Error(`${explain} ${text} has empty spaces`)
 }
 
 
-function validateDate(date, explain) {
+function validateDate(date, explain = 'date') {
+    if (typeof date !== 'string')
+        throw new TypeError(`${explain} is not a string`)
     if (!DATE_REGEX.test(date))
-        throw new Error(explain + ' '+ date + ' is not a date')
+        throw new Error(`${explain} is not a valid date`)
 }
 
 
-function validateEmail(email, explain) {
+function validateEmail(email, explain = 'email') {
     if (!EMAIL_REGEX.test(email))
-        throw new Error(explain + ' ' + email + ' is not an email')
+        throw new Error(`${explain} is not an email`)
 }
 
 
-function validatePassword(password, explain) {
+function validatePassword(password, explain = 'password') {
     if (!PASSWORD_REGEX.test(password))
-        throw new Error(explain + ' ' + password + ' is not a valid password')
+        throw new Error(`${explain} has an invalid format`)
 }
 
 
-function validateUrl(url, explain) {
+function validateUrl(url, explain = 'url') {
     if (!URL_REGEX.test(url))
-        throw new Error(explain + ' ' + url + ' is not an url')
+        throw new Error(`${explain} is not an url`)
+}
+
+function validateCallback(callback, explain = 'callback') {
+    if (typeof callback !== 'function')
+        throw new TypeError(`${explain} is not a Function`)
 }
 
 
@@ -52,98 +58,177 @@ function validateUrl(url, explain) {
 
 //USER-related functions
 
-function registerUser(username, email, password, confirmedPassword){
-    //validation
-    
+function registerUser(username, email, password, confirmedPassword, callback) {
+    //validation    
     validateText(username, 'username')
     validateEmail(email, 'email')
+    validatePassword(password, 'password')
+    validatePassword(confirmedPassword, 'confirmedPassword')
+    validateCallback(callback, 'callback')
 
     //logic
+    if (password !== confirmedPassword) {
+        callback(new Error("Passwords don't match"))
 
-    if (password !== confirmedPassword){
-        throw new Error("Passwords don't match")
+        return
     }
 
-    var user = data.users.findOne(function (user){
-        return user.username === username || user.email === email
-    })
+    var xhr = new XMLHttpRequest
 
-    if (user) throw new Error ('user already exists')
+    xhr.onload = function () {
+        const { status, responseText: json } = xhr
 
-    var user = {
-        username: username,
-        email: email,
-        password: password,
-        status: 'offline'
+        if (status > 499) {
+            callback(new Error('system error'))
+
+            return
+        } else if (status > 399) {
+            const { error, message } = JSON.parse(json)
+
+            const constructor = window[error]
+
+            callback(new constructor(message))
+        } else if (status > 299) {
+            callback(new Error('system error'))
+
+            return
+        } else callback(null)
     }
 
-    data.users.insertOne(user)
-} 
+    xhr.open('POST', 'http://localhost:8000/users')
+
+    xhr.setRequestHeader('Content-Type', 'application/json')
+
+    const user = { username, email, password, confirmedPassword }
+
+    const json = JSON.stringify(user)
+
+    xhr.send(json)
+}
 
 
-function loginUser (username, password){
+function loginUser(username, password, callback) {
     //validation
-
     validateText(username, 'username', true)
-
+    validatePassword(password)
+    validateCallback(callback)
 
     //logic
+    var xhr = new XMLHttpRequest
 
-    var user = data.users.findOne(function (user){
-        return user.username === username && user.password === password
-    })
+    xhr.onload = function () {
+        const { status, responseText: json } = xhr
 
-    if (!user) throw new Error ('wrong credentials')
+        if (status > 499) {
+            callback(new Error('system error'))
 
-    user.status = 'online'
+            return
+        } else if (status > 399) {
+            const { error, message } = JSON.parse(json)
 
-    data.users.updateOne(user)
+            const constructor = window[error]
 
-    sessionStorage.userId = user.id
+            callback(new constructor(message))
+        } else if (status > 299) {
+            callback(new Error('system error'))
+
+            return
+        } else {
+            const userId = JSON.parse(json)
+
+            sessionStorage.userId = userId
+
+            callback(null)
+        }
+    }
+    xhr.open('POST', 'http://localhost:8000/users/auth')
+
+    xhr.setRequestHeader('Content-Type', 'application/json')
+
+    const user = { username, password }
+
+    const json = JSON.stringify(user)
+
+    xhr.send(json)
 }
 
 
-function retrieveUser (){
-    var user = data.users.findOne(function(user){
-        return user.id === sessionStorage.userId
-    })
+function retrieveUser(callback) {
+    //validation
+    validateCallback(callback)
 
-    if (!user) throw new Error('user not found')
+    //logic
+    var xhr = new XMLHttpRequest
 
-    return user
+    xhr.onload = function(){
+        const { status, responseText: json } = xhr
+
+        if (status > 499){
+            callback(new Error('system error'))
+
+            return
+        } else if (status > 399) {
+            const { error, message } = JSON.parse(json)
+
+            const constructor = window[error]
+
+            callback(new constructor(message))
+        } else if (status > 299) {
+            callback(new Error('system error'))
+
+            return
+        } else {
+            const user = JSON.parse(json)
+
+            callback(null, user)
+        }
+    }
+
+    xhr.open('GET', `http://localhost:8000/users/${sessionStorage.userId}`)
+
+    xhr.send()
 }
 
 
-function retrieveUsers(){
-    var users = data.users.getAll()
+function retrieveUsers(callback) {
+    //validation
+    validateCallback(callback)
 
-    var index = users.findIndex(function (user) {
-        return user.id === sessionStorage.userId
-    })
+    //logic
+    var xhr = new XMLHttpRequest
 
-    users.splice(index, 1)
+    xhr.onload = function () {
+        const { status, responseText: json } = xhr
 
-    users.forEach(function (user) {
-        delete user.email
-        delete user.password
-    })
+        if (status > 499){
+            callback(new Error('system error'))
 
-    users.sort(function (x, y) {
-        return x.username < y.username ? -1 : 1
-    }).sort(function(x, y) {
-        return x.status > y.status ? -1 : 1
-    })
+            return
+        } else if (status > 399) {
+            const { error, message } = JSON.parse(json)
 
-    return users
+            const constructor = window[error]
+
+            callback(new constructor(message))
+        } else if (status > 299) {
+            callback(new Error('system error'))
+
+            return
+        } else callback(null)
+    }
+
+    xhr.open('GET', `http://localhost:8000/users/${sessionStorage.userId}`)
+
+    xhr.send()
 }
 
 
-function logoutUser(){
+function logoutUser() {
     var user = data.users.findOne(function (user) {
         return user.id === sessionStorage.userId
     })
 
-    if (!user){
+    if (!user) {
         throw new Error('wrong credentials')
     }
 
@@ -155,11 +240,11 @@ function logoutUser(){
 }
 
 
-function getLoggedInUserId () {
+function getLoggedInUserId() {
     return sessionStorage.userId
 }
 
-function checkLoggedInStatus(){
+function checkLoggedInStatus() {
     return !!sessionStorage.userId
 }
 
@@ -167,7 +252,7 @@ function checkLoggedInStatus(){
 
 //POST-related functions    
 
-function createPost (photo, comment){     
+function createPost(photo, comment) {
     //validation
 
     validateText(comment, 'comment')
@@ -185,21 +270,21 @@ function createPost (photo, comment){
 }
 
 
-function retrievePosts(){
+function retrievePosts() {
     var posts = data.posts.getAll()
-    
+
     posts.forEach(function (post) {
         var user = data.users.findOne(function (user) {
             return user.id === post.author
         })
 
-        post.author = {id: user.id, username: user.username}
+        post.author = { id: user.id, username: user.username }
     })
     return posts.reverse()
 }
 
 
-function deletePost (postId) {
+function deletePost(postId) {
     //validation
 
     validateText(postId, 'PostId', true)
@@ -209,9 +294,9 @@ function deletePost (postId) {
         return post.id === postId
     })
 
-    if (!post) throw new Error ('post not found')
+    if (!post) throw new Error('post not found')
 
-    if (post.author !== sessionStorage.userId) throw new Error ("can't delete somebody else's post")
+    if (post.author !== sessionStorage.userId) throw new Error("can't delete somebody else's post")
 
     data.posts.deleteOne(function (post) {
         return post.id === postId
@@ -219,22 +304,22 @@ function deletePost (postId) {
 }
 
 
-function updatePost (postId, text){
+function updatePost(postId, text) {
     //validation
 
     validateText(postId, 'PostId', true)
     validateText(text, 'text')
 
     //logic
-    var post = data.posts.findOne(function (post){
+    var post = data.posts.findOne(function (post) {
         return post.id === postId
     })
 
     if (!post)
-        throw new Error ('post not found')
+        throw new Error('post not found')
 
     if (post.author !== sessionStorage.userId)
-        throw new Error ('post does not belong to user')
+        throw new Error('post does not belong to user')
 
     post.comment = text
 
@@ -245,7 +330,7 @@ function updatePost (postId, text){
 
 //CHAT-related functions
 
-function createChat(user){
+function createChat(user) {
     var chat = {
         users: [sessionStorage.userId, user.id],
         messages: [],
@@ -258,18 +343,18 @@ function createChat(user){
 }
 
 
-function addMessageToChat (message, chatId){
-    var chat = data.chats.findOne(function (chat){
+function addMessageToChat(message, chatId) {
+    var chat = data.chats.findOne(function (chat) {
         return chatId === chat.id
     })
 
     chat.messages.push(message)
-    
+
     data.chats.updateOne(chat)
 }
 
 
-function retrieveMessagesWith (userID){
+function retrieveMessagesWith(userID) {
     var chat = data.chats.findOne(function (chat) {
         return chat.users.includes(userID) && chat.users.includes(sessionStorage.userId)
     })
@@ -281,8 +366,8 @@ function retrieveMessagesWith (userID){
 }
 
 
-function retrieveChatWith (userID){
-    var chat = data.chats.findOne(function(chat){
+function retrieveChatWith(userID) {
+    var chat = data.chats.findOne(function (chat) {
         return chat.users.includes(userID) && chat.users.includes(sessionStorage.userId)
     })
 
@@ -293,7 +378,7 @@ function retrieveChatWith (userID){
 
 //MESSAGE-related functions
 
-function createMessage(message){
+function createMessage(message) {
     var message = {
         text: message,
         author: sessionStorage.userId,
@@ -316,7 +401,7 @@ const logic = {
     retrievePosts: retrievePosts,
     deletePost: deletePost,
     updatePost: updatePost,
-    
+
     createChat: createChat,
     addMessageToChat: addMessageToChat,
     retrieveMessagesWith: retrieveMessagesWith,

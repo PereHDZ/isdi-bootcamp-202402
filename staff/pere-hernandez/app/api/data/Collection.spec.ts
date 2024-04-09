@@ -1,6 +1,6 @@
 import { readFile, writeFile} from 'fs'
 
-import Collection from './Collection.js'
+import Collection from './Collection.ts'
 
 import { expect } from 'chai'
 
@@ -680,7 +680,7 @@ describe('Collection', () => {
             })
         })
 
-        it('fails on non-Fucntion callback', () => {
+        it('fails on non-Function callback', () => {
             const cars = new Collection('cars')
             const callback = 'I am not a Function'
 
@@ -691,6 +691,59 @@ describe('Collection', () => {
             } catch (error) {
                 errorThrown = error
             }
+            expect(errorThrown).to.be.instanceOf(TypeError)
+            expect(errorThrown.message).to.equal('callback is not a Function')
+        })
+    })
+
+
+    describe('deleteAll', () => {
+        it('deletes all documents', done => {
+            const documents = [{"brand":"Renault","model":"Megane","id":"1"},{"brand":"Peugeot","model":"208","id":"2"}]
+            const documentsJSON = JSON.stringify(documents)
+
+            writeFile('./data/cars.json', documentsJSON, error => {
+                if (error) {
+                    done(error)
+
+                    return
+                }
+
+                const cars = new Collection ('cars')
+
+                cars.deleteAll(error => {
+                    if (error) {
+                        done(error)
+
+                        return
+                    }
+
+                    readFile('./data/cars.json', 'utf8', (error, json) => {
+                        if (error) {
+                            done(error)
+
+                            return
+                        }
+                        expect(json).to.equal('[]')
+                        
+                        done()
+                    })
+                })
+            })
+        })
+
+        it('fails on non-Function callback', () => {
+            const cars = new Collection('cars')
+            const callback = 'I am not a Function'
+
+            let errorThrown
+
+            try {
+                cars.deleteAll(callback)
+            } catch (error) {
+                errorThrown = error
+            }
+
             expect(errorThrown).to.be.instanceOf(TypeError)
             expect(errorThrown.message).to.equal('callback is not a Function')
         })

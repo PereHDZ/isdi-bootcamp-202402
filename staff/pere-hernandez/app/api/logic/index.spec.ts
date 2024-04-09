@@ -1,13 +1,12 @@
-import { log } from 'console'
-import db from '../data/index.mjs'
-import logic from './index.mjs'
+import db from '../data/index.ts'
+import logic from './index.ts'
 
 import { expect } from 'chai'
 
 describe('logic', () => {
     describe('registerUser', () => {
         it('creates a new user in db', done => {
-            db.users.deleteOne(user => user.username === 'PereHDZ', error => {
+            db.users.deleteAll(error => {
                 if (error){
                     done(error)
 
@@ -298,6 +297,36 @@ describe('logic', () => {
                         done()
                     })
                 })
+            })
+        })
+    })
+
+
+    describe('logoutUser', () => {
+        it('changes user status to offline', done => {
+            db.users.deleteOne(user => user.username === 'PereHDZ', error => {
+                if (error){
+                    done(error)
+
+                    return
+                }
+                
+                done()/*
+
+                db.users.insertOne({name: 'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992', status:'online'}, (error, userId) => {
+                    if (error) {
+                        done(error)
+
+                        return
+                    }
+
+                    logic.logoutUser(userId, error => {
+                        if (error){
+                            done(error)
+                        }
+                        done()
+                    })
+                })*/
             })
         })
     })

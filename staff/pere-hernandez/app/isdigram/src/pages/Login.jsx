@@ -1,13 +1,8 @@
 import logic from "../logic.mjs";
 
-import { Component } from "react";
+function Login (props) {
 
-class Login extends Component {
-    constructor(){
-        super()
-    }
-
-    handleSubmit (event) {
+    const handleSubmit = event => {
         event.preventDefault()
 
         const form = event.target
@@ -16,41 +11,45 @@ class Login extends Component {
         const password = form.password.value
 
         try {
-            logic.loginUser(username, password)
+            logic.loginUser(username, password, error => {
+                if (error){
+                    alert(error.message)
+
+                    return
+                }
+            })
 
             form.reset()
 
-            this.props.onUserLoggedIn()
+            props.onUserLoggedIn()
         } catch (error) {
             alert(error.message)
         }
     }
 
-    handleRegisterClick (event) {
+    const handleRegisterClick = event => {
         event.preventDefault()
 
-        this.props.onRegisterClick()
+        props.onRegisterClick()
     }
 
-    render() {
-        return <main>
-            <img id="login-logo-img" src="../../logo.png"></img>
+    return <main>
+        <img id="login-logo-img" src="../../logo.png"></img>
 
-            <h1 className="title">Isdigram.</h1>
+        <h1 className="title">Isdigram.</h1>
 
-            <form id="login-form" onSubmit={this.handleSubmit.bind(this)}>
-                <label htmlFor="username">Write your username here</label>
-                <input id="username" type="text"></input>
+        <form id="login-form" onSubmit={handleSubmit}>
+            <label htmlFor="username">Write your username here</label>
+            <input id="username" type="text"></input>
 
-                <label htmlFor="password">Write your password here</label>
-                <input id="password" type="password"></input>
+            <label htmlFor="password">Write your password here</label>
+            <input id="password" type="password"></input>
 
-                <button type="submit" className="submit-button">Log In</button>
-            </form>
+            <button type="submit" className="submit-button">Log In</button>
+        </form>
 
-            <button className="secondary-button" onClick={this.handleRegisterClick.bind(this)}>Register</button>
-        </main>
-    }
+        <button className="secondary-button" onClick={handleRegisterClick}>Register</button>
+    </main>
 }
 
 export default Login

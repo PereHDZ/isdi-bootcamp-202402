@@ -1,4 +1,4 @@
-import db from '../data/index.mjs'
+import db from '../data/index.ts'
 
 //constants
 
@@ -11,7 +11,7 @@ const URL_REGEX = /^(http|https):\/\//
 
 //helpers
 
-function validateText(text, explain, checkEmptySpaceInside) {
+function validateText(text, explain, checkEmptySpaceInside?) {
     if (typeof text !== 'string')
         throw new TypeError(explain + ' ' + text + ' is not a string')
     if (!text.trim().length)
@@ -134,7 +134,7 @@ function loginUser(username, password, callback) {
 
         db.users.updateOne(user2 => user2.id === user.id, user, error => {
             if (error) {
-                done(error)
+                callback(error)
 
                 return
             }
@@ -145,12 +145,41 @@ function loginUser(username, password, callback) {
 }
 
 
+function logoutUser(userId, callback){
+    //validation
+    validateText(userId, 'userId', true)
+    validateCallback(callback)
+
+    //logic
+
+    db.users.findOne(user => user.id === userId, (error, user) => {
+        if (error) {
+            callback(error)
+
+            return
+        }
+        if (!user){
+            throw new Error('wrong credentials')
+        }
+
+        user.status = 'offline'
+
+        db.users.updateOne(user2 => user2.id === user.id, user, error => {
+            if (error) {
+                callback(error)
+
+                return
+            }
+            callback(null, user.id)
+        })     
+    })
+}
+
+
 function retrieveUser(userId, callback) {
     //validation
-    /*if (typeof userId !== 'string')
-        throw new TypeError('userId is not a string')*/
-    if (typeof callback !== 'function')
-        throw new TypeError('callback is not a Fucntion')
+    validateText(userId, 'userId', true)
+    validateCallback(callback)
 
     //logic
     db.users.findOne(user => user.id === userId, (error, user) => {
@@ -196,23 +225,6 @@ function retrieveUsers(){
     })
 
     return users
-}
-
-
-function logoutUser(){
-    var user = data.users.findOne(function (user) {
-        return user.id === sessionStorage.userId
-    })
-
-    if (!user){
-        throw new Error('wrong credentials')
-    }
-
-    user.status = 'offline'
-
-    data.users.updateOne(user)
-
-    delete sessionStorage.userId
 }
 
 
@@ -367,9 +379,9 @@ function createMessage(message){
 const logic = {
     registerUser: registerUser,
     loginUser: loginUser,
+    logoutUser: logoutUser,
     retrieveUser: retrieveUser/*,
     retrieveUsers, retrieveUsers,
-    logoutUser: logoutUser,
     getLoggedInUserId: getLoggedInUserId,
     checkLoggedInStatus: checkLoggedInStatus,
 

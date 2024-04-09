@@ -1,0 +1,1 @@
+curl -X POST -H "Content-Type: application/json" -d '{"username":"heberybreathUtake","email":"maalvinas@argentinas.ar","password":"comparti2024","confirmedPassword":"comparti2024"}' http://localhost:8000/users -v

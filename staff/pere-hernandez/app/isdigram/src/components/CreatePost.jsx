@@ -1,13 +1,8 @@
 import logic from "../logic.mjs";
 
-import { Component } from "react";
+function CreatePost(props) {
 
-class CreatePost extends Component {
-    constructor(){
-        super()
-    }
-
-    handleSubmit(event){
+    const handleSubmit = event => {
         event.preventDefault()
 
         const form = event.target
@@ -23,32 +18,30 @@ class CreatePost extends Component {
             alert(error.message)
         }
 
-        this.props.onNewPost()
+        props.onNewPost()
     }
 
-    handleCancelClick(event){
+    const handleCancelClick= event => {
         event.preventDefault()
 
-        this.props.onCancelNewPostClick()
+        props.onCancelNewPostClick()
     }
 
-    render(){
-        return <section id="create-post">
-            <h2>Create a new post</h2>
+    return <section id="create-post">
+        <h2>Create a new post</h2>
 
-            <form onSubmit={this.handleSubmit.bind(this)}>
-                <label htmlFor="photo">Paste your URL here</label>
-                <input id="photo" type="text"></input>
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="photo">Paste your URL here</label>
+            <input id="photo" type="text"></input>
 
-                <label htmlFor="comment">Write a comment here</label>
-                <input id="comment" type="text"></input>
+            <label htmlFor="comment">Write a comment here</label>
+            <input id="comment" type="text"></input>
 
-                <button type="submit" className="submit-post-button">Post</button>
-            </form>
+            <button type="submit" className="submit-post-button">Post</button>
+        </form>
 
-            <button className="secondary-button" onClick={this.handleCancelClick.bind(this)}>Cancel</button>
-        </section>
-    }
+        <button className="secondary-button" onClick={handleCancelClick}>Cancel</button>
+    </section>
 }
 
 export default CreatePost

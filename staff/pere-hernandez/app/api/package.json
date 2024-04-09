@@ -5,10 +5,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node index.js",
-    "test": "npx mocha data logic",
-    "test-inspect": "npx mocha --inspect-brk data logic"
+    "start": "npx tsx index.ts",
+    "inspect": "npx tsx --inspect-brk index.ts",
+    "test": "mocha",
+    "test-inspect": "npx mocha --inspect-brk"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,8 @@
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.12.3",
     "chai": "^5.1.0",
-    "mocha": "^10.4.0"
+    "mocha": "^10.4.0",
+    "ts-node": "^10.9.2"
   },
   "dependencies": {
     "express": "^4.19.2"
