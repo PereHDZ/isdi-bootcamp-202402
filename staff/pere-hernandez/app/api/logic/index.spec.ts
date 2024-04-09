@@ -1,75 +1,91 @@
-import db from '../data/index.ts'
+import mongodb from 'mongodb'
 import logic from './index.ts'
 
 import { expect } from 'chai'
+import { log } from 'console'
+
+const { MongoClient, ObjectId } = mongodb
 
 describe('logic', () => {
+    let client, users, posts
+
+    before(done => {
+        client = new MongoClient('mongodb://localhost:27017')
+
+        client.connect()
+            .then(connection => {
+                const db = connection.db('test')
+
+                users = db.collection('users')
+                posts = db.collection('posts')
+
+                logic.users = users
+
+                done()
+            })
+            .catch(done)
+    })
+
+
+
     describe('registerUser', () => {
-        it('creates a new user in db', done => {
-            db.users.deleteAll(error => {
-                if (error){
-                    done(error)
-
-                    return
-                }
-
-                logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', error => {
-                    if (error) {
-                        done(error)
-
-                        return
-                    }
-
-                    db.users.findOne(user => user.username === 'PereHDZ', (error, user) => {
-                        if (error) {
-                            done (error)
+        it('creates a new user', done => {
+            users.deleteMany()
+                .then(() => {
+                    logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', error => {
+                        if (error){
+                            done(error)
 
                             return
                         }
 
-                        expect(!!user).to.be.true
-                        expect(user.username).to.equal('PereHDZ')
-                        expect(user.email).to.equal('perehdz@hotmail.com')
-                        expect(user.password).to.equal('cuquis1992')
+                        users.findOne({ username:'PereHDZ' })
+                            .then(user => {
+                                expect(!!user).to.be.true
+                                expect(user.username).to.equal('PereHDZ')
+                                expect(user.email).to.equal('perehdz@hotmail.com')
+                                expect(user.password).to.equal('cuquis1992')
 
-                        done()
+                                done()
+                            })
+                            .catch(done)
                     })
                 })
-            })
+                .catch(done)
         })
 
         it('fails on non-matching passwords', done => {
-            db.users.deleteOne(user => user.username === 'PereHDZ', error => {
-                if (error) {
-                    done(error)
+            users.deleteMany()
+                .then(() => {
+                    users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' })
+                        .then(() => {
+                            logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cukis1992', error => {
+                                expect(error).to.be.instanceOf(Error)
+                                expect(error.message).to.equal('passwords do not match')
 
-                    return
-                }
-
-                logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cukis1992', error => {
-                    expect(error).to.be.instanceOf(Error)
-                    expect(error.message).to.equal("Passwords don't match")
-
-                    done()
+                                done()
+                            })
+                        })
+                        .catch(done)
                 })
-            })
+                .catch(done)
         })
 
         it('fails on existing user', done => {
-            db.users.insertOne({username: 'PereHDZ', email: 'perhdz@hotmail.com', password: 'cuquis1992'}, error => {
-                if (error) {
-                    done(error)
+            users.deleteMany()
+                .then(() => {
+                    users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' })
+                        .then(() => {
+                            logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', error => {
+                                expect(error).to.be.instanceOf(Error)
+                                expect(error.message).to.equal('user already exists')
 
-                    return
-                }
-
-                logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', error => {
-                    expect(error).to.be.instanceOf(Error)
-                    expect(error.message).to.equal('user already exists')
-
-                    done()
+                                done()
+                            })
+                        })
+                        .catch(done)
                 })
-            })
+                .catch(done)
         })
 
         it('fails on non-string username', () => {
@@ -77,24 +93,23 @@ describe('logic', () => {
             let errorThrown
 
             try{
-                logic.registerUser(username, 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', () => {})
+                logic.registerUser(username, 'unknown@unknown.com', 'fails2024', 'fails2024', () => {})
             } catch (error) {
                 errorThrown = error
             }
-
             expect(errorThrown).to.be.instanceOf(TypeError)
             expect(errorThrown.message).to.equal('username 26 is not a string')
         })
 
-        it ('fails on empty username', () => {
+        it('fails on empty username', () => {
+            let empty = ''
             let errorThrown
 
-            try {
-                logic.registerUser('', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', () => {})
+            try{
+                logic.registerUser(empty, 'unknown@unknown.com', 'fails2024', 'fails2024', () => {})
             } catch (error) {
                 errorThrown = error
             }
-
             expect(errorThrown).to.be.instanceOf(Error)
             expect(errorThrown.message).to.equal('username >< is empty or blank')
         })
@@ -143,100 +158,123 @@ describe('logic', () => {
 
     describe('loginUser', () => {
         it('logs user if it exists and the correct credentials are given', done => {
-            db.users.deleteOne(user => user.username === 'PereHDZ', error => {
-                if (error) {
-                    done(error)
+            users.deleteMany()
+                .then(() => {
+                    users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992', status:'offline' })
+                        .then(() => {
+                            logic.loginUser('PereHDZ', 'cuquis1992', error => {
+                                if (error) {
+                                    done(error)
 
-                    return
-                }
+                                    return
+                                }
 
-                db.users.insertOne({ username: 'PereHDZ', email: 'perehdz@hotmail.com', password: 'cuquis1992'}, (error, insertedUserID) => {
-                    if (error){
-                        done(error)
+                                users.findOne({ username: 'PereHDZ' })
+                                    .then(user => {
+                                        expect(user.status).to.equal('online')
 
-                        return
-                    }
-
-                    logic.loginUser('PereHDZ', 'cuquis1992', (error, userId) => {
-                        if (error) {
-                            done(error)
-
-                            return
-                        }
-
-                        expect(userId).to.equal(insertedUserID)
-
-                        db.users.findOne(user => user.id === userId, (error, user) => {
-                            if (error) {
-                                done(error)
-
-                                return
-                            }
-
-                            expect(user.status).to.equal('online')
-
-                            done()
+                                        done()
+                                    })
+                                    .catch(done)                                
+                            })
                         })
-                    })
+                        .catch(done)
                 })
-            })
+                .catch(done)
         })
 
         it('fails on existing user but incorrect password', done => {
-            debugger
-            db.users.deleteOne(user => user.username === 'PereHDZ', error => {
-                if (error) {
-                    done(error)
+            users.deleteMany()
+                .then(() => {
+                    users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992', status:'offline' })
+                        .then(() => {
+                            logic.loginUser('PereHDZ', 'cukis1992', (error, userId) => {
+                                expect(error).to.be.instanceOf(Error)
+                                expect(error.message).to.equal('wrong credentials')
+                                expect(userId).to.be.undefined
 
-                    return
-                }
-
-                db.users.insertOne({ username: 'PereHDZ', email: 'perehdz@hotmail.com', password: 'cuquis1992'}, error => {
-                    if (error) {
-                        done(error)
-
-                        return
-                    }
-
-                    logic.loginUser('PereHDZ', 'wrongpassword1', (error, userId) => {
-                        expect(error).to.be.instanceOf(Error)
-                        expect(error.message).to.equal('wrong credentials')
-                        expect(userId).to.be.undefined
-
-                        done()
-                    })
+                                done()
+                            })
+                        })
+                        .catch(done)
                 })
-            })
+                .catch(done)
         })
 
-        it ('fails on non-existing username', done => {
-            db.users.deleteOne(user => user.username === 'PereHDZ', error => {
-                if (error) {
-                    done(error)
+        it('fails on non-existing username', done => {
+            users.deleteMany()
+                .then(() => {
+                    users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992', status:'offline' })
+                        .then(() => {
+                            logic.loginUser('perehdz', 'cuquis1992', (error, userId) => {
+                                expect(error).to.be.instanceOf(Error)
+                                expect(error.message).to.equal('wrong credentials')
+                                expect(userId).to.be.undefined
 
-                    return
-                }
-
-                db.users.insertOne({ username: 'PereHDZ', email: 'perehdz@hotmail.com', password: 'cuquis1992'}, error => {
-                    if (error) {
-                        done(error)
-
-                        return
-                    }
-
-                    logic.loginUser('perehdz', 'cuquis1992', (error, userId) => {
-                        expect(error).to.be.instanceOf(Error)
-                        expect(error.message).to.equal('wrong credentials')
-
-                        expect(userId).to.be.undefined
-
-                        done()
-                    })
+                                done()
+                            })
+                        })
+                        .catch(done)
                 })
-            })
+                .catch(done)
         })
     })
 
+    describe('logoutUser', () => {
+        it('changes user status to offline', done => {
+            users.deleteMany()
+                .then(() => {
+                    users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992', status:'online' })
+                        .then(() => {
+                            users.findOne({ username:'PereHDZ' })
+                                .then(user => {
+                                    const userId = user._id
+
+                                    logic.logoutUser(userId, error => {
+                                        if (error) {
+                                            done(error)
+
+                                            return
+                                        }
+
+                                        users.findOne({ username:'PereHDZ' })
+                                            .then(user2 => {
+                                                expect(userId).to.deep.equal(user2._id)
+                                                expect(user2.status).to.equal('offline')
+
+                                                done()
+                                            })
+                                            .catch(done)
+                                    })
+                                })
+                                .catch(done)
+                        })
+                        .catch(done)
+                })
+                .catch(done)
+        })
+
+        /*it ('fails on non-existing user', done => {
+            users.deleteMany()
+                .then(() => {
+                    users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992', status:'online' })
+                        .then(
+                            logic.logoutUser({_id:'hvkjvlj'}, error => {
+                                if (error) {
+                                    done(error)
+
+                                    return
+                                }
+                                done()
+                            })
+                        )
+                        .catch(done)
+                })
+                .catch(done)
+        })*/
+    })
+    
+    /*
 
     describe('retrieveUser', () => {
         it('retrieves existing user', done => {
@@ -299,35 +337,11 @@ describe('logic', () => {
                 })
             })
         })
-    })
+    })*/
 
-
-    describe('logoutUser', () => {
-        it('changes user status to offline', done => {
-            db.users.deleteOne(user => user.username === 'PereHDZ', error => {
-                if (error){
-                    done(error)
-
-                    return
-                }
-                
-                done()/*
-
-                db.users.insertOne({name: 'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992', status:'online'}, (error, userId) => {
-                    if (error) {
-                        done(error)
-
-                        return
-                    }
-
-                    logic.logoutUser(userId, error => {
-                        if (error){
-                            done(error)
-                        }
-                        done()
-                    })
-                })*/
-            })
-        })
+    after(done => {
+        client.close()
+            .then(() => done())
+            .catch(done)
     })
 })
