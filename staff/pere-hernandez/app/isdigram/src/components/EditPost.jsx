@@ -1,5 +1,5 @@
 import { Component } from "react";
-import logic from "../logic.mjs";
+import logic from "../logic";
 
 class EditPost extends Component{
     constructor(props){

@@ -1,3 +1,5 @@
+import { logger } from "../utils"
+
 function Landing(props) {
 
     const handleLoginClick = event => {
@@ -13,6 +15,8 @@ function Landing(props) {
         
         props.onRegisterClick()
     }
+
+    logger.debug('Landing -> render')
 
 
     return <main>

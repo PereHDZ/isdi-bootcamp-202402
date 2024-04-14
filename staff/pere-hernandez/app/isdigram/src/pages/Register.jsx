@@ -1,4 +1,6 @@
-import logic from "../logic.mjs"
+import { logger, showFeedback } from "../utils"
+
+import logic from "../logic"
 
 function Register (props) {
     const handleSubmit = event => {
@@ -9,10 +11,10 @@ function Register (props) {
         const username = form.username.value
         const email = form.email.value
         const password = form.password.value
-        const confirm = form.confirm.value
+        const confirmedPassword = form.confirm.value
 
         try{
-            logic.registerUser(username, email, password, confirm, error => {
+            logic.registerUser(username, email, password, confirmedPassword, error => {
                 if (error) {
                     alert(error.message)
 
@@ -33,6 +35,8 @@ function Register (props) {
 
         props.onLoginClick()
     }
+
+    logger.debug('Register -> render')
 
     return <main>
         <img id='register-logo-img' src='../../logo.png' />

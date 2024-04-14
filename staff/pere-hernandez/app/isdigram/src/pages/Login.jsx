@@ -1,7 +1,8 @@
-import logic from "../logic.mjs";
+import { logger } from '../utils'
+
+import logic from "../logic"
 
 function Login (props) {
-
     const handleSubmit = event => {
         event.preventDefault()
 
@@ -9,6 +10,8 @@ function Login (props) {
 
         const username = form.username.value
         const password = form.password.value
+
+        logger.debug('Login -> handleSubmit', username, password)
 
         try {
             logic.loginUser(username, password, error => {

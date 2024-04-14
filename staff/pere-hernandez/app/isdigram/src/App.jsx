@@ -1,61 +1,31 @@
-import logic from './logic.mjs'
+import { logger } from './utils/index.js'
 
-import { Component } from 'react'
+import logic from './logic'
+
+import { useState } from 'react'
 
 import Landing from './pages/Landing.jsx'
 import Register from './pages/Register.jsx'
 import Login from './pages/Login.jsx'
 import Home from './pages/Home.jsx'
 
-class App extends Component {
-  constructor(){
-    super()
+function App() {
+  const [view, setView] = useState(logic.checkLoggedStatus() ? 'home' : 'landing')
 
-    const online = logic.checkLoggedInStatus()
+  const handleRegisterClik = () => setView('register')
 
-    if (!online)
-      this.state = {view: 'landing'}
-    else
-      this.state = {view: 'home'}
-  }
+  const handleLoginClick = () => setView('login')
 
-  displayPage = page => {
-    //validation
-    if(typeof page !== 'string')
-      throw new TypeError('page must be a string')
+  const handleUserLoggedIn = () => setView('home')
 
-    //logic
-    this.setState({view: page })
-  }
+  logger.debug('App -> render')
 
-  render(){
-    if (this.state.view === 'landing')
-      return <Landing 
-        onRegisterClick={()=> {this.displayPage('register')}}      
-        onLoginClick={()=> {this.displayPage('login')}}
-      />
-    
-    else if (this.state.view === 'register')
-      return <Register 
-        onLoginClick={()=> {this.displayPage('login')}}
-        onRegistered={()=> {this.displayPage('login')}}
-      />
-
-    else if (this.state.view === 'login')
-      return <Login 
-        onRegisterClick={()=> {this.displayPage('register')}}
-        onUserLoggedIn={()=> {this.displayPage('home')}}
-      />
-
-    else if (this.state.view === 'home')
-      return <Home 
-        onLogout={()=> {this.displayPage('login')}}
-      />
-
-    else{
-      return <h1>Algo salió mal 😓</h1>
-    }
-  }
+  return <>
+    {view === 'landing' && <Landing onRegisterClick={handleRegisterClik} onLoginClick={handleLoginClick}></Landing>}
+    {view === 'register' && <Register onLoginClick={handleLoginClick} onRegistered={handleLoginClick}></Register>}
+    {view === 'login' && <Login onRegisterClick={handleRegisterClik} onUserLoggedIn={handleUserLoggedIn}></Login>}
+    {view === 'home' && <Home></Home>}
+  </>
 }
 
 export default App

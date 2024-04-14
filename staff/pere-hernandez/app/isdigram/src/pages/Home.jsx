@@ -1,4 +1,4 @@
-import logic from "../logic.mjs"
+import logic from "../logic"
 
 import { useState, useEffect } from "react"
 
@@ -27,6 +27,17 @@ function Home (props){
         }
     }, [])
 
+    const clearView = () => setView(null)
+
+    const handleCreatePostClick = () => setView('create-post')
+
+    const handleCancelCreatePostClick = () => clearView()
+
+    const handlePostCreated = () => {
+        clearView()
+        setStamp(Date.now())
+    }
+
     return <main id="home-main" className="home-main-scroll">
         <header>
             <div id="logo">
@@ -40,8 +51,10 @@ function Home (props){
 
         {user && <h1 id="greeting">Hello, {user.username}</h1>}
 
+        {view === 'create-post' && <CreatePost onCancelClick = {handleCancelCreatePostClick} onPostCreated = {handlePostCreated}></CreatePost>}
+
         {view !== 'create-post' && <footer>
-            <button id="new-post-button" className="transparent-button">
+            <button id="new-post-button" className="transparent-button" onClick={handleCreatePostClick}>
                 <img id="new-post-button-img" src="../../circulo-plus.png"></img>
             </button>
         </footer>}
