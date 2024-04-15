@@ -1,4 +1,7 @@
-import { MongoClient } from "mongodb"
+import mongoose from "mongoose"
+
+import { User } from "../data/index.ts"
+
 import logic from "./index.ts"
 import { expect } from 'chai'
 import { errors } from 'com'
@@ -6,102 +9,48 @@ import { errors } from 'com'
 const { CredentialsError, DuplicityError } = errors
 
 describe('registerUser', () => {
-    let client, users
+    before(() => mongoose.connect('mongodb://localhost:27017/test'))
 
-    before(done => {
-        client = new MongoClient('mongodb://localhost:27017')
-
-        client.connect()
-            .then(connection => {
-                const db = connection.db('test')
-
-                users = db.collection('users')
-
-                logic.users = users
-
-                done()
+    it('creates a new user', () =>
+        User.deleteMany()
+            .then(() => logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992'))
+            .then(() => User.findOne({ username:'PereHDZ' }))
+            .then(user => {
+                expect(!!user).to.be.true
+                expect(user.username).to.equal('PereHDZ')
+                expect(user.email).to.equal('perehdz@hotmail.com')
+                expect(user.password).to.equal('cuquis1992')
             })
-            .catch(done)
-    })
+    )
 
-    it('creates a new user', done => {
-        users.deleteMany()
+    it('fails on non-matching passwords', () => 
+        User.deleteMany()
+            .then(() => User.create({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' }))
             .then(() => {
-                logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', error => {
-                    if (error){
-                        done(error)
+                let errorThrown
 
-                        return
-                    }
+                try {
+                    logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cukis1992')
+                } catch (error) {
+                    errorThrown = error
+                }
 
-                    users.findOne({ username:'PereHDZ' })
-                        .then(user => {
-                            try{
-                                expect(!!user).to.be.true
-                                expect(user.username).to.equal('PereHDZ')
-                                expect(user.email).to.equal('perehdz@hotmail.com')
-                                expect(user.password).to.equal('cuquis1992')
-    
-                                done()
-                            } catch (error) {
-                                done(error)
-                            }
-                        })
-                        .catch(done)
-                })
-            })
-            .catch(done)
-    })
+                expect(errorThrown).to.be.instanceOf(CredentialsError)
+                expect(errorThrown.message).to.equal('passwords do not match')
+            })                    
+    )
 
-    it('fails on non-matching passwords', done => {
-        users.deleteMany()
-            .then(() => {
-                users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' })
-                    .then(() => {
-                        try {
-                            logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cukis1992', error => {
-                                try{
-                                    expect(error).to.be.instanceOf(CredentialsError)
-                                    expect(error.message).to.equal('passwords do not match')
-        
-                                    done()
-                                } catch (error) {
-                                    done(error)
-                                }
-                            })
-                        } catch (error) {
-                            done(error)
-                        }
+    it('fails on existing user', () => 
+        User.deleteMany()
+            .then(() => User.create({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' }))
+            .then(() => 
+                logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992')
+                    .catch(error => {
+                        expect(error).to.be.instanceOf(DuplicityError)
+                        expect(error.message).to.equal('user already exists')
                     })
-                    .catch(done)
-            })
-            .catch(done)
-    })
-
-    it('fails on existing user', done => {
-        users.deleteMany()
-            .then(() => {
-                users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' })
-                    .then(() => {
-                        try {
-                            logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', error => {
-                                try{
-                                    expect(error).to.be.instanceOf(DuplicityError)
-                                    expect(error.message).to.equal('user already exists')
-        
-                                    done()
-                                } catch (error) {
-                                    done(error)
-                                }
-                            })
-                        } catch (error) {
-                            done(error)
-                        }
-                    })
-                    .catch(done)
-            })
-            .catch(done)
-    })
+            )    
+    )
 
     it('fails on non-string username', () => {
         const username = 26
@@ -109,7 +58,7 @@ describe('registerUser', () => {
 
         try{
             //@ts-ignore
-            logic.registerUser(username, 'unknown@unknown.com', 'fails2024', 'fails2024', () => {})
+            logic.registerUser(username, 'unknown@unknown.com', 'fails2024', 'fails2024')
         } catch (error) {
             errorThrown = error
         }
@@ -122,7 +71,7 @@ describe('registerUser', () => {
         let errorThrown
 
         try{
-            logic.registerUser(empty, 'unknown@unknown.com', 'fails2024', 'fails2024', () => {})
+            logic.registerUser(empty, 'unknown@unknown.com', 'fails2024', 'fails2024')
         } catch (error) {
             errorThrown = error
         }
@@ -134,7 +83,7 @@ describe('registerUser', () => {
         let errorThrown
 
         try {
-            logic.registerUser('PereHDZ', 'I am not an email', 'cuquis1992', 'cuquis1992', () => {})
+            logic.registerUser('PereHDZ', 'I am not an email', 'cuquis1992', 'cuquis1992')
         } catch (error) {
             errorThrown = error
         }
@@ -147,7 +96,7 @@ describe('registerUser', () => {
         let errorThrown
 
         try {
-            logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'I am not a valid password', 'cuquis1992', () => {})
+            logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'I am not a valid password', 'cuquis1992')
         } catch (error) {
             errorThrown = error
         }
@@ -155,26 +104,6 @@ describe('registerUser', () => {
         expect(errorThrown).to.be.instanceOf(Error)
         expect(errorThrown.message).to.equal('password is not acceptable')
     })
-
-    it ('fails on non-Function callback', () => {
-        const callback = 'I am not a Function'
-        let errorThrown
-
-        try {
-            //@ts-ignore
-            logic.registerUser('PereHDZ', 'perehdz@hotmail.com', 'cuquis1992', 'cuquis1992', callback)
-        } catch (error) {
-            errorThrown = error
-        }
-        
-        expect(errorThrown).to.be.instanceOf(TypeError)
-        expect(errorThrown.message).to.equal('callback is not a Function')
-    })
-
-
-    after(done => {
-        client.close()
-            .then(() => done())
-            .catch(done)
-    })
+    
+    after(() => mongoose.disconnect())
 })
