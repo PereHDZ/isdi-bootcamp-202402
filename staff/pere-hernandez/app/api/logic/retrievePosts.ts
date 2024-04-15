@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb"
 
 const { SystemError, NotFoundError } = errors
 
-function retrievePosts(userId, callback){
+function retrievePosts(userId: string, callback: Function){
     //validation
     validate.text(userId, 'userId', true)
     validate.callback(callback)
@@ -42,9 +42,9 @@ function retrievePosts(userId, callback){
                                 }
                                 count++
 
-                                if (count === post.length) callback(null, post.reverse())
+                                if (count === posts.length) callback(null, posts.reverse())
                             })
-                            .catch(error => callback(error.message))
+                            .catch(error => callback(new SystemError (error.message)))
                     })
                 })
                 .catch(error => callback(new SystemError(error.message)))

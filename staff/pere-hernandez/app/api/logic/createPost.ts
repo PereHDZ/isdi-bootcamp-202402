@@ -4,7 +4,6 @@ import { ObjectId } from "mongodb"
 const { SystemError, NotFoundError} = errors
 
 function createPost(userId: string, image: string, comment: string, callback: Function){
-    debugger
     //validation
     validate.text(userId, 'userId', true)
     validate.url(image, 'image')

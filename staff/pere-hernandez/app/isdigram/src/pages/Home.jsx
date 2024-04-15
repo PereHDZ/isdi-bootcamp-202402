@@ -51,6 +51,8 @@ function Home (props){
 
         {user && <h1 id="greeting">Hello, {user.username}</h1>}
 
+        {/*<PostList></PostList>*/}
+
         {view === 'create-post' && <CreatePost onCancelClick = {handleCancelCreatePostClick} onPostCreated = {handlePostCreated}></CreatePost>}
 
         {view !== 'create-post' && <footer>

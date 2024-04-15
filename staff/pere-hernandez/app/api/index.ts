@@ -200,6 +200,23 @@ client.connect()
                 res.status(400).json({ error: error.constructor.name, message: error.message })
             }
         })
+
+        api.get('/posts', (req, res) => {
+            try {
+                const { authorization: userId } = req.headers
+
+                logic.retrievePosts(userId, (error, posts) => {
+                    if (error) {
+                        res.status(400).json({ error: error.constructor.name, message: error.message })
+
+                        return
+                    }
+                    req.json(posts)
+                })
+            } catch (error) {
+                res.status(400).json({ error: error.constructor.name, message: error.message })
+            }
+        })
         api.listen(8000, () => logger.info('API listening on port 8000'))
     })
     .catch(error => logger.error(error))

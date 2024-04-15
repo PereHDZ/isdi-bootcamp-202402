@@ -1,6 +1,8 @@
+import { logger } from '../utils'
+
 import logic from "../logic";
 
-import { Component } from "react";
+import { useState, useEffect } from "react";
 
 import EditPost from "./EditPost";
 
