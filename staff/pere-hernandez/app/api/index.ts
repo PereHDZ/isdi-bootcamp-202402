@@ -1,9 +1,10 @@
-import { MongoClient } from "mongodb"
+import mongoose from "mongoose"
 import express from 'express'
 import logic from "./logic/index.ts"
 import { errors } from 'com'
 import tracer from 'tracer'
 import colors from 'colors'
+import jwt from 'jsonwebtoken'
 
 const logger = tracer.colorConsole({
     filters: {
@@ -16,11 +17,9 @@ const logger = tracer.colorConsole({
 
 const { ContentError, SystemError, DuplicityError, CredentialsError, NotFoundError, StatusError } = errors
 
-const client = new MongoClient('mongodb://localhost:27017')
-
-client.connect()
-    .then(connection => {
-        const db = connection.db('isdigram')
+mongoose.connect('mongodb://localhost:27017/isdigram')
+    .then(() => {
+        const db = mongoose.connection.db
 
         const users = db.collection('users')
         const posts = db.collection('posts')
@@ -44,8 +43,9 @@ client.connect()
             try {
                 const { username, email, password, confirmedPassword } = req.body
 
-                logic.registerUser(username, email, password, confirmedPassword, error => {
-                    if (error) {
+                logic.registerUser(username, email, password, confirmedPassword)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
                         if (error instanceof SystemError){
                             logger.error(error.message)
 
@@ -59,10 +59,7 @@ client.connect()
 
                             res.status(406).json({ error: error.constructor.name, message: error.message })
                         }
-                        return
-                    }
-                    res.status(201).send()
-                })
+                    })
             } catch (error) {
                 if (error instanceof TypeError || error instanceof ContentError){
                     logger.warn(error.message)
@@ -76,8 +73,13 @@ client.connect()
             try {
                 const { username, password } = req.body
 
-                logic.loginUser(username, password, (error, userId) => {
-                    if (error) {
+                logic.authenticateUser(username, password)
+                    .then(userId => {
+                        const token = jwt.sign({ sub: userId }, 'Isdigram is just an Instagram rip-off')
+
+                        res.json(token)
+                    })
+                    .catch(error => {
                         if (error instanceof SystemError){
                             logger.error(error.message)
 
@@ -95,46 +97,7 @@ client.connect()
 
                             res.status(406).json({ error: error.constructor.name, message: error.message })
                         }
-                        return
-                    }
-                    res.status(201).json(userId)
-                })
-            } catch (error) {
-                if (error instanceof TypeError || error instanceof ContentError){
-                    logger.warn(error.message)
-
-                    res.status(406).json({ error: error.constructor.name, message: error.message })
-                } else {
-                    logger.warn(error.message)
-
-                    res.status(500).json({ error: error.constructor.name, message: error.message })
-                }
-            }
-        })
-
-        api.patch('/users/:userId', (req, res) => {
-            try {
-                const { userId } = req.params
-
-                logic.logoutUser(userId.toString(), (error, userId) => {
-                    if (error) {
-                        if (error instanceof SystemError){
-                            logger.error(error.message)
-
-                            res.status(500).json({ error: error.constructor.name, message: error.message })
-                        } else if (error instanceof NotFoundError){
-                            logger.warn(error.message)
-
-                            res.status(404).json({ error: error.constructor.name, message: error.message })
-                        } else if (error instanceof StatusError){
-                            logger.warn(error.message)
-
-                            res.status(406).json({ error: error.constructor.name, message: error.message })
-                        }
-                        return
-                    }
-                    res.status(200).json(userId)
-                })
+                    })
             } catch (error) {
                 if (error instanceof TypeError || error instanceof ContentError){
                     logger.warn(error.message)
@@ -150,12 +113,17 @@ client.connect()
 
         api.get('/users/:targetUserId', (req, res) => {
             try {
-                const { authorization: userId } = req.headers
+                const { authorization } = req.headers
+
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, 'Isdigram is just an Instagram rip-off')
 
                 const { targetUserId } = req.params
 
-                logic.retrieveUser(userId, targetUserId, (error, user) => {
-                    if (error) {
+                logic.retrieveUser(userId as string, targetUserId)
+                    .then(user => res.json(user))
+                    .catch(error => {
                         if (error instanceof SystemError) {
                             logger.error(error.message)
 
@@ -165,10 +133,7 @@ client.connect()
 
                             res.status(404).json({ error: error.constructor.name, message: error.message })
                         }
-                        return
-                    }
-                    res.json(user)
-                })
+                    })
             } catch (error) {
                 if (error instanceof TypeError || error instanceof ContentError){
                     logger.warn(error.message)
@@ -184,37 +149,67 @@ client.connect()
 
         api.post('/posts', jsonBodyParser, (req, res) => {
             try {
-                const { authorization: userId } = req.headers
+                const { authorization } = req.headers
+
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, 'Isdigram is just an Instagram rip-off')
 
                 const { image, comment } = req.body
 
-                logic.createPost(userId, image, comment, error => {
-                    if (error) {
-                        res.status(400).json({ error: error.constructor.name, message: error.message })
+                logic.createPost(userId as string, image, comment)
+                    .then(() => res.status(201).send())
+                    .catch(error => {
+                        if (error instanceof SystemError){
+                            logger.error(error.message)
 
-                        return
-                    }
-                    res.status(201).send()
-                })
+                            res.status(500).json({ error: error.constructor.name, message: error.message })
+                        } else if (error instanceof NotFoundError) {
+                            logger.warn(error.message)
+
+                            res.status(404).json({ error: error.constructor.name, message: error.message })
+                        }
+                    })
             } catch (error) {
-                res.status(400).json({ error: error.constructor.name, message: error.message })
+                if (error instanceof TypeError || error instanceof ContentError) {
+                    logger.warn(error.message)
+
+                    res.status(406).json({ error: error.constructor.name, message: error.message })
+                }
             }
         })
 
-        api.get('/posts', (req, res) => {
+        api.get('/posts', jsonBodyParser, (req, res) => {
             try {
-                const { authorization: userId } = req.headers
+                const { authorization } = req.headers
 
-                logic.retrievePosts(userId, (error, posts) => {
-                    if (error) {
-                        res.status(400).json({ error: error.constructor.name, message: error.message })
+                const token = authorization.slice(7)
 
-                        return
-                    }
-                    req.json(posts)
-                })
+                const { sub: userId } = jwt.verify(token, 'Isdigram is just an Instagram rip-off')
+
+                logic.retrievePosts(userId as string) 
+                    .then(posts => res.json(posts))
+                    .catch(error => {
+                        if (error instanceof SystemError) {
+                            logger.error(error.message)
+
+                            res.status(500).json({ error: error.constructor, message: error.message })
+                        } else if (error instanceof NotFoundError) {
+                            logger.error(error.message)
+
+                            res.status(404).json({ error: error.constructor, message: error.message })
+                        }
+                    })
             } catch (error) {
-                res.status(400).json({ error: error.constructor.name, message: error.message })
+                if (error instanceof TypeError || error instanceof ContentError) {
+                    logger.error(error.message)
+
+                    res.status(406).json({ error: error.constructor.name, message: error.message })
+                } else {
+                    logger.error(error.message)
+                    
+                    res.status(404).json({ error: error.constructor.name, message: error.message })
+                }
             }
         })
         api.listen(8000, () => logger.info('API listening on port 8000'))

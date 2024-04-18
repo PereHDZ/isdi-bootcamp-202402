@@ -1,33 +1,31 @@
-import { validate, errors } from 'com'
+import { errors } from 'com'
 
-function retrieveUser(callback){
-    //validation
-    validate.callback(callback)
+function retrieveUser(){
+    const [, payloadB64] = sessionStorage.token.split('.')
 
-    //logic
-    var xhr = new XMLHttpRequest
+    const payloadJSON = atob(payloadB64)
 
-    xhr.onload = () => {
-        const { status, responseText: json } = xhr
+    const payload = JSON.parse(payloadJSON)
 
-        if (status == 200){
-            const user = JSON.parse(json)
+    const { sub: userId } = payload
 
-            callback(null, user)
-
-            return
+    return fetch(`http://localhost:8000/users/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${sessionStorage.token}`
         }
-        const { error, message } = JSON.parse(json)
+    })
+        .then(res => {
+            if (res.status === 200) return res.json()
 
-        const constructor = errors[error]
+            return res.json()
+                .then(body => {
+                    const { error, message } = body
 
-        callback(new constructor(message))
-    }
-    xhr.open('GET', `http://localhost:8000/users/${sessionStorage.userId}`)
+                    const constructor = errors[error]
 
-    xhr.setRequestHeader('Authorization', sessionStorage.userId)
-
-    xhr.send()
+                    throw new constructor(message)
+                })
+        })
 }
 
 export default retrieveUser

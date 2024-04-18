@@ -10,16 +10,13 @@ function CreatePost(props) {
         const comment = form.comment.value
 
         try {
-            logic.createPost(image, comment, error => {
-                if (error) {
-                    alert(error.message)
+            logic.createPost(image, comment)
+                .then(() => {
+                    form.reset()
 
-                    return
-                }
-                form.reset()
-
-                props.onPostCreated()
-            })            
+                    props.onPostCreated()
+                })
+                .catch(alert)            
         } catch (error) {
             alert(error.message)
         }

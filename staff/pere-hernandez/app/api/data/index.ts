@@ -47,7 +47,7 @@ const post = new Schema({
     comment: {
         type: String,
     },
-    deta: {
+    date: {
         type: Date,
         required: true
     }

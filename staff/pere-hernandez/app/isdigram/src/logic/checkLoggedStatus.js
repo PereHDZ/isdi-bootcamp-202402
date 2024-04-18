@@ -1,5 +1,5 @@
-function checkLoggedStatus() {
-    return !!sessionStorage.userId
+function checkLoggedStatus () {
+    return !!sessionStorage.token
 }
 
 export default checkLoggedStatus

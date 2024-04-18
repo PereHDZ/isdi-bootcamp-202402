@@ -24,7 +24,7 @@ function App() {
     {view === 'landing' && <Landing onRegisterClick={handleRegisterClik} onLoginClick={handleLoginClick}></Landing>}
     {view === 'register' && <Register onLoginClick={handleLoginClick} onRegistered={handleLoginClick}></Register>}
     {view === 'login' && <Login onRegisterClick={handleRegisterClik} onUserLoggedIn={handleUserLoggedIn}></Login>}
-    {view === 'home' && <Home></Home>}
+    {view === 'home' && <Home onLogout={handleLoginClick}></Home>}
   </>
 }
 

@@ -14,20 +14,21 @@ function Home (props){
 
     useEffect(() => {
         try {
-            logic.retrieveUser((error, user) => {
-                if (error) {
-                    alert(error.message)
-
-                    return
-                }
-                setUser(user)
-            })
+            logic.retrieveUser()
+                .then(setUser)
+                .catch(alert)
         } catch (error) {
-            alert(error.message)
+            alert(error)
         }
     }, [])
 
     const clearView = () => setView(null)
+
+    const handleLogoutClick = () => {
+        logic.logoutUser()
+
+        props.onLogout()
+    }
 
     const handleCreatePostClick = () => setView('create-post')
 
@@ -46,12 +47,12 @@ function Home (props){
                 <h5 id="logo-title">Isdigram.</h5>
             </div>
 
-            <button id="logout">Logout</button>
+            <button id="logout" onClick={handleLogoutClick}>Logout</button>
         </header>
 
         {user && <h1 id="greeting">Hello, {user.username}</h1>}
 
-        {/*<PostList></PostList>*/}
+        {<PostList></PostList>}
 
         {view === 'create-post' && <CreatePost onCancelClick = {handleCancelCreatePostClick} onPostCreated = {handlePostCreated}></CreatePost>}
 

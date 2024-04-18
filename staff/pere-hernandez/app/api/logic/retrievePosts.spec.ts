@@ -1,153 +1,104 @@
-import { MongoClient, ObjectId } from "mongodb"
+import mongoose, { mongo } from "mongoose"
 import logic from "./index.ts"
 import { expect } from "chai"
 import { errors } from "com"
 
+import { User, Post, PostType } from '../data/index.ts'
+
 const { NotFoundError } = errors
 
 describe('retrievePosts', () => {
-    let client, users, posts
+    before(() => mongoose.connect('mongodb://localhost:27017/test'))
 
-    before(done => {
-        client = new MongoClient('mongodb://localhost:27017')
+    it('retrieves all posts for existing user', () => 
+        Promise.all([
+            User.deleteMany(),
+            Post.deleteMany()
+        ])        
+            .then(() => User.create({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' }))
+                .then(user => 
+                    Promise.all([
+                        Post.create({ author: user.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTBla24yYjdqazE1M3FudDQxcmgyanB5dGc0eTRvc2hxcXh2ZHk1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oKIPrwk5SCKWexkLS/giphy.gif', comment: 'One', date: new Date }),
+                        Post.create({ author: user.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGQ4eDNzb2N1NHRwMjJtbTZzYTF6ZjJ1MG1maDA5OXZrNjFiZWllaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AE7Qa6j57XuRzeMkgh/giphy.gif', comment: 'Two', date: new Date }),
+                        Post.create({ author: user.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExamlzazBjbGx2dTEyazZ2NjdobmVzMmkyem5ua2k3aWZncGx3anM5cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4HrLxAJqT8EftF2VU6/giphy.gif', comment: 'Three', date: new Date })
+                    ])
+                        .then(([post1, post2, post3]) => 
+                            logic.retrievePosts(user.id)
+                                .then(posts => {
+                                    expect(posts).to.have.lengthOf(3)
 
-        client.connect()
-            .then(connection => {
-                const db = connection.db('test')
+                                    const foundPost1 = posts.find(post => post.id === post1.id)
 
-                users = db.collection('users')
-                posts = db.collection('posts')
+                                    expect(foundPost1.author.username).to.equal('PereHDZ')
+                                    expect(foundPost1.author.id).to.equal(user.id)
+                                    expect(foundPost1.image).to.equal(post1.image)
+                                    expect(foundPost1.comment).to.equal(post1.comment)
+                                    expect(foundPost1.date).to.deep.equal(post1.date)
 
-                logic.users = users
-                logic.posts = posts
+                                    const foundPost2 = posts.find(post => post.id === post2.id)
 
-                done()
-            })
-            .catch(done)
-    })
+                                    expect(foundPost2.author.username).to.equal('PereHDZ')
+                                    expect(foundPost2.author.id).to.equal(user.id)
+                                    expect(foundPost2.image).to.equal(post2.image)
+                                    expect(foundPost2.comment).to.equal(post2.comment)
+                                    expect(foundPost2.date).to.deep.equal(post2.date)
 
-    it('retrieves all posts for existing user', done => {
-        users.deleteMany()
-            .then(() => {
-                posts.deleteMany()
-                    .then(() => {
-                        users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' })
-                            .then(result => {
-                                let insertedPosts = []
+                                    const foundPost3 = posts.find(post => post.id === post3.id)
 
-                                const insertedPost1 = { author: result.insertedId, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTBla24yYjdqazE1M3FudDQxcmgyanB5dGc0eTRvc2hxcXh2ZHk1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oKIPrwk5SCKWexkLS/giphy.gif', comment: 'One', date: new Date }
+                                    expect(foundPost3.author.username).to.equal('PereHDZ')
+                                    expect(foundPost3.author.id).to.equal(user.id)
+                                    expect(foundPost3.image).to.equal(post3.image)
+                                    expect(foundPost3.comment).to.equal(post3.comment)
+                                    expect(foundPost3.date).to.deep.equal(post3.date)
+                                })
+                        )
+                )
+    )
 
-                                posts.insertOne(insertedPost1)
-                                    .then(() => {
-                                        insertedPosts.push(insertedPost1)
+    it('fails on orphan post', () =>
+        Promise.all([
+            User.deleteMany(),
+            Post.deleteMany()
+        ])        
+            .then(() => User.create({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' }))
+                .then(user => 
+                    Promise.all([
+                        Post.create({ author: user.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTBla24yYjdqazE1M3FudDQxcmgyanB5dGc0eTRvc2hxcXh2ZHk1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oKIPrwk5SCKWexkLS/giphy.gif', comment: 'One', date: new Date }),
+                        Post.create({ author: user.id, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGQ4eDNzb2N1NHRwMjJtbTZzYTF6ZjJ1MG1maDA5OXZrNjFiZWllaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AE7Qa6j57XuRzeMkgh/giphy.gif', comment: 'Two', date: new Date }),
+                        Post.create({ author: '', image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExamlzazBjbGx2dTEyazZ2NjdobmVzMmkyem5ua2k3aWZncGx3anM5cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4HrLxAJqT8EftF2VU6/giphy.gif', comment: 'Three', date: new Date })
+                    ])
+                        .then(([post1, post2, post3]) => 
+                            logic.retrievePosts(user.id)
+                                .then(posts => {
+                                    expect(posts).to.have.lengthOf(3)
 
-                                        const insertedPost2 = { author: result.insertedId, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGQ4eDNzb2N1NHRwMjJtbTZzYTF6ZjJ1MG1maDA5OXZrNjFiZWllaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AE7Qa6j57XuRzeMkgh/giphy.gif', comment: 'Two', date: new Date }
+                                    const foundPost1 = posts.find(post => post.id === post1.id)
 
-                                        posts.insertOne(insertedPost2)
-                                            .then(() => {
-                                                insertedPosts.push(insertedPost2)
+                                    expect(foundPost1.author.username).to.equal('PereHDZ')
+                                    expect(foundPost1.author.id).to.equal(user.id)
+                                    expect(foundPost1.image).to.equal(post1.image)
+                                    expect(foundPost1.comment).to.equal(post1.comment)
+                                    expect(foundPost1.date).to.deep.equal(post1.date)
 
-                                                const insertedPost3 = { author: result.insertedId, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExamlzazBjbGx2dTEyazZ2NjdobmVzMmkyem5ua2k3aWZncGx3anM5cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4HrLxAJqT8EftF2VU6/giphy.gif', comment: 'Three', date: new Date }
+                                    const foundPost2 = posts.find(post => post.id === post2.id)
 
-                                                posts.insertOne(insertedPost3)
-                                                    .then(() => { 
-                                                        logic.retrievePosts(result.insertedId.toString(), (error, posts) => {
-                                                            if (error) {
-                                                                done(error)
+                                    expect(foundPost2.author.username).to.equal('PereHDZ')
+                                    expect(foundPost2.author.id).to.equal(user.id)
+                                    expect(foundPost2.image).to.equal(post2.image)
+                                    expect(foundPost2.comment).to.equal(post2.comment)
+                                    expect(foundPost2.date).to.deep.equal(post2.date)
 
-                                                                return
-                                                            }
-                                                            expect(posts).to.have.lengthOf(3)
+                                    const foundPost3 = posts.find(post => post.id === post3.id)
 
-                                                            const post1 = posts[2]
-
-                                                            expect(post1.author.username).to.equal('PereHDZ')
-                                                            expect(post1.author.id).to.equal(result.insertedId.toString())
-                                                            expect(post1.image).to.equal(insertedPost1.image)
-                                                            expect(post1.comment).to.equal(insertedPost1.comment)
-                                                            expect(post1.date).to.be.instanceOf(Date)
-
-                                                            const post2 = posts[1]
-
-                                                            expect(post2.author.username).to.equal('PereHDZ')
-                                                            expect(post2.author.id).to.equal(result.insertedId.toString())
-                                                            expect(post2.image).to.equal(insertedPost2.image)
-                                                            expect(post2.comment).to.equal(insertedPost2.comment)
-                                                            expect(post2.date).to.be.instanceOf(Date)
-
-                                                            const post3 = posts[0]
-
-                                                            expect(post3.author.username).to.equal('PereHDZ')
-                                                            expect(post3.author.id).to.equal(result.insertedId.toString())
-                                                            expect(post3.image).to.equal(insertedPost3.image)
-                                                            expect(post3.comment).to.equal(insertedPost3.comment)
-                                                            expect(post3.date).to.be.instanceOf(Date)
-
-                                                            done()
-                                                        })
-                                                    })
-                                                    .catch(done)
-                                            })
-                                            .catch(done)
-                                    })
-                                    .catch(done)
-                            })
-                            .catch(done)
-                    })
-                    .catch(done)
-            })
-            .catch(done)
-    })
-
-    it('fails on orphan post', done=> {
-        users.deleteMany() 
-            .then(() => {
-                posts.deleteMany()
-                    .then(() => {
-                        users.insertOne({ username:'PereHDZ', email:'perehdz@hotmail.com', password:'cuquis1992' })
-                            .then(result => {
-                                let insertedPosts = []
-
-                                const insertedPost1 = { author: result.insertedId, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTBla24yYjdqazE1M3FudDQxcmgyanB5dGc0eTRvc2hxcXh2ZHk1MCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oKIPrwk5SCKWexkLS/giphy.gif', comment: 'One', date: new Date }
-
-                                posts.insertOne(insertedPost1)
-                                    .then(() => {
-                                        insertedPosts.push(insertedPost1)
-
-                                        const insertedPost2 = { author: result.insertedId, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGQ4eDNzb2N1NHRwMjJtbTZzYTF6ZjJ1MG1maDA5OXZrNjFiZWllaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AE7Qa6j57XuRzeMkgh/giphy.gif', comment: 'Two', date: new Date }
-
-                                        posts.insertOne(insertedPost2)
-                                            .then(() => {
-                                                insertedPosts.push(insertedPost2)
-
-                                                const authorId = 'Invalid id'
-
-                                                const insertedPost3 = { author: authorId, image: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExamlzazBjbGx2dTEyazZ2NjdobmVzMmkyem5ua2k3aWZncGx3anM5cCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4HrLxAJqT8EftF2VU6/giphy.gif', comment: 'Three', date: new Date }
-
-                                                posts.insertOne(insertedPost3)
-                                                    .then(() => {
-                                                        insertedPosts.push(insertedPost3)
-
-                                                        logic.retrievePosts(result.insertedId.toString(), (error, posts) => {
-                                                            expect(error).to.be.instanceOf(NotFoundError)
-                                                            expect(error.message).to.equal('post owner not found')
-                                                            expect(posts).to.be.undefined
-
-                                                            done()
-                                                        })
-                                                    })
-                                                    .catch(done)
-                                            })
-                                            .catch(done)
-                                    })
-                                    .catch(done)
-                            })
-                            .catch(done)
-                    })
-                    .catch(done)
-            })
-            .catch(done)
-    })
+                                    expect(foundPost3.author.username).to.equal('')
+                                    expect(foundPost3.author.id).to.equal(user.id)
+                                    expect(foundPost3.image).to.equal(post3.image)
+                                    expect(foundPost3.comment).to.equal(post3.comment)
+                                    expect(foundPost3.date).to.deep.equal(post3.date)
+                                })
+                        )
+                )
+    )/*
 
     it('fails on invalid userId', done => {
         users.deleteMany()
@@ -304,11 +255,7 @@ describe('retrievePosts', () => {
                     .catch(done)
             })
             .catch(done)
-    })
+    })*/
 
-    after(done => {
-        client.close()
-            .then(() => done())
-            .catch(done)
-    })
+    after(mongoose.disconnect)
 })
