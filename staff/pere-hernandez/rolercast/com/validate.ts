@@ -1,0 +1,23 @@
+import { ContentError } from './errors'
+
+const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const PASSWORD_REGEX = /^(?=.*[0-9])(?=.*[A-Za-z])[A-Za-z0-9]+$/
+
+const validate = {
+    text(text, explain, checkEmptySpaceInside?){
+        if (typeof text !== 'string') throw new TypeError(explain + ' ' + text + ' is not a string')
+        if (!text.trim().length) throw new ContentError (explain + ' >' + text + '< is empty or blank')
+        if (checkEmptySpaceInside)
+            if (text.includes(' ')) throw new ContentError(explain + ' ' + text + ' has empty spaces')
+    },
+
+    mail(email, explain = 'email'){
+        if (!EMAIL_REGEX.test(email)) throw new ContentError(`${explain} ${email} is not an email`)
+    },
+
+    password(password, explain = 'password'){
+        if (!PASSWORD_REGEX.test(password)) throw new ContentError(`${explain} is not an acceptable password`)
+    }
+}
+
+export default validate
