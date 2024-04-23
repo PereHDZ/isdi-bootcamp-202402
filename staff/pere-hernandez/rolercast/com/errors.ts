@@ -18,13 +18,15 @@ const SystemError = buildErrorClass('SystemError')
 const DuplicityError = buildErrorClass('DuplicityError')
 const CredentialsError = buildErrorClass('CredentialsError')
 const NotFoundError = buildErrorClass('NotFoundError')
+const UnauthorizedError  = buildErrorClass('UnauthorizedError')
 
 const errors = {
     ContentError,
     SystemError,
     DuplicityError,
     CredentialsError,
-    NotFoundError
+    NotFoundError,
+    UnauthorizedError
 }
 
 export {
@@ -32,7 +34,8 @@ export {
     SystemError,
     DuplicityError,
     CredentialsError,
-    NotFoundError
+    NotFoundError,
+    UnauthorizedError
 }
 
 export default errors

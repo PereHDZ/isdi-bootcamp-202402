@@ -31,10 +31,31 @@ const user = new Schema({
     }
 })
 
+type RaceType = {
+    name: string,
+    description: string
+}
+
+const race = new Schema ({
+    name: {
+        type: String, 
+        required: true,
+        unique: true
+    },
+    description: {
+        type: String, 
+        required: true,
+        unique: true
+    }
+})
+
 const User = model<UserType>('User', user)
+const Race = model<RaceType>('Race', race)
 
 export {
     UserType,
-    User
+    User,
+    RaceType,
+    Race
 }
 

@@ -9,11 +9,14 @@ Easily create your own D&D character
 ## Functional
 
 - List pre-generated characters
-- Create characters
-- Export your character sheet in PDF format
+- Choose pre-generated character
+- Create a character
+- Edit a character
+- Delete a character
+- Export a character sheet in PDF format
 - Publish characters
 - Find published characters
-- Add friends to your friendlist
+- Request friendship
 - Share characters with friends
 
 Future versions
@@ -56,47 +59,65 @@ User
 - password (stirng, required)
 - avatar (png, optional)
 
+Stats
+- strength (number, optional)
+- dexterity (number, optional)
+- constitution (number, optional)
+- intelligence (number, optional)
+- wisdom (number, optional)
+- charisma (number, optional)
+
+Skills
+- acrobatics (number, optional)
+- animal handling (number, optional)
+- arcana (number, optional)
+- athletics (number, optional)
+- deception (number, optional)
+- history (number, optional)
+- insight (number, optional)
+- intimidation (number, optional)
+- investigation (number, optional)
+- medicine (number, optional)
+- nature (number, optional)
+- perception (number, optional)
+- performance (number, optional)
+- persuasion (number, optional)
+- religion (number, optional)
+- sleight of Hand (number, optional)
+- stealth (number, optional)
+- survival (number, optional)
+
+
 Class
+- id (required)
 - name (string, required)
-- bonus (Array[integer], required)
+- description (string, required)
+- stats (Stats)
+- skills (Skills)
+- inventory ([Equipment.id], required)
+
+Equipment 
+- id (required)
+- name (string, required)
+- type (string, required, enum: ...)
+- stats (Stats)
+- skills (Skills)
 
 Race
+- id (required)
 - name (string, required)
-- bonus (Array[integer], required)
+- description (string, required)
+- icon (string, required)
+- stats (Stats)
+- skills (Skills)
 
 Character
 - id (required)
-- class (Class, required)
+- class (Class.id, required)
 - name (string, optional)
-- creator (id, required)
-- race (Race, required)
-- stats ({
-    strength: (integer, required),
-    dexterity: (integer, required),
-    constitution: (integer, required),
-    intelligence: (integer, required),
-    wisdom: (integer, required),
-    charisma: (integer, required)
-})
-- skills ({
-    acrobatics (integer, required)
-    animal handling (integer, required)
-    arcana (integer, required)
-    athletics (integer, required)
-    deception (integer, required)
-    history (integer, required)
-    insight (integer, required)
-    intimidation (integer, required)
-    investigation (integer, required)
-    medicine (integer, required)
-    nature (integer, required)
-    perception (integer, required)
-    performance (integer, required)
-    persuasion (integer, required)
-    religion (integer, required)
-    sleight of Hand (integer, required)
-    stealth (integer, required)
-    survival (integer, required)
-})
-- inventory
-- public (boolean, required)
+- creator (User.id, required)
+- race (Race.id, required)
+- visibility (string, required, enum public|private|shared)
+- stats (Stats)
+- skills (Skills)
+- inventory ([Equipment.id])

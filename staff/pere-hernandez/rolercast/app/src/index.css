@@ -1,5 +1,5 @@
 :root {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   color: #2B1203;
   margin: 0;
   padding: 0;
@@ -23,7 +23,7 @@ main {
 
 h1{
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   color: #DD5D0E;
 }
@@ -62,14 +62,28 @@ a {
   color: #2AA6C7;
 }
 
+header{
+  background-color: #2B1203;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 84px;
+  width: 95%;
+  padding: 0 3vw 0 3vw;
+}
+
 .logo-div {
   display: flex;
-  flex-direction: column;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 200px;
   height: 153px;
+}
+
+.header-logo-div {
+  display: flex;
+  align-items: center;
 }
 
 .logo {
@@ -101,3 +115,90 @@ a {
   height: 206px;
 }
 
+.transparent-button {
+  background-color: transparent;
+  border: none;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+}
+
+.header-logo {
+  height: 30px;
+  width: 34.65px;
+  margin-left: 3vw;
+}
+
+.logout-button {
+  height: 30px;
+  background-color: #DD5D0E;
+  color: white;
+  border: 0;
+}
+
+.footer-button{
+  display: flex;
+  align-items: center;
+  background-color: #2AA6C7;
+  border: 0;
+  border-radius: 5px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+footer{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2B1203;
+  width: 100%;
+  height: 100px;
+  top: 90vh;
+}
+
+.home-main{
+  display: block;
+}
+
+.home-title {
+  margin: 3vh 8vw 3vh 3vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.select-atribute-article {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 215px;
+  height: 75px;
+  padding-left: 16px;
+}
+
+.select-section {
+  box-sizing: border-box;
+  display: flex;
+  width: 430px;
+  flex-wrap: wrap;
+}
+
+.select-atribute-button {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center ;
+  background-color: #2B1203;
+  border-radius: 100%;
+  border: 4px solid #DD5D0E;
+  margin-right: 10px;
+}
+
+.select-button-icon {
+  width: 55px;
+  height: 55px;
+}
