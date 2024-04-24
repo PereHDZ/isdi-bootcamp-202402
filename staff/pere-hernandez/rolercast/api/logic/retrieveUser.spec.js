@@ -41,7 +41,7 @@ describe('retrieveUser', () => {
                 )
     )
 
-    it('fails on non-existing user', () => 
+    it('fails on non-existing target user', () => 
         User.deleteMany()
             .then(() => User.create({ username: 'PereHDZ', email: 'pere@hdz.com', password: 'cuquis1992', avatar: null }))
                 .then(user => 

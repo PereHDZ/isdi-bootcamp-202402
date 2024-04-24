@@ -4,14 +4,12 @@ import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 
-import SelectAtribute from './SelectAtribute'
+import SelectRaceComponent from './SelectRaceComponent'
 
 function RaceList({ stamp }){
     const [races, setRaces] = useState([])
 
     const loadRaces = () => {
-        logger.debug('RaceList -> loadRaces')
-
         try {
             logic.retrieveRaces()
                 .then(setRaces)
@@ -26,7 +24,7 @@ function RaceList({ stamp }){
     }, [stamp])
 
     return <section className='select-section'>
-        {races.map(race => <SelectAtribute key={race.name} item={race}/>)}
+        {races.map(race => <SelectRaceComponent key={race.name} item={race}/>)}
     </section>
 }
 

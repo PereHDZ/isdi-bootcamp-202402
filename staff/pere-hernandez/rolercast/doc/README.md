@@ -87,7 +87,6 @@ Skills
 - stealth (number, optional)
 - survival (number, optional)
 
-
 Class
 - id (required)
 - name (string, required)

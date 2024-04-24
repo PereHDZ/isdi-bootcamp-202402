@@ -1,7 +1,9 @@
 import registerUser from './registerUser.ts'
 import authenticateUser from './authenticateUser.ts'
 import retrieveUser from './retrieveUser.ts'
+
 import retrieveRaces from './retrieveRaces.ts'
+import retrieveRace from './retrieveRace.ts'
 
 const logic = {
     users: null,
@@ -10,7 +12,9 @@ const logic = {
     registerUser,
     authenticateUser,
     retrieveUser,
-    retrieveRaces
+
+    retrieveRaces,
+    retrieveRace
 }
 
 export default logic

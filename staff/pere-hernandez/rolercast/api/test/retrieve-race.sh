@@ -1,0 +1,1 @@
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjI1NWY5MWM0OWYyZjBiOGYyY2VkOTkiLCJpYXQiOjE3MTM5Nzk0NDIsImV4cCI6MTcxMzk4OTQ0Mn0.Rr90Y3Fh4NTYvjbS8c7NhojTyy92gN1twp305ohZ5pw" http://localhost:9000/races/6627d925aed76901fc7bf228 -v 

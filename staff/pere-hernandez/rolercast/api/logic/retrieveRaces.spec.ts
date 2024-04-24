@@ -25,7 +25,7 @@ describe('retrieveRaces', () => {
                         Promise.all([
                             Race.create({ name: 'Human', description: 'I am a Human'}),
                             Race.create({ name: 'Elf', description: 'I am an Elf'}),
-                            Race.create({ name: 'Dwarf', description: 'I am a Dwarf'}),
+                            Race.create({ name: 'Dwarf', description: 'I am a Dwarf'})
                         ])
                             .then(([race1, race2, race3]) => 
                                 logic.retrieveRaces(user.id)

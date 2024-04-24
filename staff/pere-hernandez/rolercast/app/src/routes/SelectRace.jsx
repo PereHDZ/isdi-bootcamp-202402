@@ -1,9 +1,8 @@
-import logic from '../logic'
 import { useState, useEffect } from 'react'
 
 import RaceList from '../components/RaceList'
 
-function CreateChatacterRoute(){
+function SelectRace(){
     const [races, setRaces] = useState(null)
 
     return <section>
@@ -13,4 +12,4 @@ function CreateChatacterRoute(){
     </section>
 }
 
-export default CreateChatacterRoute
+export default SelectRace
