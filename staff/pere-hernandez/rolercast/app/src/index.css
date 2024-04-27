@@ -166,9 +166,17 @@ footer{
 }
 
 .home-title {
-  margin: 3vh 8vw 3vh 3vw;
+  margin: 0 8vw 3vh 3vw;
   display: flex;
   justify-content: space-between;
+  color: #DD5D0E;
+  font-size: 30px;
+}
+
+.return {
+  display: flex;
+  justify-content: space-between;
+  color: #DD5D0E;
 }
 
 .select-atribute-article {
@@ -209,7 +217,7 @@ footer{
   display: flex;
   align-items: center;
   margin-left: 5vw;
-  margin: 3vh 8vw 3vh 3vw;
+  margin: 0 8vw 0 3vw;
 }
 
 .display-info-div{
@@ -221,8 +229,9 @@ footer{
   padding: 20px;
 }
 
-.padding-bottom {
-  padding-bottom: 20px;
+.atribute-title {
+  margin-bottom: 20px;
+  margin-top: 3vh;
 }
 
 .display-info-p {
@@ -251,5 +260,9 @@ footer{
   justify-content: center;
   align-items: center;
   height: 100px;
-  margin-top: 50px;
+  margin-top: 20px;
+}
+
+.full-width {
+  width: 100%;
 }

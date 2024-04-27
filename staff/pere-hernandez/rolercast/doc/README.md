@@ -2,7 +2,7 @@
 
 ## Intro
 
-Easily create your own D&D character
+Easily create your own Baldur's Gate 3 character
 
 ![](https://media.giphy.com/media/LmTQNn97DI0SfSu1Ws/giphy.gif?cid=790b7611v347symzgmqfnl8vzky4fqw8c6k9i5zk94sa9ad0&ep=v1_gifs_search&rid=giphy.gif&ct=g)
 
@@ -14,13 +14,15 @@ Easily create your own D&D character
 - Edit a character
 - Delete a character
 - Export a character sheet in PDF format
+
+v.0.1
 - Publish characters
 - Find published characters
 - Request friendship
 - Share characters with friends
+- Add Level Progression
 
 Future versions
-
 - Implement more role-playing games other than D&D
 - Implement a campaign creation & management tool
 - Implement character dynamics tool
@@ -59,13 +61,44 @@ User
 - password (stirng, required)
 - avatar (png, optional)
 
-Stats
-- strength (number, optional)
-- dexterity (number, optional)
-- constitution (number, optional)
-- intelligence (number, optional)
-- wisdom (number, optional)
-- charisma (number, optional)
+Weapons
+- daggers(number, optional)
+- sickles (number, optional)
+- handAxes (number, optional)
+- clubs (number, optional)
+- greatClubs(numbers, optional)
+- maces (number, optional)
+- lightHammers (number, optional)
+- quarterstaves (number, optional)
+- spears (number, optional)
+- javelins (number, optional)
+- scimitars (number, optional)
+- shortSwords (number, optional)
+- longSwords (number, optional)
+- flails (number, optional)
+- morningstar (number, optional)
+- rapiers (number, optional)
+- warPicks (number, optional)
+- battleAxes (number, optional)
+- warHammers (number, optional)
+- glaives (number, optional)
+- greatAxes (number, optional)
+- greatSwords (number, optional)
+- halberds (number, optional)
+- mauls (number, optional)
+- pikes (number, optional)
+- lightCrossbows (number, optional)
+- shortbows (number, optional)
+- tridents (number, optional)
+- handCrossbows (number, optional)
+- heavyCrossbows (number, optional)
+- longbows (number, optional)
+
+Armors
+- lightArmour (number, optional)
+- mediumArmour (number, optional)
+- heavyArmour (number, optional)
+- shields (number, optional)
 
 Skills
 - acrobatics (number, optional)
@@ -87,36 +120,48 @@ Skills
 - stealth (number, optional)
 - survival (number, optional)
 
-Class
-- id (required)
-- name (string, required)
-- description (string, required)
-- stats (Stats)
-- skills (Skills)
-- inventory ([Equipment.id], required)
+Proficiencies
+- weapons (Weapons, required)
+- armors (Armors, required)
+- skills (Skills, required)
 
-Equipment 
-- id (required)
-- name (string, required)
-- type (string, required, enum: ...)
-- stats (Stats)
-- skills (Skills)
+Features
+- humanVersatility (HumanVersatility, optional)
+- feyAncestry (FeyAncestry, optional)
+- darkvision (Darkvision, optional)
+- ...
 
 Race
 - id (required)
 - name (string, required)
 - description (string, required)
-- icon (string, required)
-- stats (Stats)
-- skills (Skills)
+- speed (number, optional)
+- features (Features, optional)
+- proficiencies (Proficencies, optional)
+- parent (Race.id, optional)
+
+Class (WIP)
+
+Background
+- id (required)
+- name (string, required)
+- description (string, required)
+- ([Skills, Skills], required)
 
 Character
 - id (required)
-- class (Class.id, required)
-- name (string, optional)
 - creator (User.id, required)
 - race (Race.id, required)
-- visibility (string, required, enum public|private|shared)
+- class (Class.id, required)
+- name (string, optional)
 - stats (Stats)
-- skills (Skills)
-- inventory ([Equipment.id])
+- proficiencies (Proficencies, optional)
+- carryingCapacity (number, required)
+
+Stats
+- strength (number, optional)
+- dexterity (number, optional)
+- constitution (number, optional)
+- intelligence (number, optional)
+- wisdom (number, optional)
+- charisma (number, optional)

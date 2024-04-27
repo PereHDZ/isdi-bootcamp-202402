@@ -1,8 +1,6 @@
 import { useRaceId } from "../pages/Home"
 import { useState, useEffect } from "react"
 
-import { useNavigate } from "react-router-dom"
-
 import logic from "../logic"
 
 function ConfirmRace({ onReturnClick }){
@@ -10,9 +8,13 @@ function ConfirmRace({ onReturnClick }){
 
     const {raceId} = useRaceId()
 
-    const navigate = useNavigate()
-
     useEffect(() => {
+            /*if (!(raceId)) {
+            onReturnClick()
+
+            return
+        } */
+        
         try {
             logic.retrieveRace(raceId)
                 .then(setRace)
@@ -33,10 +35,10 @@ function ConfirmRace({ onReturnClick }){
             <button className="transparent-button" onClick={handleReturnClick}>
                 <img src="../../public/icons/return.png" className="icon"></img>
             </button>
-            <h1 className="return">RETURN</h1>
+            <h3 className="return">RETURN</h3>
         </div>
 
-        <div className="select-atribute-article padding-bottom">
+        <div className="select-atribute-article atribute-title full-width">
             <div className="select-atribute-button">
                 <img src={`../../public/gallery/Race_Icons/Race_${race && race.name}.png`} className="select-button-icon" />
             </div>
@@ -46,6 +48,8 @@ function ConfirmRace({ onReturnClick }){
 
         <div className="display-info-div">
             <p className="display-info-p">{race && race.description}</p>
+            
+            <h3>RACIAL FEATURES</h3>
         </div>
 
         <div className="select-button-div">

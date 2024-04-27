@@ -17,8 +17,6 @@ function App() {
 
     const handleUserLoggedOut = () => navigate('/login')
 
-    logger.debug('App -> render')
-
     return <>
         <Routes>
             <Route path="/login" element={logic.isUserLoggedIn() ? <Navigate to={"/"}/> : <Login onRegisterClick={handleRegisterClick} onUserLoggedIn={handleLoggedUser}/>}/>

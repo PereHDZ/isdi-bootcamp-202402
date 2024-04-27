@@ -18,7 +18,7 @@ function Home({ onUserLoggedOut }) {
 
     useEffect(() => {
         if (raceId !== null) navigate('/confirmRace')
-    }, [raceId, navigate])
+    }, [raceId])
 
     const handleLogoutClick = () => {
         try {
@@ -37,6 +37,8 @@ function Home({ onUserLoggedOut }) {
 
         navigate('/selectRace')
     }
+
+    const handleReturnFromSelectRace = () => navigate('/*')
 
     return <>
     <RaceIdContext.Provider value={{setRaceId, raceId}}>
@@ -57,7 +59,7 @@ function Home({ onUserLoggedOut }) {
 
         <Routes>
             <Route path="/*" element={<HomeRoute onCreateClick={handleCreateClick}/>}></Route>
-            <Route path="/selectRace" element={<SelectRace/>}/>
+            <Route path="/selectRace" element={<SelectRace onReturn={handleReturnFromSelectRace}/>}/>
             <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn}/>}/>
         </Routes>
     </main>
