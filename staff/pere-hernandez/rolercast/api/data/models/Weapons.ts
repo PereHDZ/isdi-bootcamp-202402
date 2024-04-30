@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 import { WeaponsType } from '../types'
-import { weapons } from '../schemas/index'
+import { weapons } from '../schemas/index.ts'
 
 const { model } = mongoose
 

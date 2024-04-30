@@ -8,7 +8,7 @@ const duergarMagic = new Schema ({
         requierd: true
     },
     bonusesDescription: {
-        type: String,
+        type: [String],
         required: true
     },
 })

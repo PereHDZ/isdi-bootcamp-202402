@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 import CantripType from '../types/CantripType'
-import cantrip from '../schemas/cantrip'
+import cantrip from '../schemas/cantrip.ts'
 
 const { model } = mongoose
 

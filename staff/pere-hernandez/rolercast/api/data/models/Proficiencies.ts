@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 import { ProficienciesType } from '../types'
-import { proficiencies } from '../schemas/index'
+import { proficiencies } from '../schemas/index.ts'
 
 const { model } = mongoose
 

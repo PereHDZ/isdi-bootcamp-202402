@@ -6,7 +6,7 @@ const { Types: { ObjectId } } = Schema
 
 type DuergarMagicType = {
     name: string,
-    description: string,
+    description: [string],
     cantrip: ObjectId
 }
 

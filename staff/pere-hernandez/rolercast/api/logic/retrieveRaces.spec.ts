@@ -5,7 +5,7 @@ import logic from './index.ts'
 import { expect } from 'chai'
 import { errors } from 'com'
 
-import { User, Race, RaceType } from '../data/schemas/index.ts'
+import { User, Race } from '../data/models/index.ts'
 
 dotenv.config()
 

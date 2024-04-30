@@ -6,7 +6,7 @@ const { Types: { ObjectId } } = Schema
 
 type DrowMagicType = {
     name: string,
-    description: string,
+    description: [string],
     cantrip: ObjectId
 }
 

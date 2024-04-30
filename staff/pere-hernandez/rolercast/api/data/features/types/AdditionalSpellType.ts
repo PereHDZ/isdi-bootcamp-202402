@@ -6,7 +6,7 @@ const { Types: { ObjectId } } = Schema
 
 type AdditionalSpellType = {
     name: string,
-    description: string,
+    bonusesDescription: [string],
     cantrip: ObjectId
 }
 

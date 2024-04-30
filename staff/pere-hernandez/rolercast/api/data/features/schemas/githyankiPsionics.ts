@@ -15,6 +15,7 @@ const githyankiPsionics = new Schema ({
     },
     cantrip: {
         type: ObjectId,
+        ref: 'Cantrip',
         required: true
     }
 })

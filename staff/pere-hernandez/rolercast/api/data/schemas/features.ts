@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
-import { acidBreath, additionalSpell, astralKnowledge, brave, darkvision, draconicAncestry, drowMagic, duergarMagic, dwarvenResilience, dwarvenToughness, feyAncestry, fireBreath, fleetOfFoot, frostBreath, githyankiPsionics, gnomeCunning, halflingLuck, hellishResistance, highElfCantrip, humanVersatility, lightningBreath, poisonBreath, savageAttacks, stoneCamuflage, strongheartResilience, superiorDarkvision, tieflingMagic } from '../features/schemas'
-import cantrip from './cantrip'
+import { acidBreath, additionalSpell, astralKnowledge, brave, darkvision, draconicAncestry, drowMagic, duergarMagic, dwarvenResilience, dwarvenToughness, feyAncestry, fireBreath, fleetOfFoot, frostBreath, githyankiPsionics, gnomeCunning, halflingLuck, hellishResistance, highElfCantrip, humanVersatility, lightningBreath, poisonBreath, relentlessEndurance, savageAttacks, stoneCamuflage, strongheartResilience, superiorDarkvision, tieflingMagic } from '../features/schemas/index.ts'
+import cantrip from './cantrip.ts'
 
 const { Schema } = mongoose
 
@@ -120,6 +120,10 @@ const features = new Schema ({
     },
     frostBreath: {
         type: frostBreath,
+        required: false
+    },
+    relentlessEndurance: {
+        type: relentlessEndurance,
         required: false
     }
 })

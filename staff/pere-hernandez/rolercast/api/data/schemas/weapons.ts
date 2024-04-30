@@ -5,158 +5,127 @@ const { Schema } = mongoose
 const weapons = new Schema ({
     daggers: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     sickles: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     handAxes: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     clubs: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     greatClubs: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     maces: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     lightHammers: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     quarterstaves: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     spears: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     javelins: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     scimitars: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     shortSwords: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     longSwords: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     flails: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     morningstars: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     rapiers: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     warPicks: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     battleAxes: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     warHammers: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     glaives: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     greatAxes: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     greatSwords: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     halberds: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     mauls: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     pikes: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     lightCrossbows: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     shortBows: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     tridents: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     handCrossbows: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     heavyCrossbows: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     },
     longbows: {
         type: Number,
-        required: false,
-        unique: true
+        required: false
     }
 })
 

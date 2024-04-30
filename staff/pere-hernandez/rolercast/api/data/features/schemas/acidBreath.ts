@@ -5,7 +5,7 @@ const { Schema } = mongoose
 const acidBreath = new Schema ({
     name: {
         type: String,
-        requierd: true
+        required: true
     },
     bonusesDescription: {
         type: [String],

@@ -6,7 +6,7 @@ import logic from "../logic"
 function ConfirmRace({ onReturnClick }){
     const [race, setRace] = useState(null)
 
-    const {raceId} = useRaceId()
+    const { raceId } = useRaceId()
 
     useEffect(() => {
             /*if (!(raceId)) {

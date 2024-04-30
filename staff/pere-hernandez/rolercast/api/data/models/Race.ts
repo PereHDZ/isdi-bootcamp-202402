@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 import { RaceType } from '../types'
-import { race } from '../schemas/index'
+import { race } from '../schemas/index.ts'
 
 const { model } = mongoose
 

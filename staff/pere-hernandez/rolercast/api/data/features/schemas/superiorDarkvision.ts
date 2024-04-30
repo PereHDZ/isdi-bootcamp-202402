@@ -12,7 +12,7 @@ const superiorDarkvision = new Schema ({
         required: true
     },
     darkVisionRange: {
-        type: [String],
+        type: Number,
         required: true
     }
 })

@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { Race, User } from '../data/schemas/index.ts'
+import { Race, User } from '../data/models/index.ts'
 
 import logic from './index.ts'
 import { expect } from 'chai'

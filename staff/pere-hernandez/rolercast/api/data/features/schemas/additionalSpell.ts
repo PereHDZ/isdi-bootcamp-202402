@@ -10,7 +10,7 @@ const additionalSpell = new Schema ({
         requierd: true
     },
     bonusesDescription: {
-        type: String,
+        type: [String],
         required: true
     },
     spell: {

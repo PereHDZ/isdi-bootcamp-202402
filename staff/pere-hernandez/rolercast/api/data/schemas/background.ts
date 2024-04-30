@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import skills from './skills'
+import skills from './skills.ts'
 
 const { Schema } = mongoose
 

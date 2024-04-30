@@ -1,14 +1,11 @@
 import mongoose from 'mongoose'
 
-import { HumanVersatilityType } from '../types'
-
-const { Schema, model } = mongoose
+const { Schema } = mongoose
 
 const humanVersatility = new Schema ({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     bonusesDescription: {
         type: [String],
@@ -23,7 +20,5 @@ const humanVersatility = new Schema ({
         required: true
     }
 })
-
-const HumanVersatility = model<HumanVersatilityType>('HumanVersatility', humanVersatility)
 
 export default humanVersatility

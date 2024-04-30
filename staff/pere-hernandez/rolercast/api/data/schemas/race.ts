@@ -1,5 +1,5 @@
 import mongoose, { ObjectId } from 'mongoose'
-import { features, proficiencies } from '.'
+import { features, proficiencies } from './index.ts'
 
 const { Schema } = mongoose
 

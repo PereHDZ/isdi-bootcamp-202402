@@ -26,7 +26,8 @@ import {
     PoisonBreathType,
     FrostBreathType,
     DwarvenResilienceType,
-    SavageAttacksType
+    SavageAttacksType,
+    RelentlessEnduranceType
 } from '../features/types'
 
 import CantripType from './CantripType'
@@ -60,7 +61,8 @@ type FeaturesType = {
     lightningBreath?: LightningBreathType,
     fireBreath?: FireBreathType,
     poisonBreath?: PoisonBreathType,
-    frostBreath?: FrostBreathType
+    frostBreath?: FrostBreathType,
+    relentlessEndurance?: RelentlessEnduranceType
 }
 
 export default FeaturesType

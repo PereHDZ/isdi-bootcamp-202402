@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 import { FeaturesType } from '../types'
-import { features } from '../schemas/index'
+import { features } from '../schemas/index.ts'
 
 const { model } = mongoose
 

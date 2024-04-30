@@ -5,8 +5,7 @@ const { Schema } = mongoose
 const feyAncestry = new Schema ({
     name: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     bonusesDescription: {
         type: [String],
