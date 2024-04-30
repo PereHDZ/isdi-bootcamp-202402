@@ -1,6 +1,6 @@
 type DwarvenResilienceType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default DwarvenResilienceType

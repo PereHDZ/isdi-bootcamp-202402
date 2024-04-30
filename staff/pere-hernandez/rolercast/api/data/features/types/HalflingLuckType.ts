@@ -1,6 +1,6 @@
 type HalflingLuckType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default HalflingLuckType

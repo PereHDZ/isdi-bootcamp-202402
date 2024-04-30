@@ -6,7 +6,7 @@ const { Types: { ObjectId } } = Schema
 
 type GithyankiPsionicsType = {
     name: string,
-    bonusesDescription: [string],
+    bonusesDescription: string,
     cantrip: ObjectId
 }
 

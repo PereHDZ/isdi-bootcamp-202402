@@ -1,6 +1,6 @@
 type FeyAncestryType = {
     name: string,
-    bonusesDesription: [string],
+    bonusesDesription: string,
 }
 
 export default FeyAncestryType

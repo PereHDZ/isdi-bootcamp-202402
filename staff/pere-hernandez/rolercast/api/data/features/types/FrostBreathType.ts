@@ -1,6 +1,6 @@
 type FrostBreathType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default FrostBreathType

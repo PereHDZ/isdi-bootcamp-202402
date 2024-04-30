@@ -1,15 +1,14 @@
 import mongoose from 'mongoose'
-import { AstralKnowledgeType } from '../types'
 
-const { Schema, model } = mongoose
+const { Schema } = mongoose
 
 const astralKnowledge = new Schema ({
     name: {
         type: String,
-        requierd: true
+        required: true
     },
     bonusesDescription: {
-        type: [String],
+        type: String,
         required: true
     }
 })

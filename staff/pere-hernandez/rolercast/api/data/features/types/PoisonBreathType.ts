@@ -1,6 +1,6 @@
 type PoisonBreathType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default PoisonBreathType

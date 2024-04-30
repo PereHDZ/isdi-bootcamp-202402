@@ -18,7 +18,7 @@ function retrieveRace(userId: string, raceId: string): Promise<{ name: string, d
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return Race.findById(raceId).select('_id name description').lean()
+            return Race.findById(raceId).select('_id name description speed features proficiencies parent').lean()
         })
         .then(race => {
             if (!race) throw new NotFoundError('race not found')

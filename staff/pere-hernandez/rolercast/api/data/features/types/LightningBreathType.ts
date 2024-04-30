@@ -1,6 +1,6 @@
 type LightningBreathType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default LightningBreathType

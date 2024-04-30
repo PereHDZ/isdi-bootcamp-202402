@@ -1,6 +1,6 @@
 type DwarvenToughnessType = {
     name: string,
-    bonusesDescription: [string],
+    bonusesDescription: string,
     hitPointCount: number
 }
 

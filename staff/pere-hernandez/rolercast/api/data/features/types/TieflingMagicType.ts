@@ -6,7 +6,7 @@ const { Types: { ObjectId } } = Schema
 
 type TieflingMagicType = {
     name: string,
-    bonusesDescription: [string],
+    bonusesDescription: string,
     cantrip?: ObjectId
 }
 

@@ -1,6 +1,6 @@
 type DarkvisionType = {
     name: string,
-    bonusesDescription: [string],
+    bonusesDescription: string,
     darkVisionRange: number
 }
 

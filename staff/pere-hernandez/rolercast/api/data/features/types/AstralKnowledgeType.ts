@@ -1,6 +1,6 @@
 type AstralKnowledgeType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default AstralKnowledgeType

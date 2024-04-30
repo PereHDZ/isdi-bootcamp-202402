@@ -1,6 +1,6 @@
 type StoneCamuflageType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default StoneCamuflageType

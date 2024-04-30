@@ -7,10 +7,10 @@ const { Types: { ObjectId } } = Schema
 const additionalSpell = new Schema ({
     name: {
         type: String,
-        requierd: true
+        required: true
     },
     bonusesDescription: {
-        type: [String],
+        type: String,
         required: true
     },
     spell: {

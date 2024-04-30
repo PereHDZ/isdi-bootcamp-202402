@@ -1,6 +1,6 @@
 type SavageAttacksType = {
     name: string,
-    bonusesDescription: [string],
+    bonusesDescription: string,
     criticalHitDice: number
 }
 

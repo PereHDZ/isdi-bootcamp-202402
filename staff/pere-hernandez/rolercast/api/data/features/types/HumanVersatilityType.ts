@@ -1,6 +1,6 @@
 type HumanVersatilityType = {
     name: string,
-    bonusesDescription: [string],
+    bonusesDescription: string,
     carryingCapacityBonus: number,
     skillCount: number
 }

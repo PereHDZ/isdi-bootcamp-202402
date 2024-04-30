@@ -1,6 +1,6 @@
 type DraconicAncestryType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default DraconicAncestryType

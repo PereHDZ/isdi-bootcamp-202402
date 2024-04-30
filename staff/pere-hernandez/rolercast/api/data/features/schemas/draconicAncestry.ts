@@ -7,10 +7,10 @@ const { Schema } = mongoose
 const draconicAncestry = new Schema ({
     name: {
         type: String,
-        requierd: true
+        required: true
     },
     bonusesDescription: {
-        type: [String],
+        type: String,
         required: true
     }
 })

@@ -8,7 +8,7 @@ const humanVersatility = new Schema ({
         required: true
     },
     bonusesDescription: {
-        type: [String],
+        type: String,
         required: true
     },
     carryingCapacityBonus: {

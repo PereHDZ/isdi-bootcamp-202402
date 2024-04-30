@@ -7,14 +7,15 @@ const { Types: { ObjectId } } = Schema
 const tieflingMagic = new Schema ({
     name: {
         type: String,
-        requierd: true
+        required: true
     },
     bonusesDescription: {
-        type: [String],
+        type: String,
         required: true
     },
     cantrip: {
         type: ObjectId,
+        ref: 'Cantrip',
         required: false
     }
 })

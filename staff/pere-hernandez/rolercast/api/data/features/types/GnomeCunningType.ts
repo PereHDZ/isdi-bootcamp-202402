@@ -1,6 +1,6 @@
 type GnomeCunningType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default GnomeCunningType

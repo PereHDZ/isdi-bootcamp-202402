@@ -1,6 +1,6 @@
 type HellishResistanceType = {
     name: string,
-    bonusesDescription: [string]
+    bonusesDescription: string
 }
 
 export default HellishResistanceType

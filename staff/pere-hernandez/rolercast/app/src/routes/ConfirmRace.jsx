@@ -9,11 +9,11 @@ function ConfirmRace({ onReturnClick }){
     const { raceId } = useRaceId()
 
     useEffect(() => {
-            /*if (!(raceId)) {
+            if (!(raceId)) {
             onReturnClick()
 
             return
-        } */
+        }
         
         try {
             logic.retrieveRace(raceId)
@@ -28,6 +28,60 @@ function ConfirmRace({ onReturnClick }){
         event.preventDefault()
 
         onReturnClick()
+    }
+
+    const getSpeed = () => {
+        if (!!race.speed){
+            return <div className="display-row">
+                <p className="bold">Racial BaseSpeed:</p>
+                <p className="margin-left">{race.speed}m</p>
+            </div>
+        }
+
+        return <></>
+    }
+
+    const getProficiencies = () => {
+        let proficienciesObjects = []
+        let proficienciesArray = []
+
+        if (!!race.proficiencies){
+            for (const proficiency in race.proficiencies){
+                if (proficiency !== '_id')
+                    proficienciesObjects.push(race.proficiencies[proficiency])
+            }
+            
+            for (let i = 0; i < proficienciesObjects.length; i++){
+                for (const key in proficienciesObjects[i]){
+                    if (key !== '_id')
+                        proficienciesArray.push(key)
+                }
+            }
+
+            const p = proficienciesArray.join(', ')
+
+            return <p><strong>Proficiencies: </strong>{p}</p>
+        }
+        return <></>
+    }
+
+    const getFeatures = () => {
+        let featuresArray = []
+
+        if (!!race.features){
+            for(const feature in race.features){
+                if (feature !== '_id')
+                    featuresArray.push(race.features[feature])
+            }
+
+            return featuresArray.map(feature => {
+                return <div className="display-row">
+                    <p><strong>{feature.name}: </strong>{feature.bonusesDescription} </p>
+                </div>                
+            })
+        }
+
+        return <></>
     }
 
     return <section>
@@ -50,6 +104,12 @@ function ConfirmRace({ onReturnClick }){
             <p className="display-info-p">{race && race.description}</p>
             
             <h3>RACIAL FEATURES</h3>
+
+            { race && getSpeed() }
+
+            <p>{ race && getProficiencies() }</p>
+
+            <p>{ race && getFeatures() }</p>
         </div>
 
         <div className="select-button-div">
