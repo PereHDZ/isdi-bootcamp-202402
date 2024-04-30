@@ -1,14 +1,13 @@
-import { Schema } from 'mongoose'
+import { ObjectId, Schema } from 'mongoose'
 
-const { Types: { ObjectId } } = Schema
-
-import { RaceType, Race, UserType, User } from '../data/index.ts'
-
+import { Race, User } from '../data/models/index.ts'
+import { FeaturesType, ProficienciesType } from '../data/types/index.ts'
 import { validate, errors } from 'com'
 
 const { SystemError, NotFoundError } = errors
+const { Types: { ObjectId } } = Schema
 
-function retrieveRace(userId: string, raceId: string): Promise<{ name: string, description: string }>{
+function retrieveRace(userId: string, raceId: string): Promise<{ name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }>{
     //validation
     validate.text(userId, 'userId', true)
     validate.text(raceId, 'raceId', true)
@@ -24,7 +23,7 @@ function retrieveRace(userId: string, raceId: string): Promise<{ name: string, d
         .then(race => {
             if (!race) throw new NotFoundError('race not found')
 
-            return { name: race.name, description: race.description }
+            return { name: race.name, description: race.description, speed: race.speed, features: race.features, proficiencies: race.proficiencies, parent: race.parent }
         })
 }
 

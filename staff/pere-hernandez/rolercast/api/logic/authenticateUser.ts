@@ -1,6 +1,6 @@
 import { validate, errors } from 'com'
 
-import { User } from '../data/index.ts'
+import { User } from '../data/models/index.ts'
 
 const { SystemError, NotFoundError, CredentialsError } = errors
 

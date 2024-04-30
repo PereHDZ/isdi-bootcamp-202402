@@ -1,6 +1,7 @@
 import { validate, errors } from 'com'
 
-import { UserType, User } from '../data/index.ts'
+import { User } from '../data/models/index.ts'
+import { UserType } from '../data/types/index.ts'
 
 const { SystemError, DuplicityError, CredentialsError } = errors
 
