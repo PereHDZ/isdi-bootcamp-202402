@@ -141,6 +141,16 @@ Race
 - parent (Race.id, optional)
 
 Class (WIP)
+- id (required)
+- name (string, required)
+- description (string, required)
+- hp (number, optional)
+- keyHabilites: (KeyHabilities, optional)
+- savingThrowProficiencies: (SavingThrowProficiencies, optional)
+- equipmentProficiencies (EquipmentProficiencies, optional)
+- skillProficiencies (SkillProficiencies, optional)
+- spellCasting (SpellCasting, optional)
+- parent (Class.id, optional)
 
 Background
 - id (required)

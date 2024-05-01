@@ -7,5 +7,6 @@ import ProficienciesType from './ProficienciesType'
 import FeaturesType from './FeaturesType'
 import RaceType from './RaceType'
 import BackgroundType from './BackgroundType'
+import CharacterClassType from './CharacterClassType'
 
-export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType }
+export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType }

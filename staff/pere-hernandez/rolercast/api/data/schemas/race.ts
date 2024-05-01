@@ -30,6 +30,7 @@ const race = new Schema ({
     },
     parent: {
         type: ObjectId,
+        ref: 'Race',
         required: false
     }
 })

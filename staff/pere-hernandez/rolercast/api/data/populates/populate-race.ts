@@ -1,7 +1,7 @@
 import mongoose, { ObjectId } from 'mongoose'
 
 import { Features, Proficiencies, Race, Weapons, Armour, Skills } from '../models'
-import { DraconicAncestry, FeyAncestry, SuperiorDarkvision, HumanVersatility, Darkvision, SavageAttacks, RelentlessEndurance, HalflingLuck, Brave, DwarvenResilience, GnomeCunning, HellishResistance, AstralKnowledge, GithyankiPsionics, DrowMagic } from '../features/models'
+import { DraconicAncestry, FeyAncestry, SuperiorDarkvision, HumanVersatility, Darkvision, SavageAttacks, RelentlessEndurance, HalflingLuck, Brave, DwarvenResilience, GnomeCunning, HellishResistance, AstralKnowledge, GithyankiPsionics, DrowMagic, HighElfCantrip } from '../features/models'
 
 const { Types: { ObjectId } } = mongoose
 
@@ -21,6 +21,13 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                 Race.create({ name: 'Tiefling', description: 'Descended from devils of the Nine Hells - by blood or curse - tieflings face constant suspicion in Faerûn. Their arcane abilities make them natural survivors, whether as heroes or villains.', speed: 9, features: new Features({ hellishResistance: new HellishResistance({ name:'Hellish Resistance', bonusesDescription: 'Your blood protects you from flame, abyssal or otherwise. Gain Resistance to Fire damage, taking only half damage from it.' }), darkvision: new Darkvision({ name: 'Darkvision', bonusesDescription: 'Can see in the dark up to 12 m / 40 ft.', darkVisionRange: 12 }) }) }),
                 Race.create({ name: 'Githyanki', description: 'With a ruthlessness borne from mind flayer enslavement, githyanki ride the Astral Sea atop red dragons, bringing their silver swords and psionic might to bear against any trace of the illithid menace.', speed: 9, proficiencies: new Proficiencies({ weapons: new Weapons({ shortSwords: 1, longSwords: 1, greatSwords: 1 }), armour: new Armour({ lightArmour: 1, mediumArmour: 1 }) }), features: new Features({ astralKnowledge: new AstralKnowledge({ name: 'Astral Knowledge', bonusesDescription: 'Gain Proficiency in all Skills corresponding to a chosen Ability each Long Rest' }), githyankiPsionics: new GithyankiPsionics({ name: 'Githyanki Psionics', bonusesDescription: 'Githyanki Psionics grants Githyanki access to the following Spells, based on character level:\nCantrip: Mage Hand (Character level 1). Your Mage Hand is invisible when cast via Githyanki Psionics.\n1st Level Spell: Enhance Leap (Character level 3).\n2nd Level Spell: Misty Step (Character level 5)   Recharge: Long rest', cantrip: new ObjectId('663104b9505f0221763632fb') }) }) })
             ])
+                .then((races) => {
+                    const elfRace = races.find(race => race.name === 'Elf')
+
+                    Promise.all([
+                        Race.create({ name: 'High Elf', description: 'Heirs of the mystical Feywild, high elves value magic in all its forms, and even those who do not study spellcraft can manipulate the Weave.', speed: 9, features: new Features({ highElfCantrip: new HighElfCantrip({ name: 'High Elf Cantrip', bonusesDescription: 'Choose 1 Cantrip from the Wizard spell list. Note that this means these cantrips use Intelligence as a casting stat.', cantripCount: 1 }) }), parent: elfRace._id })
+                    ])
+                })
         )
         .then(() => mongoose.disconnect())
         .then(() => console.log('populated'))
