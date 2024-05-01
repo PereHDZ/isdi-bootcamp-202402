@@ -6,6 +6,7 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import HomeRoute from "../routes/HomeRoute"
 import SelectRace from "../routes/SelectRace"
 import ConfirmRace from "../routes/ConfirmRace"
+import SelectSubRace from "../routes/SelectSubrace"
 
 const RaceIdContext = createContext(null)
 
@@ -40,6 +41,10 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromSelectRace = () => navigate('/*')
 
+    const handleReturnFromSelectSubrace = () => navigate('/confirmRace')
+
+    const handleRaceSelected = () => navigate('/selectSubrace')
+
     return <>
     <RaceIdContext.Provider value={{setRaceId, raceId}}>
     <main className="home-main">
@@ -60,7 +65,8 @@ function Home({ onUserLoggedOut }) {
         <Routes>
             <Route path="/*" element={<HomeRoute onCreateClick={handleCreateClick}/>}></Route>
             <Route path="/selectRace" element={<SelectRace onReturn={handleReturnFromSelectRace}/>}/>
-            <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn}/>}/>
+            <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn} onRaceSelected={handleRaceSelected}/>}/>
+            <Route path="/selectSubrace" element={<SelectSubRace onReturn={handleReturnFromSelectSubrace}/>}/>
         </Routes>
     </main>
     </RaceIdContext.Provider></> 

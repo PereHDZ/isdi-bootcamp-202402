@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 
 import logic from "../logic"
 
-function ConfirmRace({ onReturnClick }){
+function ConfirmRace({ onReturnClick, onRaceSelected }){
     const [race, setRace] = useState(null)
 
     const { raceId } = useRaceId()
@@ -28,6 +28,12 @@ function ConfirmRace({ onReturnClick }){
         event.preventDefault()
 
         onReturnClick()
+    }
+
+    const handleSelectRaceClick = () => {
+        event.preventDefault()
+
+        onRaceSelected()
     }
 
     const getSpeed = () => {
@@ -113,7 +119,7 @@ function ConfirmRace({ onReturnClick }){
         </div>
 
         <div className="select-button-div">
-            <button className="select-button">SELECT</button>
+            <button className="select-button" onClick={handleSelectRaceClick}>SELECT</button>
         </div>
         
     </section>
