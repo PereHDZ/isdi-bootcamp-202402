@@ -1,5 +1,3 @@
-import { logger } from '../utils'
-
 import logic from '../logic'
 
 import { useState, useEffect } from 'react'
@@ -11,7 +9,7 @@ function RaceList({ stamp }){
 
     const loadRaces = () => {
         try {
-            logic.retrieveRaces()
+            logic.retrieveParentRaces()
                 .then(setRaces)
                 .catch(error => alert(error))
         } catch (error) {

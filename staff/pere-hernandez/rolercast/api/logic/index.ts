@@ -4,6 +4,7 @@ import retrieveUser from './retrieveUser.ts'
 
 import retrieveRaces from './retrieveRaces.ts'
 import retrieveRace from './retrieveRace.ts'
+import retrieveParentRaces from './retrieveParentRaces.ts'
 
 import retrieveCharacterClasses from './retrieveCharacterClasses.ts'
 import retrieveCharacterClass from './retrieveCharacterClass.ts'
@@ -19,6 +20,7 @@ const logic = {
 
     retrieveRaces,
     retrieveRace,
+    retrieveParentRaces,
 
     retrieveCharacterClasses,
     retrieveCharacterClass

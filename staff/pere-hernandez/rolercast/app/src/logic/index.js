@@ -6,6 +6,7 @@ import logoutUser from './logoutUser.js'
 import retrieveUser from './retrieveUser.js'
 import retrieveRaces from './retrieveRaces.js'
 import retrieveRace from './retrieveRace.js'
+import retrieveParentRaces from './retrieveParentRaces.js'
 
 const logic = { 
     registerUser,
@@ -15,7 +16,8 @@ const logic = {
     
     retrieveUser,
     retrieveRaces,
-    retrieveRace
+    retrieveRace,
+    retrieveParentRaces
 }
 
 export default logic
