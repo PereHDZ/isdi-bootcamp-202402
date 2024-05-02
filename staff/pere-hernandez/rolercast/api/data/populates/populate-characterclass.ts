@@ -1,10 +1,8 @@
-import mongoose, { ObjectId } from 'mongoose'
+import mongoose from 'mongoose'
 
 import { CharacterClass } from '../models'
 
-const { Types: { ObjectId } } = mongoose
-
-mongoose.connect('mongodb://localhost:27017/rolecast')
+mongoose.connect('mongodb://localhost:27017/rolercast')
     .then(() => CharacterClass.deleteMany())
     .then(() => 
         Promise.all([

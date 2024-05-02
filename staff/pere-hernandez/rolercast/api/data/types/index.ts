@@ -8,5 +8,7 @@ import FeaturesType from './FeaturesType'
 import RaceType from './RaceType'
 import BackgroundType from './BackgroundType'
 import CharacterClassType from './CharacterClassType'
+import SpellType from './SpellType'
+import RaceActionType from './RaceActionType'
 
-export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType }
+export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType }

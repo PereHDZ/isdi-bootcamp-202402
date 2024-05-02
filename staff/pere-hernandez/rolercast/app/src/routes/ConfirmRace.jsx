@@ -39,8 +39,7 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
     const getSpeed = () => {
         if (!!race.speed){
             return <div className="display-row">
-                <p className="bold">Racial BaseSpeed:</p>
-                <p className="margin-left">{race.speed}m</p>
+                <p><strong>Racial BaseSpeed: </strong>{race.speed}m</p>
             </div>
         }
 

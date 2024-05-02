@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
 
-import { DraconicAncestryType } from '../types'
-
 const { Schema } = mongoose
+
+const { Types: { ObjectId } } = Schema
 
 const draconicAncestry = new Schema ({
     name: {
@@ -12,6 +12,11 @@ const draconicAncestry = new Schema ({
     bonusesDescription: {
         type: String,
         required: true
+    },
+    raceAction: {
+        type: ObjectId,
+        ref: 'Action',
+        required: false
     }
 })
 

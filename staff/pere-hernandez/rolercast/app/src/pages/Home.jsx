@@ -7,6 +7,7 @@ import HomeRoute from "../routes/HomeRoute"
 import SelectRace from "../routes/SelectRace"
 import ConfirmRace from "../routes/ConfirmRace"
 import SelectSubRace from "../routes/SelectSubrace"
+import SelectClass from "../routes/SelectClass"
 
 const RaceIdContext = createContext(null)
 
@@ -43,7 +44,28 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromSelectSubrace = () => navigate('/confirmRace')
 
-    const handleRaceSelected = () => navigate('/selectSubrace')
+    const handleReturnFromSelectClass = () => navigate('/selectRace')
+
+    const handleRaceSelected = () => {
+        try {
+            logic.retrieveRaces()
+                .then(races => {
+                    const raceChildren = races.filter(race => {
+                        if (!!race.parent){
+                            race.parent.toString() === raceId
+                        }
+                    })
+
+                    if (raceChildren.length > 0){
+                        navigate('/selectSubrace')
+                    } else {
+                        navigate('/selectClass')
+                    }
+                })
+        } catch (error) {
+            alert(error)
+        }     
+    } 
 
     return <>
     <RaceIdContext.Provider value={{setRaceId, raceId}}>
@@ -67,6 +89,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectRace" element={<SelectRace onReturn={handleReturnFromSelectRace}/>}/>
             <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn} onRaceSelected={handleRaceSelected}/>}/>
             <Route path="/selectSubrace" element={<SelectSubRace onReturn={handleReturnFromSelectSubrace}/>}/>
+            <Route path="/selectClass" element={<SelectClass onReturn={handleReturnFromSelectClass}/>}/>
         </Routes>
     </main>
     </RaceIdContext.Provider></> 

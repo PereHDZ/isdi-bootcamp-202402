@@ -131,6 +131,14 @@ Features
 - darkvision (Darkvision, optional)
 - ...
 
+Cantrip
+- name (string, required)
+- description (string, required)
+
+Spell
+- name (string, required)
+- description (string, required)
+
 Race
 - id (required)
 - name (string, required)
