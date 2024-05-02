@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import savingThrowProficiencies from './savingThrowProficiencies'
+import proficiencies from './proficiencies'
 
 const { Schema } = mongoose
 
@@ -28,6 +29,10 @@ const characterClass = new Schema ({
     },
     savingThrowProficiencies: {
         type: savingThrowProficiencies,
+        required: false
+    },
+    proficiencies: {
+        type: proficiencies,
         required: false
     },
     parent: {

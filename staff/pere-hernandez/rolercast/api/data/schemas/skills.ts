@@ -7,7 +7,7 @@ const skills = new Schema ({
         type: Number,
         required: false
     },
-    animal: {
+    animalHandling: {
         type: Number,
         required: false
     },
@@ -52,6 +52,10 @@ const skills = new Schema ({
         required: false
     },
     performance: {
+        type: Number,
+        required: false
+    },
+    persuasion: { 
         type: Number,
         required: false
     },

@@ -1,6 +1,6 @@
 type SkillsType = {
     acrobatics?: number,
-    animal?: number,
+    animalHandling?: number,
     arcana?: number,
     athletics?: number,
     deception?: number,
@@ -12,6 +12,7 @@ type SkillsType = {
     nature?: number,
     perception?: number,
     performance?: number,
+    persuasion?: number,
     religion?: number,
     sleightOfHand?: number,
     stealth?: number,
