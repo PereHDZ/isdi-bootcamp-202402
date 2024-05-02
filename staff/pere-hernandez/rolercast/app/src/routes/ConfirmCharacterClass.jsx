@@ -30,6 +30,17 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
         onReturnClick()
     }
 
+    const getSavingThrowProficiencies = () => {
+        const declaredAttributes = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
+
+        const matchingAttributes = Object.keys(characterClass.savingThrowProficiencies).filter(attribute =>
+            declaredAttributes.includes(attribute))
+
+        const p = matchingAttributes.join(', ')
+
+        return <p><strong>Saving Throw Proficiencies: </strong>{p}</p>
+    }
+
     return <section>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -63,6 +74,8 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
                     <li key={index}>{keyAbility}</li>
                 ))}
             </ul>
+
+            {characterClass && getSavingThrowProficiencies()}
 
         </div>
     </section>

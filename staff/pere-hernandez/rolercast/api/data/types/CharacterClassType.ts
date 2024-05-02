@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongoose'
+import SavingThrowProficienciesType from './SavingThrowProficienciesType'
 
 type CharacterClassType = {
     name: string,
@@ -6,6 +7,7 @@ type CharacterClassType = {
     hp?: number,
     hpPerLevel?: number,
     keyAbilities?: [string],
+    savingThrowProficiencies?: SavingThrowProficienciesType
     parent?: ObjectId
 }
 

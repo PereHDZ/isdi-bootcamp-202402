@@ -6,9 +6,10 @@ import features from './features.ts'
 import proficiencies from './proficiencies.ts'
 import race from './race.ts'
 import raceAction from './raceAction.ts'
+import savingThrowProficiencies from './savingThrowProficiencies.ts'
 import skills from './skills.ts'
 import spell from './spell.ts'
 import user from './user.ts'
 import weapons from './weapons.ts'
 
-export { armour, background, cantrip, characterClass, features, proficiencies, race, raceAction, skills, spell, user, weapons }
+export { armour, background, cantrip, characterClass, features, proficiencies, race, raceAction, savingThrowProficiencies, skills, spell, user, weapons }

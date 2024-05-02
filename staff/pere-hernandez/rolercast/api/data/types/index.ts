@@ -10,5 +10,6 @@ import BackgroundType from './BackgroundType'
 import CharacterClassType from './CharacterClassType'
 import SpellType from './SpellType'
 import RaceActionType from './RaceActionType'
+import SavingThrowProficienciesType from './SavingThrowProficienciesType'
 
-export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType }
+export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType, SavingThrowProficienciesType }

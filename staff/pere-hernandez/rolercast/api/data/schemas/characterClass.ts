@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import savingThrowProficiencies from './savingThrowProficiencies'
 
 const { Schema } = mongoose
 
@@ -23,6 +24,10 @@ const characterClass = new Schema ({
     },
     keyAbilities: {
         type: [String],
+        required: false
+    },
+    savingThrowProficiencies: {
+        type: savingThrowProficiencies,
         required: false
     },
     parent: {
