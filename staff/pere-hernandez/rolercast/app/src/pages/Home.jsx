@@ -3,18 +3,21 @@ import logic from "../logic"
 import { useState, useEffect, useContext, createContext } from "react"
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 
-import HomeRoute from "../routes/HomeRoute"
+import HomeRoute from '../routes/HomeRoute'
 import SelectRace from "../routes/SelectRace"
 import ConfirmRace from "../routes/ConfirmRace"
 import SelectSubRace from "../routes/SelectSubrace"
-import SelectClass from "../routes/SelectClass"
+import SelectCharacterClass from "../routes/SelectCharacterClass"
 
 const RaceIdContext = createContext(null)
+const CharacterClassIdContext = createContext(null)
 
 export const useRaceId = () => useContext(RaceIdContext)
+export const useCharacterClassId = () => useContext(CharacterClassIdContext)
 
 function Home({ onUserLoggedOut }) {
     const [raceId, setRaceId] = useState(null)
+    const [characterClassId, setCharacterClassId] = useState(null)
     
     const navigate = useNavigate()
 
@@ -40,6 +43,12 @@ function Home({ onUserLoggedOut }) {
         navigate('/selectRace')
     }
 
+    const handleReturnFromConfirmClass = () => {
+        setCharacterClassId(null)
+
+        navigate('/selectClass')
+    }
+
     const handleReturnFromSelectRace = () => navigate('/*')
 
     const handleReturnFromSelectSubrace = () => navigate('/confirmRace')
@@ -52,7 +61,8 @@ function Home({ onUserLoggedOut }) {
                 .then(races => {
                     const raceChildren = races.filter(race => {
                         if (!!race.parent){
-                            race.parent.toString() === raceId
+                            if (race.parent.toString() === raceId)
+                                return race
                         }
                     })
 
@@ -69,6 +79,7 @@ function Home({ onUserLoggedOut }) {
 
     return <>
     <RaceIdContext.Provider value={{setRaceId, raceId}}>
+    <CharacterClassIdContext.Provider value={{setCharacterClassId, characterClassId}}>
     <main className="home-main">
         <header>
             <button className="transparent-button">
@@ -89,10 +100,13 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectRace" element={<SelectRace onReturn={handleReturnFromSelectRace}/>}/>
             <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn} onRaceSelected={handleRaceSelected}/>}/>
             <Route path="/selectSubrace" element={<SelectSubRace onReturn={handleReturnFromSelectSubrace}/>}/>
-            <Route path="/selectClass" element={<SelectClass onReturn={handleReturnFromSelectClass}/>}/>
+            <Route path="/selectClass" element={<SelectCharacterClass onReturn={handleReturnFromSelectClass}/>}/>
+            {/* <Route path="/confirmClass" element={<ConfirmClass onReturnClick={handleReturnFromConfirmClass}/>}/> */}
         </Routes>
     </main>
-    </RaceIdContext.Provider></> 
+    </CharacterClassIdContext.Provider>
+    </RaceIdContext.Provider>
+    </>
 }
 
 export default Home

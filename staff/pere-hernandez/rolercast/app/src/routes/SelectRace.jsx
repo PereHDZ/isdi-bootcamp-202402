@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react'
 import RaceList from '../components/RaceList'
 
 function SelectRace({ onReturn }){
-    const [races, setRaces] = useState(null)
-
     const handleReturnClick = () => onReturn()
 
     return <section>

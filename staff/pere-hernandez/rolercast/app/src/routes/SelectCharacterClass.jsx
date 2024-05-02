@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
+import CharacterClassList from "../components/CharacterClassList"
 
-function SelectClass({ onReturn }){
-    const [classes, setClasses] = useState(null)
-
+function SelectCharacterClass({ onReturn }){
     const handleReturnClick = () => onReturn()
 
     return <section>
@@ -14,7 +12,9 @@ function SelectClass({ onReturn }){
         </div>
 
         <h1 className='home-title'>SELECT CLASS</h1>
+
+        <CharacterClassList />
     </section>
 }
 
-export default SelectClass
+export default SelectCharacterClass

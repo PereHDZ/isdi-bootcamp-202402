@@ -8,6 +8,7 @@ import retrieveParentRaces from './retrieveParentRaces.ts'
 
 import retrieveCharacterClasses from './retrieveCharacterClasses.ts'
 import retrieveCharacterClass from './retrieveCharacterClass.ts'
+import retrieveSubracesFromRace from './retrieveSubracesFromRace.ts'
 
 const logic = {
     users: null,
@@ -21,6 +22,7 @@ const logic = {
     retrieveRaces,
     retrieveRace,
     retrieveParentRaces,
+    retrieveSubracesFromRace,
 
     retrieveCharacterClasses,
     retrieveCharacterClass

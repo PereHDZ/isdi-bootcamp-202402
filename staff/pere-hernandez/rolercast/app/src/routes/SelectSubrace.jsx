@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import SubraceList from '../components/SubraceList'
 
 function SelectSubrace({ onReturn }){
     const [subraces, setSubRaces] = useState(null)
@@ -14,6 +15,8 @@ function SelectSubrace({ onReturn }){
         </div>
 
         <h1 className='home-title'>SELECT SUBRACE</h1>
+
+        <SubraceList/>
     </section>
 }
 
