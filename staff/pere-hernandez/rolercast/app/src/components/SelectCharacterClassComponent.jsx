@@ -1,10 +1,10 @@
 import { useCharacterClassId } from "../pages/Home"
 
-function SelectChatacterClassComponent({ item: characterClass }) {
+function SelectCharacterClassComponent({ item: characterClass }) {
     const {setCharacterClassId} = useCharacterClassId()
     const handleCharacterClassClick = () => {
         setCharacterClassId(characterClass._id)
-    }  
+    }
 
     return <article className='select-atribute-article'>
         <button className='transparent-button' onClick={handleCharacterClassClick}>
@@ -14,4 +14,4 @@ function SelectChatacterClassComponent({ item: characterClass }) {
     </article>
 }
 
-export default SelectChatacterClassComponent
+export default SelectCharacterClassComponent

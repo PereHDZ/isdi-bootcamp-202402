@@ -2,7 +2,7 @@ import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 
-import SelectChatacterClassComponent from './SelectCharacterClassComponent'
+import SelectCharacterClassComponent from './SelectCharacterClassComponent'
 
 function CharacterClassList({ stamp }){
     const [characterClasses, setCharacterClasses] = useState([])
@@ -22,7 +22,7 @@ function CharacterClassList({ stamp }){
     }, [stamp])
 
     return <section className='select-section'>
-        {characterClasses.map(characterClass => <SelectChatacterClassComponent key={characterClass.name} item={characterClass}/>)}
+        {characterClasses.map(characterClass => <SelectCharacterClassComponent key={characterClass.name} item={characterClass}/>)}
     </section>
 }
 

@@ -1,7 +1,7 @@
-import { useRaceId } from "../pages/Home"
-import { useState, useEffect } from "react"
+import { useRaceId } from '../pages/Home'
+import { useState, useEffect } from 'react'
 
-import logic from "../logic"
+import logic from '../logic'
 
 function ConfirmRace({ onReturnClick, onRaceSelected }){
     const [race, setRace] = useState(null)
@@ -9,7 +9,7 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
     const { raceId } = useRaceId()
 
     useEffect(() => {
-            if (!(raceId)) {
+        if (!(raceId)) {
             onReturnClick()
 
             return
@@ -110,7 +110,7 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
             
             <h3>RACIAL FEATURES</h3>
 
-            { race && getSpeed() }
+            <p>{ race && getSpeed() }</p>
 
             <p>{ race && getProficiencies() }</p>
 

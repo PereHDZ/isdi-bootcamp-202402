@@ -1,12 +1,12 @@
 import { validate, errors } from 'com'
 
-function retrieveRace(raceId) {
+function retrieveCharacterClass(characterClassId) {
     //validation
     validate.token(sessionStorage.token)
-    validate.text(raceId, 'raceId', true)
+    validate.text(characterClassId, 'characterClassId', true)
 
     //logic
-    return fetch(`${import.meta.env.VITE_API_URL}/races/${raceId}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/classes/${characterClassId}`, {
         headers: {
             Authorization: `Bearer ${sessionStorage.token}`
         }
@@ -25,4 +25,4 @@ function retrieveRace(raceId) {
         })
 }
 
-export default retrieveRace
+export default retrieveCharacterClass

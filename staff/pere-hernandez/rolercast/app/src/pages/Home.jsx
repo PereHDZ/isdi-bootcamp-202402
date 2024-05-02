@@ -8,6 +8,7 @@ import SelectRace from "../routes/SelectRace"
 import ConfirmRace from "../routes/ConfirmRace"
 import SelectSubRace from "../routes/SelectSubrace"
 import SelectCharacterClass from "../routes/SelectCharacterClass"
+import ConfirmCharacterClass from "../routes/ConfirmCharacterClass"
 
 const RaceIdContext = createContext(null)
 const CharacterClassIdContext = createContext(null)
@@ -22,8 +23,14 @@ function Home({ onUserLoggedOut }) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (raceId !== null) navigate('/confirmRace')
+        if (raceId !== null && characterClassId === null)
+            navigate('/confirmRace')
     }, [raceId])
+    
+    useEffect(() => {
+        if (characterClassId !== null)
+            navigate('/confirmClass')
+    }, [characterClassId])
 
     const handleLogoutClick = () => {
         try {
@@ -101,7 +108,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn} onRaceSelected={handleRaceSelected}/>}/>
             <Route path="/selectSubrace" element={<SelectSubRace onReturn={handleReturnFromSelectSubrace}/>}/>
             <Route path="/selectClass" element={<SelectCharacterClass onReturn={handleReturnFromSelectClass}/>}/>
-            {/* <Route path="/confirmClass" element={<ConfirmClass onReturnClick={handleReturnFromConfirmClass}/>}/> */}
+            <Route path="/confirmClass" element={<ConfirmCharacterClass onReturnClick={handleReturnFromConfirmClass}/>}/>
         </Routes>
     </main>
     </CharacterClassIdContext.Provider>
