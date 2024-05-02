@@ -51,7 +51,11 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
 
             <h3>CLASS FEATURES</h3>
 
-            <p><strong>HP: </strong> {characterClass && characterClass.hp} + Constitution Modifier</p>
+            <p><strong>HP: </strong> </p>
+            <ul>
+                <li><strong>Base HP: </strong>{characterClass && characterClass.hp} + Constitution Modifier</li>
+                <li><strong>HP gained on Level Up: </strong>+{characterClass && characterClass.hpPerLevel}</li>
+            </ul>
 
         </div>
     </section>

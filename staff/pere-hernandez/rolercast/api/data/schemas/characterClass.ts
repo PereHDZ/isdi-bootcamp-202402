@@ -17,6 +17,10 @@ const characterClass = new Schema ({
         type: Number,
         required: false,
     },
+    hpPerLevel: {
+        type: Number,
+        required: false
+    },
     parent: {
         type: ObjectId,
         ref: 'CharacterClass',
