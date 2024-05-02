@@ -51,10 +51,17 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
 
             <h3>CLASS FEATURES</h3>
 
-            <p><strong>HP: </strong> </p>
+            <p><strong>HP:</strong></p>
             <ul>
                 <li><strong>Base HP: </strong>{characterClass && characterClass.hp} + Constitution Modifier</li>
                 <li><strong>HP gained on Level Up: </strong>+{characterClass && characterClass.hpPerLevel}</li>
+            </ul>
+
+            <p><strong>Key Abilities:</strong></p>
+            <ul>
+                {characterClass && characterClass.keyAbilities.map((keyAbility, index) => (
+                    <li key={index}>{keyAbility}</li>
+                ))}
             </ul>
 
         </div>

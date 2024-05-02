@@ -21,6 +21,10 @@ const characterClass = new Schema ({
         type: Number,
         required: false
     },
+    keyAbilities: {
+        type: [String],
+        required: false
+    },
     parent: {
         type: ObjectId,
         ref: 'CharacterClass',

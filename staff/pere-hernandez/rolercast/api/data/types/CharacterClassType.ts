@@ -5,6 +5,7 @@ type CharacterClassType = {
     description: string,
     hp?: number,
     hpPerLevel?: number,
+    keyAbilities?: [string],
     parent?: ObjectId
 }
 

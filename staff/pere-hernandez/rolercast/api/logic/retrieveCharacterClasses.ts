@@ -10,7 +10,7 @@ const { SystemError, NotFoundError } = errors
 
 const { Types: { ObjectId } } = Schema
 
-function retrieveCharacterClasses(userId: string): Promise<[{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, parent?: ObjectId }] | { name: string, description: string, hp?: number, hpPerLevel?: number, parent?: ObjectId }[]> {
+function retrieveCharacterClasses(userId: string): Promise<[{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], parent?: ObjectId }] | { name: string, description: string, hp?: number, hpPerLevel?: number,keyAbilities?: [string], parent?: ObjectId }[]> {
     //validation
     validate.text(userId, 'userId', true)
 
