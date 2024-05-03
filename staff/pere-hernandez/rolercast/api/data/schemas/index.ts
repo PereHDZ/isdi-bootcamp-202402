@@ -9,7 +9,8 @@ import raceAction from './raceAction.ts'
 import savingThrowProficiencies from './savingThrowProficiencies.ts'
 import skills from './skills.ts'
 import spell from './spell.ts'
+import spellcasting from './spellcasting.ts'
 import user from './user.ts'
 import weapons from './weapons.ts'
 
-export { armour, background, cantrip, characterClass, features, proficiencies, race, raceAction, savingThrowProficiencies, skills, spell, user, weapons }
+export { armour, background, cantrip, characterClass, features, proficiencies, race, raceAction, savingThrowProficiencies, skills, spell, spellcasting, user, weapons }
