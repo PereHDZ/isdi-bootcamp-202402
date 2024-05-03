@@ -41,6 +41,31 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
         return <p><strong>Saving Throw Proficiencies: </strong>{p}</p>
     }
 
+    const getProficiencies = () => {
+        let proficienciesObjects = []
+        let proficiencies = []
+
+        if(!!characterClass.proficiencies){
+            for (const proficiency in characterClass.proficiencies){
+                if (proficiency !== '_id' && proficiency !== 'skills')
+                    proficienciesObjects.push(characterClass.proficiencies[proficiency])
+            }
+
+            for (let i = 0; i < proficienciesObjects.length; i++){
+                for (const key in proficienciesObjects[i]){
+                    if (key !== '_id' && key !== 'skills' )
+                        proficiencies.push(key)
+                }
+            }
+
+            const p = proficiencies.join(', ')
+
+            return <p><strong>Proficiencies: </strong>{p}</p>
+        }
+
+        console.log(proficiencies)
+    }
+
     return <section>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -75,7 +100,9 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
                 ))}
             </ul>
 
-            {characterClass && getSavingThrowProficiencies()}
+            { characterClass && getSavingThrowProficiencies() }
+
+            { characterClass && getProficiencies() }
 
         </div>
     </section>

@@ -110,11 +110,11 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
             
             <h3>RACIAL FEATURES</h3>
 
-            <p>{ race && getSpeed() }</p>
+            { race && getSpeed() }
 
-            <p>{ race && getProficiencies() }</p>
+            { race && getProficiencies() }
 
-            <p>{ race && getFeatures() }</p>
+            { race && getFeatures() }
         </div>
 
         <div className="select-button-div">
