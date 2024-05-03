@@ -9,6 +9,12 @@ function ConfrimSubrace({ onReturnClick, onSubraceSelected }){
     const { raceId } = useRaceId()
 
     useEffect(() => {
+        if (!(raceId)) {
+            onReturnClick()
+
+            return
+        }
+        
         try {
             logic.retrieveRace(raceId)
                 .then(race => {

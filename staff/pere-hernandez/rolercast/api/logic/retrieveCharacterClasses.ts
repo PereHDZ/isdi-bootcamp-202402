@@ -4,7 +4,7 @@ import { validate, errors } from 'com'
 
 import { CharacterClass, User } from '../data/models/index.ts'
 
-import { ProficienciesType, SavingThrowProficienciesType } from '../data/types/index.ts'
+import { ProficienciesType, SavingThrowProficienciesType, SpellcastingType } from '../data/types/index.ts'
 
 const { Schema } = mongoose
 
@@ -12,7 +12,7 @@ const { SystemError, NotFoundError } = errors
 
 const { Types: { ObjectId } } = Schema
 
-function retrieveCharacterClasses(userId: string): Promise<[{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: ObjectId, parent?: ObjectId }] | { name: string, description: string, hp?: number, hpPerLevel?: number, savingThrowProficiencies?: SavingThrowProficienciesType, keyAbilities?: [string], proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: ObjectId, parent?: ObjectId }[]> {
+function retrieveCharacterClasses(userId: string): Promise<[{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: SpellcastingType, parent?: ObjectId }] | { name: string, description: string, hp?: number, hpPerLevel?: number, savingThrowProficiencies?: SavingThrowProficienciesType, keyAbilities?: [string], proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: SpellcastingType, parent?: ObjectId }[]> {
     //validation
     validate.text(userId, 'userId', true)
 

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import savingThrowProficiencies from './savingThrowProficiencies'
 import proficiencies from './proficiencies'
+import spellcasting from './spellcasting'
 
 const { Schema } = mongoose
 
@@ -39,9 +40,8 @@ const characterClass = new Schema ({
         type: String,
         required: false
     },
-    spellcatsing: {
-        type: ObjectId,
-        ref: 'Spellcasting',
+    spellcasting: {
+        type: spellcasting,
         required: false
     },
     parent: {

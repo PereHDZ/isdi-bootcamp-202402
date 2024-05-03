@@ -2,7 +2,6 @@ import mongoose, { ObjectId } from 'mongoose'
 
 import { Features, Proficiencies, Race, Weapons, Armour, Skills } from '../models'
 import { DraconicAncestry, FeyAncestry, SuperiorDarkvision, HumanVersatility, Darkvision, SavageAttacks, RelentlessEndurance, HalflingLuck, Brave, DwarvenResilience, GnomeCunning, HellishResistance, AstralKnowledge, GithyankiPsionics, DrowMagic, HighElfCantrip, FleetOfFoot, NaturallyStealthy, StrongheartResilience, DwarvenToughness, DuergarResilience, DuergarMagic, AdditionalSpell, StoneCamuflage, TieflingMagic, AcidBreath, LightningBreath, FireBreath, PoisonBreath, FrostBreath } from '../features/models'
-import { draconicAncestry } from '../features/schemas'
 
 const { Types: { ObjectId } } = mongoose
 

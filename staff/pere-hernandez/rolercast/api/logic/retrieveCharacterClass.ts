@@ -2,12 +2,12 @@ import { ObjectId, Schema } from 'mongoose'
 
 import { CharacterClass, User } from '../data/models/index.ts'
 import { validate, errors } from 'com'
-import { SavingThrowProficienciesType, ProficienciesType } from '../data/types/index.ts'
+import { SavingThrowProficienciesType, ProficienciesType, SpellcastingType } from '../data/types/index.ts'
 
 const { SystemError, NotFoundError } = errors
 const { Types: { ObjectId } } = Schema
 
-function retrieveCharacterClass(userId: string, characterClassId: string): Promise<{ name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: ObjectId, parent?: ObjectId }>{
+function retrieveCharacterClass(userId: string, characterClassId: string): Promise<{ name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: SpellcastingType, parent?: ObjectId }>{
     //validation
     validate.text(userId, 'userId', true)
     validate.text(characterClassId, 'characterClassId', true)

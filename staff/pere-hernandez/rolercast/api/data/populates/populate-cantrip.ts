@@ -23,6 +23,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                 Cantrip.create({ name: 'Resistance', description: 'Make a target more resistant to spell effects and conditions: it receives a +1d4 bonus to Saving Throws.' }),
                 Cantrip.create({ name: 'Sacred Flame', description: 'Engulf a target in a flame-like radiance' }),
                 Cantrip.create({ name: "Selûne's Dream", description: 'An ally you touch regains 1d8 hit points, but potentially falls into a slumber.' }),
+                Cantrip.create({ name: "Shield", description: 'When you are about to be hit by an enemy, use your Reaction to increase your Armour Class Armour Class by 5. You also take no damage from Magic Missile. These effects last until the start of your next turn.' }),
                 Cantrip.create({ name: 'Shillelagh', description: "Your staff or club becomes magical: it deals 1d8 + WIS Bludgeoning damage and uses your Spellcasting Ability for Attack Rolls" }),
                 Cantrip.create({ name: 'Shocking Grasp', description: 'The target cannot use reactions. This spell has Advantage on creatures wearing metal armour.' }),
                 Cantrip.create({ name: 'Thaumaturgy', description: 'Gain Advantage on Intimidation and Performance Checks.' }),
