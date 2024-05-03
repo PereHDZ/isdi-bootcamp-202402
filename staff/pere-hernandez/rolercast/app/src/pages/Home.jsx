@@ -36,6 +36,7 @@ function Home({ onUserLoggedOut }) {
                             
                         navigate('/confirmRace')
                     })
+                    .catch(error => alert(error))
             } catch (error){
                 alert(error)
             }
@@ -76,6 +77,20 @@ function Home({ onUserLoggedOut }) {
     const handleReturnFromSelectSubrace = () => navigate('/confirmRace')
 
     const handleReturnFromSelectClass = () => navigate('/selectRace')
+
+    const handleReturnFromConfirmSubrace = () => {
+        try {
+            logic.retrieveRace(raceId)
+                .then(race => {
+                    setRaceId(race.parent)
+                })
+                .catch(error => alert(error))
+        } catch (error) {
+            alert(error)
+        }
+
+        navigate('/selectSubrace')
+    }
 
     const handleRaceSelected = () => {
         try {
@@ -122,7 +137,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectRace" element={<SelectRace onReturn={handleReturnFromSelectRace}/>}/>
             <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn} onRaceSelected={handleRaceSelected}/>}/>
             <Route path="/selectSubrace" element={<SelectSubRace onReturn={handleReturnFromSelectSubrace}/>}/>
-            <Route path="/confirmSubrace" element={<ConfirmSubace />}/>
+            <Route path="/confirmSubrace" element={<ConfirmSubace onReturnClick={handleReturnFromConfirmSubrace} onSubraceSelected={handleRaceSelected}/>}/>
             <Route path="/selectClass" element={<SelectCharacterClass onReturn={handleReturnFromSelectClass}/>}/>
             <Route path="/confirmClass" element={<ConfirmCharacterClass onReturnClick={handleReturnFromConfirmClass}/>}/>
         </Routes>
