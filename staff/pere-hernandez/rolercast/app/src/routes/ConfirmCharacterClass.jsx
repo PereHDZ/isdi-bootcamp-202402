@@ -104,6 +104,8 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
 
             { characterClass && getProficiencies() }
 
+            { characterClass && <p><strong>Spellcasting Ability: </strong>{ characterClass.spellcastingAbility }</p> }
+
         </div>
     </section>
 }

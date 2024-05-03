@@ -35,6 +35,10 @@ const characterClass = new Schema ({
         type: proficiencies,
         required: false
     },
+    spellcastingAbility: {
+        type: String,
+        required: false
+    },
     parent: {
         type: ObjectId,
         ref: 'CharacterClass',

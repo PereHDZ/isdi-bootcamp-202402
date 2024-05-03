@@ -10,6 +10,7 @@ type CharacterClassType = {
     keyAbilities?: [string],
     savingThrowProficiencies?: SavingThrowProficienciesType,
     proficiencies?: ProficienciesType,
+    spellcastingAbility?: string,
     parent?: ObjectId
 }
 
