@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 
 import { useRaceId } from '../pages/Home'
 
+import SelectSubraceComponent from './SelectSubraceComponent'
+
 function SubraceList({ stamp }){
     const {raceId, setRaceId} = useRaceId()
     const [subraces, setSubraces] = useState([])
@@ -22,8 +24,8 @@ function SubraceList({ stamp }){
         loadSubraces()
     }, [stamp])
 
-    return <section className='selec-section'>
-        {subraces.map(subrace => <h1>{subrace.name}</h1>)}
+    return <section className='select-section'>
+        {subraces.map(subrace => <SelectSubraceComponent key={subrace.name} item={subrace}/>)}
     </section>
 }
 

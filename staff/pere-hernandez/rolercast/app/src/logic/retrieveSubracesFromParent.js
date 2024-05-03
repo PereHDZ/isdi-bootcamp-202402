@@ -6,8 +6,7 @@ function retrieveSubracesFromRace(raceId) {
     validate.text(raceId, 'raceId', true)
 
     //logic
-    console.log(raceId)
-    return fetch(`${import.meta.env.VITE_API_URL}/races/${raceId}/subRaces`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/races/${raceId}/subraces`, {
         headers: {
             Authorization: `Bearer ${sessionStorage.token}`
         }

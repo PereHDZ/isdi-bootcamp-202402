@@ -5,7 +5,7 @@ function retrieveParentRaces() {
     validate.token(sessionStorage.token)
 
     //logic
-    return fetch(`${import.meta.env.VITE_API_URL}/parentRaces`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/rootraces`, {
         headers: {
             'Authorization': `Bearer ${sessionStorage.token}`
         }

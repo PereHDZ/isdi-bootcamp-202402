@@ -216,7 +216,7 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        api.get('/parentRaces', (req, res) => {
+        api.get('/rootraces', (req, res) => {
             try {
                 const { authorization } = req.headers
 
@@ -254,7 +254,8 @@ mongoose.connect(MONGODB_URL)
             }
         })
         
-        api.get('races/:raceId/subRaces', (req, res) => {
+        api.get('/races/:raceId/subraces', (req, res) => {
+            debugger
             try {
                 const { authorization } = req.headers
 

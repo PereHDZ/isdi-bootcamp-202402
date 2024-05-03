@@ -39,6 +39,11 @@ const characterClass = new Schema ({
         type: String,
         required: false
     },
+    spellcatsing: {
+        type: ObjectId,
+        ref: 'Spellcasting',
+        required: false
+    },
     parent: {
         type: ObjectId,
         ref: 'CharacterClass',
