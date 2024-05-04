@@ -106,6 +106,12 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
 
             { characterClass && <p><strong>Spellcasting Ability: </strong>{ characterClass.spellcastingAbility }</p> }
 
+            { characterClass && characterClass.spellcasting && <p><strong>Spellcasting: </strong>You will de able to choose {characterClass.spellcasting.cantripCount} cantrips and {characterClass.spellcasting.spellCount} spells from the {characterClass.name} Spell List.</p>}
+
+        </div>
+
+        <div className="select-button-div">
+            <button className="select-button" >SELECT</button>
         </div>
     </section>
 }

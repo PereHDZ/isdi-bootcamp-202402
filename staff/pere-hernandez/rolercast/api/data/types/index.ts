@@ -12,5 +12,6 @@ import SpellType from './SpellType'
 import RaceActionType from './RaceActionType'
 import SavingThrowProficienciesType from './SavingThrowProficienciesType'
 import SpellcastingType from './SpellcastingType'
+import ClassActionType from './ClassActionType'
 
-export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType, SavingThrowProficienciesType, SpellcastingType }
+export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType, SavingThrowProficienciesType, SpellcastingType, ClassActionType }

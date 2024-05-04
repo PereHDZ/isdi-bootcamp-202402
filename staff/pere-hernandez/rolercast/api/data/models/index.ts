@@ -2,6 +2,7 @@ import Armour from './Armour.ts'
 import Background from './Background.ts'
 import Cantrip from './Cantrip.ts'
 import CharacterClass from './CharacterClass.ts'
+import ClassAction from './ClassAction.ts'
 import Features from './Features.ts'
 import Proficiencies from './Proficiencies.ts'
 import Race from './Race.ts'
@@ -13,4 +14,4 @@ import Spellcasting from './Spellcasting.ts'
 import User from './User.ts'
 import Weapons from './Weapons.ts'
 
-export { Armour, Background, Cantrip, CharacterClass, Features, Proficiencies, Race, RaceAction, SavingThrowProficiencies, Skills, Spell, Spellcasting, User, Weapons }
+export { Armour, Background, Cantrip, CharacterClass, ClassAction, Features, Proficiencies, Race, RaceAction, SavingThrowProficiencies, Skills, Spell, Spellcasting, User, Weapons }

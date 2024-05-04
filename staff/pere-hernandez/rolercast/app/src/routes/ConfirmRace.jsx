@@ -106,6 +106,7 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
         </div>
 
         <div className="display-info-div">
+
             <p className="display-info-p">{race && race.description}</p>
             
             <h3>RACIAL FEATURES</h3>
@@ -115,6 +116,7 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
             { race && getProficiencies() }
 
             { race && getFeatures() }
+            
         </div>
 
         <div className="select-button-div">
