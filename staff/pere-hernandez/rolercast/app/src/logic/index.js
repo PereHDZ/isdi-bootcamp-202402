@@ -15,6 +15,7 @@ import retrieveParentCharacterClasses from './retrieveParentCharacterClasses.js'
 import retrieveSubclassesFromClass from './retrieveSubclassesFromParent.js'
 
 import retrieveBackgrounds from './retrieveBackgrounds.js'
+import retrieveBackground from './retrieveBackground.js'
 
 const logic = { 
     registerUser,
@@ -33,7 +34,8 @@ const logic = {
     retrieveParentCharacterClasses,
     retrieveSubclassesFromClass,
 
-    retrieveBackgrounds
+    retrieveBackgrounds,
+    retrieveBackground
 }
 
 export default logic

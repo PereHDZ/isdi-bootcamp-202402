@@ -13,6 +13,7 @@ import ConfirmSubace from "../routes/ConfirmSubrace"
 import SelectBackground from "../routes/SelectBackground"
 import SelectSubclass from "../routes/SelectSubclass"
 import ConfirmSubclass from "../routes/ConfirmSubclass"
+import ConfirmBackground from "../routes/ConfirmBackground"
 
 
 const RaceIdContext = createContext(null)
@@ -71,6 +72,10 @@ function Home({ onUserLoggedOut }) {
             
     }, [characterClassId])
 
+    useEffect(() => {
+        if(backgroundId !== null) navigate('/confirmBackground')
+    })
+
     const handleLogoutClick = () => {
         try {
             logic.logoutUser()
@@ -93,6 +98,12 @@ function Home({ onUserLoggedOut }) {
         setCharacterClassId(null)
 
         navigate('/selectClass')
+    }
+
+    const handleReturnFromConfirmBackground = () => {
+        setBackgroundId(null)
+
+        navigate('/selectBackground')
     }
 
     const handleReturnFromSelectRace = () => navigate('/*')
@@ -207,6 +218,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectSubclass" element={<SelectSubclass onReturn={handleReturnFromSelectSubclass}/>}/>
             <Route path="/confirmSubclass" element={<ConfirmSubclass onReturnClick={handleReturnFromConfirmSubclass} onSubclassSelected={handleClassSelected}/>}/>
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
+            <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground}/>}/>
         </Routes>
     </main>
     </backgroundIdContext.Provider>

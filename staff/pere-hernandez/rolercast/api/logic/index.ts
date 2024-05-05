@@ -13,6 +13,7 @@ import retrieveParentCharacterClasses from './retrieveParentCharacterClasses.ts'
 import retrieveSubclassesFromClass from './retrieveSubclassesFromClass.ts'
 
 import retrieveBackgrounds from './retrieveBackgrounds.ts'
+import retrieveBackground from './retrieveBackground.ts'
 
 const logic = {
     users: null,
@@ -33,7 +34,8 @@ const logic = {
     retrieveParentCharacterClasses,
     retrieveSubclassesFromClass,
 
-    retrieveBackgrounds
+    retrieveBackgrounds,
+    retrieveBackground
 }
 
 export default logic
