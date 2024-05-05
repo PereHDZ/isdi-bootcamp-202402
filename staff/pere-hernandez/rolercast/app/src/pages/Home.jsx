@@ -1,7 +1,7 @@
 import logic from "../logic"
 
 import { useState, useEffect, useContext, createContext } from "react"
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 import HomeRoute from '../routes/HomeRoute'
 import SelectRace from "../routes/SelectRace"
@@ -14,6 +14,7 @@ import SelectBackground from "../routes/SelectBackground"
 import SelectSubclass from "../routes/SelectSubclass"
 import ConfirmSubclass from "../routes/ConfirmSubclass"
 import ConfirmBackground from "../routes/ConfirmBackground"
+import AssignStats from "../routes/AssignStats"
 
 
 const RaceIdContext = createContext(null)
@@ -73,7 +74,7 @@ function Home({ onUserLoggedOut }) {
     }, [characterClassId])
 
     useEffect(() => {
-        if(backgroundId !== null) navigate('/confirmBackground')
+        if (backgroundId !== null) navigate('/stats')
     })
 
     const handleLogoutClick = () => {
@@ -111,6 +112,8 @@ function Home({ onUserLoggedOut }) {
     const handleReturnFromSelectSubrace = () => navigate('/confirmRace')
 
     const handleReturnFromSelectSubclass = () => navigate('/confirmClass')
+
+    const handleReturnFromAssignStats = () => navigate('/confirmBackground')
 
     const handleReturnFromSelectClass = () => navigate('/selectRace')
 
@@ -186,6 +189,8 @@ function Home({ onUserLoggedOut }) {
         }
     }
 
+    const handleBackgroundSelected = () => navigate('/stats')
+
     const handleReturnFromSelectBackground = () => navigate('/selectClass')
 
     return <>
@@ -218,7 +223,8 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectSubclass" element={<SelectSubclass onReturn={handleReturnFromSelectSubclass}/>}/>
             <Route path="/confirmSubclass" element={<ConfirmSubclass onReturnClick={handleReturnFromConfirmSubclass} onSubclassSelected={handleClassSelected}/>}/>
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
-            <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground}/>}/>
+            <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground} onBackgroundSelected={handleBackgroundSelected}/>}/>
+            <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats}/>}/>
         </Routes>
     </main>
     </backgroundIdContext.Provider>

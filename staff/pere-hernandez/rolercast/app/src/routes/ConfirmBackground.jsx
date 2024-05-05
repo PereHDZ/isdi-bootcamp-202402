@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 import logic from '../logic'
 
-function ConfirmBackground({ onReturnClick }){
+function ConfirmBackground({ onReturnClick, onBackgroundSelected }){
     const [background, setBackground] = useState(null)
 
     const { backgroundId } = useBackgroundId()
@@ -28,6 +28,12 @@ function ConfirmBackground({ onReturnClick }){
         event.preventDefault()
 
         onReturnClick()
+    }
+
+    const handleSelectBackgroundClick = () => {
+        event.preventDefault()
+
+        onBackgroundSelected()
     }
 
     const getSkills = () => {
@@ -65,6 +71,10 @@ function ConfirmBackground({ onReturnClick }){
 
                 {background && getSkills()}
 
+            </div>
+
+            <div className="select-button-div">
+                <button className="select-button" onClick={handleSelectBackgroundClick}>SELECT</button>
             </div>
     </section>
 }

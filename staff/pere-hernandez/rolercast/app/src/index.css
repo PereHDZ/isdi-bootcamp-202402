@@ -283,3 +283,14 @@ footer{
 .confirm-class-h2{
   margin-left: 5vw;
 }
+
+.stats-icons {
+  height: 80px;
+  width: 80px;
+}
+
+.distribute-stats {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5vw;
+}
