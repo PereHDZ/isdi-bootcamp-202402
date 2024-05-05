@@ -490,7 +490,7 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        api.get('/classes/:backgroundId', (req, res) => {
+        api.get('/backgrounds/:backgroundId', (req, res) => {
             try {
                 const { authorization } = req.headers
 
