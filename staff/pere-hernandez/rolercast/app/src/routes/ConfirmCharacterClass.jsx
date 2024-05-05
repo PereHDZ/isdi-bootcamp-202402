@@ -68,8 +68,6 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
 
             return <p><strong>Proficiencies: </strong>{p}</p>
         }
-
-        console.log(proficiencies)
     }
 
     return <section>
