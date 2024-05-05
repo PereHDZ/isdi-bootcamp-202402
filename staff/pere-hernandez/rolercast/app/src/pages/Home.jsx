@@ -10,6 +10,7 @@ import SelectSubRace from "../routes/SelectSubrace"
 import SelectCharacterClass from "../routes/SelectCharacterClass"
 import ConfirmCharacterClass from "../routes/ConfirmCharacterClass"
 import ConfirmSubace from "../routes/ConfirmSubrace"
+import SelectBackground from "../routes/SelectBackground"
 
 const RaceIdContext = createContext(null)
 const CharacterClassIdContext = createContext(null)
@@ -112,7 +113,31 @@ function Home({ onUserLoggedOut }) {
         } catch (error) {
             alert(error)
         }     
-    } 
+    }
+    
+    const handleClassSelected = () => {
+        try {
+            logic.retrieveCharacterClasses()
+                .then(characterClasses => {
+                    const classChildren = characterClasses.filter(characterClass => {
+                        if (!!characterClass.parent){
+                            if(characterClass.parent.toString() === characterClassId)
+                                return characterClass
+                        }
+                    })
+
+                    if (classChildren.length > 0){
+                        navigate('/selectSubClass')
+                    } else {
+                        navigate('/selectBackground')
+                    }
+                })
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    const handleReturnFromSelectBackground = () => navigate('/selectClass')
 
     return <>
     <RaceIdContext.Provider value={{setRaceId, raceId}}>
@@ -139,7 +164,8 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectSubrace" element={<SelectSubRace onReturn={handleReturnFromSelectSubrace}/>}/>
             <Route path="/confirmSubrace" element={<ConfirmSubace onReturnClick={handleReturnFromConfirmSubrace} onSubraceSelected={handleRaceSelected}/>}/>
             <Route path="/selectClass" element={<SelectCharacterClass onReturn={handleReturnFromSelectClass}/>}/>
-            <Route path="/confirmClass" element={<ConfirmCharacterClass onReturnClick={handleReturnFromConfirmClass}/>}/>
+            <Route path="/confirmClass" element={<ConfirmCharacterClass onReturnClick={handleReturnFromConfirmClass}  onCharacterClassSelected={handleClassSelected}/>}/>
+            <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
         </Routes>
     </main>
     </CharacterClassIdContext.Provider>

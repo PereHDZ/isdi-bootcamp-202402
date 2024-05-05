@@ -30,6 +30,12 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
         onReturnClick()
     }
 
+    const handleSelectClassClick = () => {
+        event.preventDefault()
+
+        onCharacterClassSelected()
+    }
+
     const getSavingThrowProficiencies = () => {
         const declaredAttributes = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
 
@@ -111,7 +117,7 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
         </div>
 
         <div className="select-button-div">
-            <button className="select-button" >SELECT</button>
+            <button className="select-button" onClick={handleSelectClassClick}>SELECT</button>
         </div>
     </section>
 }

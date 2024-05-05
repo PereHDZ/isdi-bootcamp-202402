@@ -1,4 +1,4 @@
-import mongoose, { ObjectId, isObjectIdOrHexString } from 'mongoose'
+import mongoose, { ObjectId } from 'mongoose'
 
 import { validate, errors } from 'com'
 

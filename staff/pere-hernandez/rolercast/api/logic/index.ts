@@ -9,6 +9,9 @@ import retrieveParentRaces from './retrieveParentRaces.ts'
 import retrieveCharacterClasses from './retrieveCharacterClasses.ts'
 import retrieveCharacterClass from './retrieveCharacterClass.ts'
 import retrieveSubracesFromRace from './retrieveSubracesFromRace.ts'
+import retrieveParentCharacterClasses from './retrieveParentCharacterClasses.ts'
+
+import retrieveBackgrounds from './retrieveBackgrounds.ts'
 
 const logic = {
     users: null,
@@ -25,7 +28,10 @@ const logic = {
     retrieveSubracesFromRace,
 
     retrieveCharacterClasses,
-    retrieveCharacterClass
+    retrieveCharacterClass,
+    retrieveParentCharacterClasses,
+
+    retrieveBackgrounds
 }
 
 export default logic

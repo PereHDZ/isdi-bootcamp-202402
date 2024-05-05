@@ -9,7 +9,7 @@ function CharacterClassList({ stamp }){
 
     const loadCharacterClasses = () => {
         try {
-            logic.retrieveCharacterClasses()
+            logic.retrieveParentCharacterClasses()
                 .then(setCharacterClasses)
                 .catch(error => alert(error))
         } catch (error) {
