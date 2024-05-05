@@ -2,6 +2,7 @@ import { ObjectId } from 'mongoose'
 import SavingThrowProficienciesType from './SavingThrowProficienciesType'
 import ProficienciesType from './ProficienciesType'
 import SpellcastingType from './SpellcastingType'
+import SkillsType from './SkillsType'
 
 type CharacterClassType = {
     name: string,
@@ -11,8 +12,12 @@ type CharacterClassType = {
     keyAbilities?: [string],
     savingThrowProficiencies?: SavingThrowProficienciesType,
     proficiencies?: ProficienciesType,
+    expertises?: SkillsType,
     spellcastingAbility?: string,
     spellcasting?: SpellcastingType,
+    knownSpells?: [ObjectId],
+    knownCantrips?: [ObjectId],
+    classAction?: [ObjectId],
     parent?: ObjectId
 }
 

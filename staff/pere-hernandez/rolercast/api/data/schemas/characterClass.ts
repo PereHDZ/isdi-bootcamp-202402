@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import savingThrowProficiencies from './savingThrowProficiencies'
 import proficiencies from './proficiencies'
 import spellcasting from './spellcasting'
+import skills from './skills'
 
 const { Schema } = mongoose
 
@@ -36,12 +37,31 @@ const characterClass = new Schema ({
         type: proficiencies,
         required: false
     },
+    expertises: {
+        type: skills,
+        required: false
+    },
     spellcastingAbility: {
         type: String,
         required: false
     },
     spellcasting: {
         type: spellcasting,
+        required: false
+    },
+    knownSpells: {
+        type: [ObjectId],
+        ref: 'Spell',
+        required: false
+    },
+    knownCantrips: {
+        type: [ObjectId],
+        ref: 'Cantrip',
+        required: false
+    },
+    classActions: {
+        type: [ObjectId],
+        ref: 'ClassAction',
         required: false
     },
     parent: {

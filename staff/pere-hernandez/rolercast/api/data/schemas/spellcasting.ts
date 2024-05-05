@@ -7,21 +7,21 @@ const { Types: { ObjectId } } = Schema
 const spellcasting = new Schema ({
     cantripCount: {
         type: Number,
-        required: true
+        required: false
     },
     availableCantrips: {
         type: [ObjectId],
         ref: 'Cantrip',
-        required: true
+        required: false
     },
     spellCount: {
         type: Number,
-        required: true
+        required: false
     },
     availableSpells: {
         type: [ObjectId],
         ref: 'Spell',
-        required: true
+        required: false
     }
 })
 
