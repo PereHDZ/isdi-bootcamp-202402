@@ -12,6 +12,7 @@ import retrieveSubracesFromRace from './retrieveSubracesFromParent.js'
 import retrieveCharacterClasses from './retrieveCharacterClasses.js'
 import retrieveCharacterClass from './retrieveCharacterClass.js'
 import retrieveParentCharacterClasses from './retrieveParentCharacterClasses.js'
+import retrieveSubclassesFromClass from './retrieveSubclassesFromParent.js'
 
 const logic = { 
     registerUser,
@@ -27,7 +28,8 @@ const logic = {
 
     retrieveCharacterClasses,
     retrieveCharacterClass,
-    retrieveParentCharacterClasses
+    retrieveParentCharacterClasses,
+    retrieveSubclassesFromClass
 }
 
 export default logic

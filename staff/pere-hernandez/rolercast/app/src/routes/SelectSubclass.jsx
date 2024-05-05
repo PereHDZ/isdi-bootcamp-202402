@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import SubclassList from '../components/SubclassList'
 
 function SelectSubclass({ onReturn }){
     const [subclasses, setSubclasses] = useState(null)
@@ -15,7 +16,7 @@ function SelectSubclass({ onReturn }){
 
         <h1 className='home-title'>SELECT SUBCLASS</h1>
 
-        
+        <SubclassList/>
     </section>
 }
 

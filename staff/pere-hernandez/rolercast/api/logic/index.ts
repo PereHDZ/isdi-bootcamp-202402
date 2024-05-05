@@ -5,11 +5,12 @@ import retrieveUser from './retrieveUser.ts'
 import retrieveRaces from './retrieveRaces.ts'
 import retrieveRace from './retrieveRace.ts'
 import retrieveParentRaces from './retrieveParentRaces.ts'
+import retrieveSubracesFromRace from './retrieveSubracesFromRace.ts'
 
 import retrieveCharacterClasses from './retrieveCharacterClasses.ts'
 import retrieveCharacterClass from './retrieveCharacterClass.ts'
-import retrieveSubracesFromRace from './retrieveSubracesFromRace.ts'
 import retrieveParentCharacterClasses from './retrieveParentCharacterClasses.ts'
+import retrieveSubclassesFromClass from './retrieveSubclassesFromClass.ts'
 
 import retrieveBackgrounds from './retrieveBackgrounds.ts'
 
@@ -30,6 +31,7 @@ const logic = {
     retrieveCharacterClasses,
     retrieveCharacterClass,
     retrieveParentCharacterClasses,
+    retrieveSubclassesFromClass,
 
     retrieveBackgrounds
 }
