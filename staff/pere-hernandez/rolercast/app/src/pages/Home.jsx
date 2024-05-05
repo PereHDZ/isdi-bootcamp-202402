@@ -11,6 +11,8 @@ import SelectCharacterClass from "../routes/SelectCharacterClass"
 import ConfirmCharacterClass from "../routes/ConfirmCharacterClass"
 import ConfirmSubace from "../routes/ConfirmSubrace"
 import SelectBackground from "../routes/SelectBackground"
+import SelectSubclass from "../routes/SelectSubclass"
+
 
 const RaceIdContext = createContext(null)
 const CharacterClassIdContext = createContext(null)
@@ -76,6 +78,8 @@ function Home({ onUserLoggedOut }) {
     const handleReturnFromSelectRace = () => navigate('/*')
 
     const handleReturnFromSelectSubrace = () => navigate('/confirmRace')
+
+    const handleReturnFromSelectSubclass = () => navigate('/confirmClass')
 
     const handleReturnFromSelectClass = () => navigate('/selectRace')
 
@@ -165,6 +169,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/confirmSubrace" element={<ConfirmSubace onReturnClick={handleReturnFromConfirmSubrace} onSubraceSelected={handleRaceSelected}/>}/>
             <Route path="/selectClass" element={<SelectCharacterClass onReturn={handleReturnFromSelectClass}/>}/>
             <Route path="/confirmClass" element={<ConfirmCharacterClass onReturnClick={handleReturnFromConfirmClass}  onCharacterClassSelected={handleClassSelected}/>}/>
+            <Route path="/selectSubclass" element={<SelectSubclass onReturn={handleReturnFromSelectSubclass}/>}/>
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
         </Routes>
     </main>
