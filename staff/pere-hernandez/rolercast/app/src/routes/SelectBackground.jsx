@@ -1,3 +1,4 @@
+import BackgroundList from "../components/BackgroundList"
 
 
 function SelectBackground({ onReturn }){
@@ -13,7 +14,7 @@ function SelectBackground({ onReturn }){
 
         <h1 className='home-title'>SELECT BACKGROUND</h1>
 
-        
+        <BackgroundList/>
     </section>
 }
 

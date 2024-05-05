@@ -17,13 +17,16 @@ import ConfirmSubclass from "../routes/ConfirmSubclass"
 
 const RaceIdContext = createContext(null)
 const CharacterClassIdContext = createContext(null)
+const backgroundIdContext = createContext(null)
 
 export const useRaceId = () => useContext(RaceIdContext)
 export const useCharacterClassId = () => useContext(CharacterClassIdContext)
+export const useBackgroundId = () => useContext(backgroundIdContext)
 
 function Home({ onUserLoggedOut }) {
     const [raceId, setRaceId] = useState(null)
     const [characterClassId, setCharacterClassId] = useState(null)
+    const [backgroundId, setBackgroundId] = useState(null)
     
     const navigate = useNavigate()
 
@@ -177,6 +180,7 @@ function Home({ onUserLoggedOut }) {
     return <>
     <RaceIdContext.Provider value={{setRaceId, raceId}}>
     <CharacterClassIdContext.Provider value={{setCharacterClassId, characterClassId}}>
+    <backgroundIdContext.Provider value={{setBackgroundId, backgroundId}}>
     <main className="home-main">
         <header>
             <button className="transparent-button">
@@ -205,6 +209,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
         </Routes>
     </main>
+    </backgroundIdContext.Provider>
     </CharacterClassIdContext.Provider>
     </RaceIdContext.Provider>
     </>

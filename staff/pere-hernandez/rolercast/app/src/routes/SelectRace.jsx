@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'
-
 import RaceList from '../components/RaceList'
 
 function SelectRace({ onReturn }){
