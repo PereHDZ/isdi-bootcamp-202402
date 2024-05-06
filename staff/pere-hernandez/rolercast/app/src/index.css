@@ -300,7 +300,7 @@ footer{
   display: flex;
   flex-direction: column;
   width: 50vw;
-  padding-right: 5vw;
+  padding-left: 5vw;
 }
 
 .display-skills {
@@ -324,11 +324,49 @@ footer{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 20px;
 }
 
 .counter-button {
   width: 20px;
   justify-content: center;
   align-items: center;
+}
+
+.stats-div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.checkbox{
+  width: fit-content;
+  height: fit-content;
+}
+
+.stats-form {
+  width: 100%;
+}
+
+.stat-span {
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  width: 100px;
+}
+
+.display-stats {
+  display: flex;
+  width: 200px;
+}
+
+.assign-bonus-skill {
+  justify-content: center;
+  align-items: center;
+}
+
+.no-margin {
+  margin-left: 0px;
+  margin-right: 2vw;
+  font-size: small;
 }

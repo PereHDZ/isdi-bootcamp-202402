@@ -72,10 +72,12 @@ function Home({ onUserLoggedOut }) {
         }
             
     }, [characterClassId])
-
+    
     useEffect(() => {
-        if (backgroundId !== null) navigate('/stats')
-    })
+        if (backgroundId !== null) {
+            navigate('/confirmBackground')
+        }
+    }, [backgroundId])
 
     const handleLogoutClick = () => {
         try {
@@ -103,6 +105,7 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromConfirmBackground = () => {
         setBackgroundId(null)
+        setBackgroundConfirmed(false)
 
         navigate('/selectBackground')
     }
@@ -189,7 +192,7 @@ function Home({ onUserLoggedOut }) {
         }
     }
 
-    const handleBackgroundSelected = () => navigate('/stats')
+    const handleBackgroundSelected = () => navigate('/stats')    
 
     const handleReturnFromSelectBackground = () => navigate('/selectClass')
 
