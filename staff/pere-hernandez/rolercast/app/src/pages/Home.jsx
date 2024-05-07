@@ -15,6 +15,8 @@ import SelectSubclass from "../routes/SelectSubclass"
 import ConfirmSubclass from "../routes/ConfirmSubclass"
 import ConfirmBackground from "../routes/ConfirmBackground"
 import AssignStats from "../routes/AssignStats"
+import SelectSpells from "../routes/SelectSpells"
+import retrieveCharacterClass from "../logic/retrieveCharacterClass"
 
 
 const RaceIdContext = createContext(null)
@@ -119,6 +121,8 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromSelectClass = () => navigate('/selectRace')
 
+    const handleReturnFromSelectSpells = () => navigate('/selectClass')
+
     const handleReturnFromConfirmSubrace = () => {
         try {
             logic.retrieveRace(raceId)
@@ -183,7 +187,21 @@ function Home({ onUserLoggedOut }) {
                     if (classChildren.length > 0){
                         navigate('/selectSubClass')
                     } else {
-                        navigate('/selectBackground')
+                        retrieveCharacterClass(characterClassId)
+                            .then(characterClass => {
+                                if (!characterClass.parent && !characterClass.spellcasting) 
+                                    navigate('/selectBackground')
+                                else if (!!characterClass.spellcasting)
+                                    navigate('/selectSpells')
+                                else if (!!characterClass.parent){
+                                    retrieveCharacterClass(characterClass.parent)
+                                        .then(parentClass => {
+                                            if (!!parentClass.spellcasting)
+                                                navigate('/selectSpells')
+                                        })
+                                }
+                            })
+                        
                     }
                 })
         } catch (error) {
@@ -224,6 +242,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/confirmClass" element={<ConfirmCharacterClass onReturnClick={handleReturnFromConfirmClass}  onCharacterClassSelected={handleClassSelected}/>}/>
             <Route path="/selectSubclass" element={<SelectSubclass onReturn={handleReturnFromSelectSubclass}/>}/>
             <Route path="/confirmSubclass" element={<ConfirmSubclass onReturnClick={handleReturnFromConfirmSubclass} onSubclassSelected={handleClassSelected}/>}/>
+            <Route path="/selectSpells" element={<SelectSpells onReturn={handleReturnFromSelectSpells}></SelectSpells>}/>
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
             <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground} onBackgroundSelected={handleBackgroundSelected}/>}/>
             <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats}/>}/>
