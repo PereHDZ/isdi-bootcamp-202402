@@ -15,6 +15,8 @@ import retrieveSubclassesFromClass from './retrieveSubclassesFromClass.ts'
 import retrieveBackgrounds from './retrieveBackgrounds.ts'
 import retrieveBackground from './retrieveBackground.ts'
 
+import retrieveDeities from './retrieveDeities.ts'
+
 const logic = {
     users: null,
     races: null,
@@ -35,7 +37,9 @@ const logic = {
     retrieveSubclassesFromClass,
 
     retrieveBackgrounds,
-    retrieveBackground
+    retrieveBackground,
+
+    retrieveDeities
 }
 
 export default logic

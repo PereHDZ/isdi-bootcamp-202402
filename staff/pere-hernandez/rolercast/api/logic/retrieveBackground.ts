@@ -1,5 +1,3 @@
-import { ObjectId, Schema } from 'mongoose'
-
 import { Background, User } from '../data/models/index.ts'
 import { validate, errors } from 'com'
 import { SkillsType } from '../data/types/index.ts'

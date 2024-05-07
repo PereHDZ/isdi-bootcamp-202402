@@ -9,10 +9,64 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
     .then(() => Race.deleteMany())
         .then(() => 
             Promise.all([
-                Race.create({ name: 'Dragonborn', description: 'A proud race that values clan and skills above all else. Once enslaved by dragons, they strive to be self-sufficient, not wanting to be beholden to anyone, not even the gods.', speed: 9, features: new Features({ draconicAncestry: new DraconicAncestry({ name: 'Draconic Ancestry', bonusesDescription: 'You are distantly related to a particular kind of dragon. This determines the damage and area of your breath weapon, and the type of resistance you gain.' }) }) }),
-                Race.create({ name: 'Elf', description: "With an ethereal countenance and long lifespans, elves are at home with nature's power, flourishing in light and dark alike.", proficiencies: new Proficiencies({ weapons: new Weapons({ spears: 1, pikes: 1, halberds: 1, glaives: 1 }), armour: new Armour({ lightArmour: 1, shields: 1 }) }), features: new Features({ feyAncestry: new FeyAncestry({ name: 'Fey Ancestry', bonusesDescription: "The Feywild casts a veil over your mind. You have Advantage on Saving throws against being Charmed, and magic can't put you to Sleep." }), darkvision: new Darkvision({ name: 'Darkvision', bonusesDescription: 'Can see in the dark up to 12 m / 40 ft.', darkVisionRange: 12 }) }) }),
-                Race.create({ name: 'Drow', description: "Driven to the Underdark, most drow have adopted a ruthless pragmatism. While the Lolth-sworn delight in the goddess' evil tenets, the Seldarine reject Her attempt to overthrow the leader of the elven pantheon.", speed: 9, proficiencies: new Proficiencies({ weapons: new Weapons({ rapiers: 1, shortSwords: 1, handCrossbows: 1 }), skills: new Skills({ perception: 1 }) }), features: new Features({ feyAncestry: new FeyAncestry({ name: 'Fey Ancestry', bonusesDescription: "The Feywild casts a veil over your mind. You have Advantage on Saving throws against being Charmed, and magic can't put you to Sleep." }), superiorDarkvision: new SuperiorDarkvision({ name: 'Superior Darkvision', bonusesDescription: 'Can see in the dark up to 24m.', darkVisionRange: 12 }), drowMagic: new DrowMagic({ name: 'Drow Magic', bonusesDescription: 'Drow Magic grants Drow access to the following Spells, which can be cast once each per Long Rest:\nCantrip: Dancing Lights (at character level 1)\n1st Level Spell: Faerie Fire (at character level 3)\n2nd Level Spell: Darkness (at character level 5)', cantrip: new ObjectId('663104b9505f0221763632f7') }) }) }),
-                Race.create({ name: 'Human', description: 'The most common face to see in Faerûn, humans are known for their tenacity, creativity, and endless capacity for growth.', speed: 9, proficiencies: new Proficiencies({ weapons: new Weapons({ spears: 1, pikes: 1, halberds: 1, glaives: 1 }), armour: new Armour({ lightArmour: 1, shields: 1 })}), features: new Features({ humanVersatility: new HumanVersatility({ name: 'Human Versatility', bonusesDescription: 'Select an additional Skill to be Proficient in. Your carrying capacity is increased by a quarter.', carryingCapacityBonus: 0.25, skillCount: 1 }) }) }),
+                Race.create({ 
+                    name: 'Dragonborn', 
+                    description: 'A proud race that values clan and skills above all else. Once enslaved by dragons, they strive to be self-sufficient, not wanting to be beholden to anyone, not even the gods.', 
+                    speed: 9, 
+                    features: new Features({ 
+                        draconicAncestry: new DraconicAncestry({ 
+                            name: 'Draconic Ancestry', 
+                            bonusesDescription: 'You are distantly related to a particular kind of dragon. This determines the damage and area of your breath weapon, and the type of resistance you gain.' }) }) }),
+
+                Race.create({ 
+                    name: 'Elf', 
+                    description: "With an ethereal countenance and long lifespans, elves are at home with nature's power, flourishing in light and dark alike.", 
+                    proficiencies: new Proficiencies({ 
+                        weapons: new Weapons({ spears: 1, pikes: 1, halberds: 1, glaives: 1 }), 
+                        armour: new Armour({ lightArmour: 1, shields: 1 }) }), 
+                    features: new Features({ 
+                        feyAncestry: new FeyAncestry({ 
+                            name: 'Fey Ancestry', 
+                            bonusesDescription: "The Feywild casts a veil over your mind. You have Advantage on Saving throws against being Charmed, and magic can't put you to Sleep." }), 
+                        darkvision: new Darkvision({ 
+                            name: 'Darkvision', 
+                            bonusesDescription: 'Can see in the dark up to 12 m / 40 ft.', 
+                            darkVisionRange: 12 }) }) }),
+
+                Race.create({ 
+                    name: 'Drow', 
+                    description: "Driven to the Underdark, most drow have adopted a ruthless pragmatism. While the Lolth-sworn delight in the goddess' evil tenets, the Seldarine reject Her attempt to overthrow the leader of the elven pantheon.", 
+                    speed: 9, 
+                    proficiencies: new Proficiencies({ 
+                        weapons: new Weapons({ rapiers: 1, shortSwords: 1, handCrossbows: 1 }), 
+                        skills: new Skills({ perception: 1 }) }), 
+                    features: new Features({ 
+                        feyAncestry: new FeyAncestry({ 
+                            name: 'Fey Ancestry', 
+                            bonusesDescription: "The Feywild casts a veil over your mind. You have Advantage on Saving throws against being Charmed, and magic can't put you to Sleep." }), 
+                        superiorDarkvision: new SuperiorDarkvision({ 
+                            name: 'Superior Darkvision', 
+                            bonusesDescription: 'Can see in the dark up to 24m.', 
+                            darkVisionRange: 12 }), 
+                        drowMagic: new DrowMagic({
+                            name: 'Drow Magic', 
+                            bonusesDescription: 'Drow Magic grants Drow access to the following Spells, which can be cast once each per Long Rest:\nCantrip: Dancing Lights (at character level 1)\n1st Level Spell: Faerie Fire (at character level 3)\n2nd Level Spell: Darkness (at character level 5)', 
+                            cantrip: new ObjectId('663104b9505f0221763632f7') }) }) }),
+
+                Race.create({ 
+                    name: 'Human', 
+                    description: 'The most common face to see in Faerûn, humans are known for their tenacity, creativity, and endless capacity for growth.', 
+                    speed: 9, 
+                    proficiencies: new Proficiencies({ 
+                        weapons: new Weapons({ spears: 1, pikes: 1, halberds: 1, glaives: 1 }), 
+                        armour: new Armour({ lightArmour: 1, shields: 1 })}), 
+                    features: new Features({ 
+                        humanVersatility: new HumanVersatility({ 
+                            name: 'Human Versatility', 
+                            bonusesDescription: 'Select an additional Skill to be Proficient in. Your carrying capacity is increased by a quarter.', 
+                            carryingCapacityBonus: 0.25, 
+                            skillCount: 1 }) }) }),
+                            
                 Race.create({ name: 'Half-Elf', description: 'Half-Elves inherit blessings from both their parents, but at the price of never quite fitting in. Curious, ambitious, and versatile, half-elves are welcome everywhere, but struggle without a community to call their own.', proficiencies: new Proficiencies({ weapons: new Weapons({ spears: 1, pikes: 1, halberds: 1, glaives: 1 }), armour: new Armour({ lightArmour: 1, shields: 1 }) }), features: new Features({ feyAncestry: new FeyAncestry({ name: 'Fey Ancestry', bonusesDescription: "The Feywild casts a veil over your mind. You have Advantage on Saving throws against being Charmed, and magic can't put you to Sleep." }) }), darkvision: new Darkvision({ name: 'Darkvision', bonusesDescription: 'Can see in the dark up to 12 m / 40 ft.', darkVisionRange: 12 }) }),
                 Race.create({ name: 'Half-Orc', description: 'Creatures of intense emotion, Half-Orcs are more inclined to act than contemplate - whether the rage burning their bodies compels them to fight, or the love filling their hearts inspires acts of incredible kindness.', speed: 9, proficiencies: new Proficiencies({ skills: new Skills({ intimidation: 1 }) }), features: new Features({ darkvision: new Darkvision({ name: 'Darkvision', bonusesDescription: 'Can see in the dark up to 12 m / 40 ft.', darkVisionRange: 12 }), savageAttacks: new SavageAttacks({ name: 'Savage Attacks', bonusesDescription: 'When you land a Critical Hit with a melee weapon attack, you deal an extra dice of weapon damage.', criticalHitDice: 1 }), relentlessEndurance: new RelentlessEndurance({ name: 'Relentless Endurance', bonusesDescription: 'If you reach 0 hit points, you regain 1hit points instead of becoming Downed.'}) }) }),
                 Race.create({ name: 'Halfling', description: 'Small yet capable, halflings prefer the comforts of home and hearth - but their natural luck and dexterity makes them fine adventurers.', speed: 7.5, features: new Features({ halflingLuck: new HalflingLuck({ name: 'Halfling Luck', bonusesDescription: 'When you roll a 1 for an Attack roll, Ability check, or Saving throw, you can reroll the dice and must use the new roll.' }), brave: new Brave({ name: 'Brave', bonusesDescription:'You have Advantage on Saving Throws against Frightened.' }) }) }),

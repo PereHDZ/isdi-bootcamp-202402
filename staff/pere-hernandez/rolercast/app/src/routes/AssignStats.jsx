@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useCharacterClassId } from '../pages/Home'
-import retrieveCharacterClass from '../logic/retrieveCharacterClass'
 import logic from '../logic'
 
 function AssignStats({ onReturnClick }){
     const { characterClassId } = useCharacterClassId()
-    const [ characterClass, setCharacterClass ] = useState(null)
+    const [characterClass, setCharacterClass] = useState(null)
+    const [deities, setDeities] = useState(null)
+    const [deity, setDeity] = useState('')
+
 
     const [skills, setSkills] = useState({
         Strength: 8,
@@ -27,20 +29,20 @@ function AssignStats({ onReturnClick }){
         onReturnClick()
     }
 
-    try {
-        logic.retrieveCharacterClass(characterClassId)
-            .then(setCharacterClass)
-            .catch(error => alert(error))
-    } catch (error) {
-        alert(error)
-    }
+    // try {
+    //     logic.retrieveCharacterClass(characterClassId)
+    //         .then(setCharacterClass)
+    //         .catch(error => alert(error))
+    // } catch (error) {
+    //     alert(error)
+    // }
 
     const handleSkillIncrement = (skill) => {
         if (remainingSkillPoints > 0 && skills[skill] < 15){
             const updatedSkills = { ...skills }
             updatedSkills[skill]++
             setSkills(updatedSkills)
-            setRemainingSkillPoints(remainingSkillPoints--)
+            setRemainingSkillPoints(remainingSkillPoints - 1)
         }
     }
 
@@ -49,7 +51,7 @@ function AssignStats({ onReturnClick }){
             const updatedSkills = { ...skills }
             updatedSkills[skill]--
             setSkills(updatedSkills)
-            setRemainingSkillPoints(remainingSkillPoints++)
+            setRemainingSkillPoints(remainingSkillPoints + 1)
         }          
     }
 
@@ -65,15 +67,36 @@ function AssignStats({ onReturnClick }){
     const renderSkillInput = (skill) => {
         return <div key={skill}>
             <label htmlFor={skill}>{skill}:</label>
-            <button onClick={() => handleSkillDecrement(skill)}>-</button>
+            <button type='button' onClick={() => handleSkillDecrement(skill)}>-</button>
             <span>{skills[skill]}</span>
-            <button onClick={() => handleSkillIncrement(skill)}>+</button>
+            <button type='button' onClick={() => handleSkillIncrement(skill)}>+</button>
         </div>
+    }
+
+    const handleDeityChange = (event) => {
+        setDeity(event.target.value)
     }
 
     const renderSelectDeity = () => {
         if (characterClass.name.includes('Domain')){
-            return <h3>SELECT YOUR DEITY</h3>
+            try {
+                logic.retrieveDeities()
+                    .then(setDeities)
+                    .then(() => {
+                        return <div>
+                            <label>SELECT YOUR DEITY</label>
+                            <select value={deity} onChange={handleDeityChange}>
+                                <option value={''}>Select Deity</option>
+                                { deities && deities.map(deity => {
+                                    return <option key={deity.name} value={deity}>{deity.name}</option>
+                                })}
+                            </select>
+                        </div>
+                    })
+                    .catch(error => alert(error))
+            } catch (error) {
+                alert(error)
+            }          
         } else {
             return <></>
         }
@@ -188,13 +211,15 @@ function AssignStats({ onReturnClick }){
                 </div>
             </div>
 
-            { characterClass && renderSelectDeity()}
+            {/* { characterClass && renderSelectDeity() }
+
+            { deity && <p>{deity.description}</p>}
 
             { characterClass && characterClass.name === 'Fighter' &&<h5>SELECT YOUR FIGHTING STYLE</h5>}            
 
             { characterClass && characterClass.name === 'Ranger' && <h5>SELECT YOR FAVOURED ENEMY</h5>}      
 
-            { characterClass && characterClass.name === 'Ranger' && <h5>SELECT YOR NATURAL EXPLORER</h5>}      
+            { characterClass && characterClass.name === 'Ranger' && <h5>SELECT YOR NATURAL EXPLORER</h5>}       */}
         </form>
     </section>
 }
