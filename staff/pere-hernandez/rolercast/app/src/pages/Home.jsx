@@ -22,13 +22,13 @@ import retrieveRace from "../logic/retrieveRace"
 
 const RaceContext = createContext(null)
 const CharacterClassContext = createContext(null)
-const BackgroundIdContext = createContext(null)
+const BackgroundContext = createContext(null)
 const CantripsContext = createContext(null)
 const SpellsContext = createContext(null)
 
 export const useRace = () => useContext(RaceContext)
 export const useCharacterClass = () => useContext(CharacterClassContext)
-export const useBackgroundId = () => useContext(BackgroundIdContext)
+export const useBackground = () => useContext(BackgroundContext)
 export const useCantrips = () => useContext(CantripsContext)
 export const useSpells = () => useContext(SpellsContext)
 
@@ -37,7 +37,7 @@ function Home({ onUserLoggedOut }) {
     const [characterClass, setCharacterClass] = useState(null)
     const [cantrips, setCantrips] = useState([])
     const [spells, setSpells] = useState([])
-    const [backgroundId, setBackgroundId] = useState(null)
+    const [background, setBackground] = useState(null)
     
     const navigate = useNavigate()
 
@@ -66,10 +66,10 @@ function Home({ onUserLoggedOut }) {
     }, [characterClass])
     
     useEffect(() => {
-        if (backgroundId !== null) {
+        if (background !== null) {
             navigate('/confirmBackground')
         }
-    }, [backgroundId])
+    }, [background])
 
     const handleLogoutClick = () => {
         try {
@@ -96,7 +96,7 @@ function Home({ onUserLoggedOut }) {
     }
 
     const handleReturnFromConfirmBackground = () => {
-        setBackgroundId(null)
+        setBackground(null)
 
         navigate('/selectBackground')
     }
@@ -196,7 +196,7 @@ function Home({ onUserLoggedOut }) {
     return <>
     <RaceContext.Provider value={{setRace, race}}>
     <CharacterClassContext.Provider value={{setCharacterClass, characterClass}}>
-    <BackgroundIdContext.Provider value={{setBackgroundId, backgroundId}}>
+    <BackgroundContext.Provider value={{setBackground, background}}>
     <CantripsContext.Provider value={{setCantrips, cantrips}}>
     <SpellsContext.Provider value={{setRace, spells}}>
     <main className="home-main">
@@ -232,7 +232,7 @@ function Home({ onUserLoggedOut }) {
     </main>
     </SpellsContext.Provider>
     </CantripsContext.Provider>
-    </BackgroundIdContext.Provider>
+    </BackgroundContext.Provider>
     </CharacterClassContext.Provider>
     </RaceContext.Provider>
     </>

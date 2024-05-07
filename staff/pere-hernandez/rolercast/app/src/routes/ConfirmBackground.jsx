@@ -1,26 +1,14 @@
-import { useBackgroundId } from '../pages/Home'
-import { useState, useEffect } from 'react'
-
-import logic from '../logic'
+import { useBackground } from '../pages/Home'
+import { useEffect } from 'react'
 
 function ConfirmBackground({ onReturnClick, onBackgroundSelected }){
-    const [background, setBackground] = useState(null)
-
-    const { backgroundId } = useBackgroundId()
+    const { background } = useBackground()
 
     useEffect(() => {
-        if(!(backgroundId)) {
+        if(!(background)) {
             onReturnClick()
 
             return
-        }
-
-        try {
-            logic.retrieveBackground(backgroundId)
-                .then(setBackground)
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
         }
     }, [])
 

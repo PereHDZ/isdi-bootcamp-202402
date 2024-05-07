@@ -1,9 +1,9 @@
-import { useBackgroundId } from '../pages/Home'
+import { useBackground } from '../pages/Home'
 
 function SelectBackgroundComponent({ item: background }) {
-    const {setBackgroundId} = useBackgroundId()
+    const {setBackground} = useBackground()
     const handleBackgroundClick = () => {
-        setBackgroundId(background._id)
+        setBackground(background)
     }
 
     return <article className="select-atribute-article">
