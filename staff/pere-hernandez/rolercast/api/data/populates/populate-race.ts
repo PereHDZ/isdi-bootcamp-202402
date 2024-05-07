@@ -51,7 +51,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         drowMagic: new DrowMagic({
                             name: 'Drow Magic', 
                             bonusesDescription: 'Drow Magic grants Drow access to the following Spells, which can be cast once each per Long Rest:\nCantrip: Dancing Lights (at character level 1)\n1st Level Spell: Faerie Fire (at character level 3)\n2nd Level Spell: Darkness (at character level 5)', 
-                            cantrip: new ObjectId('663104b9505f0221763632f7') }) }) }),
+                            cantrip: new ObjectId('66354088b3c877f621450002') }) }) }),
 
                 Race.create({ 
                     name: 'Human', 
@@ -167,7 +167,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         githyankiPsionics: new GithyankiPsionics({ 
                             name: 'Githyanki Psionics', 
                             bonusesDescription: 'Githyanki Psionics grants Githyanki access to the following Spells, based on character level:\nCantrip: Mage Hand (Character level 1). Your Mage Hand is invisible when cast via Githyanki Psionics.\n1st Level Spell: Enhance Leap (Character level 3).\n2nd Level Spell: Misty Step (Character level 5)   Recharge: Long rest', 
-                        cantrip: new ObjectId('663104b9505f0221763632fb') }) }) })
+                        cantrip: new ObjectId('66354088b3c877f621450006') }) }) })
             ])
                 .then((races) => {
                     const elfRace = races.find(race => race.name === 'Elf')
@@ -244,7 +244,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                                 drowMagic: new DrowMagic({ 
                                     name: 'Drow Magic', 
                                     bonusesDescription: 'Drow Magic grants Drow access to the following Spells, which can be cast once each per Long Rest:\nCantrip: Dancing Lights (at character level 1)\n1st Level Spell: Faerie Fire (at character level 3)\n2nd Level Spell: Darkness (at character level 5)', 
-                                    cantrip: new ObjectId('663104b9505f0221763632f7') }) }), 
+                                    cantrip: new ObjectId('66354088b3c877f621450002') }) }), 
                             parent: halfElfRace._id }),
 
                         Race.create({ 
@@ -335,7 +335,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                                 tieflingMagic: new TieflingMagic({ 
                                     name: 'Tiefling Magic', 
                                     bonusesDescription: 'Produce Flame, Hellish Rebuke, and Darkness Spells at levels 1, 3, and 5', 
-                                    cantrip: new ObjectId('663104b9505f022176363300') }) }), 
+                                    cantrip: new ObjectId('66354088b3c877f62145000b') }) }), 
                             parent: tieflingRace._id }),
 
                         Race.create({ 
@@ -345,7 +345,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                                 tieflingMagic: new TieflingMagic({ 
                                     name: 'Tiefling Magic', 
                                     bonusesDescription: 'Mage Hand, Burning Hands and Flame Blade Spells at levels 1, 3, and 5', 
-                                    cantrip: new ObjectId('663104b9505f0221763632fb') }) }), 
+                                    cantrip: new ObjectId('66354088b3c877f621450006') }) }), 
                             parent: tieflingRace._id }),
                         Race.create({ 
                             name: 'Zariel Tiefling', 
@@ -354,7 +354,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                                 tieflingMagic: new TieflingMagic({ 
                                     name: 'Tiefling Magic', 
                                     bonusesDescription: 'Thaumaturgy, Searing Smite and Branding Smite Spells at levels 1, 3, and 5', 
-                                    cantrip: new ObjectId('663104b9505f022176363307') }) }), 
+                                    cantrip: new ObjectId('66354088b3c877f621450013') }) }), 
                                 parent: tieflingRace._id }),
 
                         Race.create({ 

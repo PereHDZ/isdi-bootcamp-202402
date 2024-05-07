@@ -17,6 +17,8 @@ import retrieveSubclassesFromClass from './retrieveSubclassesFromParent.js'
 import retrieveBackgrounds from './retrieveBackgrounds.js'
 import retrieveBackground from './retrieveBackground.js'
 
+import retrieveCantrip from './retrieveCantrip.js'
+
 import retrieveDeities from './retrieveDeities.js'
 
 const logic = { 
@@ -38,6 +40,8 @@ const logic = {
 
     retrieveBackgrounds,
     retrieveBackground,
+
+    retrieveCantrip,
 
     retrieveDeities
 }

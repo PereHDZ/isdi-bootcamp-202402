@@ -22,16 +22,19 @@ import retrieveCharacterClass from "../logic/retrieveCharacterClass"
 const RaceContext = createContext(null)
 const CharacterClassIdContext = createContext(null)
 const BackgroundIdContext = createContext(null)
+const CantripsContext = createContext(null)
 const SpellsContext = createContext(null)
 
 export const useRace = () => useContext(RaceContext)
 export const useCharacterClassId = () => useContext(CharacterClassIdContext)
 export const useBackgroundId = () => useContext(BackgroundIdContext)
+export const useCantrips = () => useContext(CantripsContext)
 export const useSpells = () => useContext(SpellsContext)
 
 function Home({ onUserLoggedOut }) {
     const [race, setRace] = useState(null)
     const [characterClassId, setCharacterClassId] = useState(null)
+    const [cantrips, setCantrips] = useState([])
     const [spells, setSpells] = useState([])
     const [backgroundId, setBackgroundId] = useState(null)
     
@@ -212,6 +215,7 @@ function Home({ onUserLoggedOut }) {
     <RaceContext.Provider value={{setRace, race}}>
     <CharacterClassIdContext.Provider value={{setCharacterClassId, characterClassId}}>
     <BackgroundIdContext.Provider value={{setBackgroundId, backgroundId}}>
+    <CantripsContext.Provider value={{setCantrips, cantrips}}>
     <SpellsContext.Provider value={{setRace, spells}}>
     <main className="home-main">
         <header>
@@ -245,6 +249,7 @@ function Home({ onUserLoggedOut }) {
         </Routes>
     </main>
     </SpellsContext.Provider>
+    </CantripsContext.Provider>
     </BackgroundIdContext.Provider>
     </CharacterClassIdContext.Provider>
     </RaceContext.Provider>
