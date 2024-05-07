@@ -17,23 +17,24 @@ import ConfirmBackground from "../routes/ConfirmBackground"
 import AssignStats from "../routes/AssignStats"
 import SelectSpells from "../routes/SelectSpells"
 import retrieveCharacterClass from "../logic/retrieveCharacterClass"
+import retrieveRace from "../logic/retrieveRace"
 
 
 const RaceContext = createContext(null)
-const CharacterClassIdContext = createContext(null)
+const CharacterClassContext = createContext(null)
 const BackgroundIdContext = createContext(null)
 const CantripsContext = createContext(null)
 const SpellsContext = createContext(null)
 
 export const useRace = () => useContext(RaceContext)
-export const useCharacterClassId = () => useContext(CharacterClassIdContext)
+export const useCharacterClass = () => useContext(CharacterClassContext)
 export const useBackgroundId = () => useContext(BackgroundIdContext)
 export const useCantrips = () => useContext(CantripsContext)
 export const useSpells = () => useContext(SpellsContext)
 
 function Home({ onUserLoggedOut }) {
     const [race, setRace] = useState(null)
-    const [characterClassId, setCharacterClassId] = useState(null)
+    const [characterClass, setCharacterClass] = useState(null)
     const [cantrips, setCantrips] = useState([])
     const [spells, setSpells] = useState([])
     const [backgroundId, setBackgroundId] = useState(null)
@@ -41,7 +42,7 @@ function Home({ onUserLoggedOut }) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (race !== null && characterClassId === null){
+        if (race !== null && characterClass === null){
             if (!!race.parent){
                 navigate('/confirmSubRace')
 
@@ -53,25 +54,16 @@ function Home({ onUserLoggedOut }) {
     }, [race])
     
     useEffect(() => {
-        if (characterClassId !== null){
-            try {
-                logic.retrieveCharacterClass(characterClassId)
-                    .then(characterClass => {
-                        if (!!characterClass.parent){
-                            navigate('/confirmSubclass')
+        if (characterClass !== null){
+            if (!!characterClass.parent){
+                navigate('/confirmSubclass')
 
-                            return
-                        }
-
-                        navigate('/confirmClass')
-                    })
-                    .catch(error => alert(error))
-            } catch(error) {
-                alert(error)
+                return
             }
-        }
-            
-    }, [characterClassId])
+
+            navigate('/confirmClass')
+        }            
+    }, [characterClass])
     
     useEffect(() => {
         if (backgroundId !== null) {
@@ -98,7 +90,7 @@ function Home({ onUserLoggedOut }) {
     }
 
     const handleReturnFromConfirmClass = () => {
-        setCharacterClassId(null)
+        setCharacterClass(null)
 
         navigate('/selectClass')
     }
@@ -123,28 +115,22 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromConfirmSubrace = () => {
         try {
-            logic.retrieveRace(race)
-                .then(race => {
-                    setRace(race.parent)
+            retrieveRace(race.parent)
+                .then(parentRace => {
+                    setRace(parentRace)
+
+                    console.log(race.name)
+
+                    navigate('/selectSubrace')
                 })
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
-        }
-
-        navigate('/selectSubrace')
+        }    
     }
 
     const handleReturnFromConfirmSubclass = () => {
-        try {
-            logic.retrieveCharacterClass(characterClassId)
-                .then(characterClass => {
-                    setCharacterClassId(characterClass.parent)
-                })
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
-        }
+        setCharacterClass(characterClass.parent)
 
         navigate('/selectSubclass')
     }
@@ -175,31 +161,27 @@ function Home({ onUserLoggedOut }) {
         try {
             logic.retrieveCharacterClasses()
                 .then(characterClasses => {
-                    const classChildren = characterClasses.filter(characterClass => {
-                        if (!!characterClass.parent){
-                            if(characterClass.parent.toString() === characterClassId)
-                                return characterClass
+                    const classChildren = characterClasses.filter(classChild => {
+                        if (!!classChild.parent){
+                            if(classChild.parent.toString() === characterClass._id)
+                                return classChild
                         }
                     })
 
                     if (classChildren.length > 0){
                         navigate('/selectSubClass')
                     } else {
-                        retrieveCharacterClass(characterClassId)
-                            .then(characterClass => {
-                                if (!characterClass.parent && !characterClass.spellcasting) 
-                                    navigate('/selectBackground')
-                                else if (!!characterClass.spellcasting)
-                                    navigate('/selectSpells')
-                                else if (!!characterClass.parent){
-                                    retrieveCharacterClass(characterClass.parent)
-                                        .then(parentClass => {
-                                            if (!!parentClass.spellcasting)
-                                                navigate('/selectSpells')
-                                        })
-                                }
-                            })
-                        
+                        if (!characterClass.parent && !characterClass.spellcasting) 
+                            navigate('/selectBackground')
+                        else if (!!characterClass.spellcasting)
+                            navigate('/selectSpells')
+                        else if (!!characterClass.parent){
+                            retrieveCharacterClass(characterClass.parent)
+                                .then(parentClass => {
+                                    if (!!parentClass.spellcasting)
+                                        navigate('/selectSpells')
+                                })
+                        }
                     }
                 })
         } catch (error) {
@@ -213,7 +195,7 @@ function Home({ onUserLoggedOut }) {
 
     return <>
     <RaceContext.Provider value={{setRace, race}}>
-    <CharacterClassIdContext.Provider value={{setCharacterClassId, characterClassId}}>
+    <CharacterClassContext.Provider value={{setCharacterClass, characterClass}}>
     <BackgroundIdContext.Provider value={{setBackgroundId, backgroundId}}>
     <CantripsContext.Provider value={{setCantrips, cantrips}}>
     <SpellsContext.Provider value={{setRace, spells}}>
@@ -251,7 +233,7 @@ function Home({ onUserLoggedOut }) {
     </SpellsContext.Provider>
     </CantripsContext.Provider>
     </BackgroundIdContext.Provider>
-    </CharacterClassIdContext.Provider>
+    </CharacterClassContext.Provider>
     </RaceContext.Provider>
     </>
 }

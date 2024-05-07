@@ -1,34 +1,16 @@
-import { useCharacterClassId } from '../pages/Home'
+import { useCharacterClass } from '../pages/Home'
 import { useState, useEffect } from 'react'
 
 import logic from '../logic'
 
 function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
-    const [characterClass, setCharacterClass] = useState(null)
-
-    const { characterClassId } = useCharacterClassId()
+    const { characterClass } = useCharacterClass()
 
     useEffect(() => {
-        if (!(characterClassId)) {
+        if (!(characterClass)) {
             onReturnClick()
 
             return
-        }
-
-        try {
-            logic.retrieveCharacterClass(characterClassId)
-                .then(characterClass => {
-                    if (!(characterClass.parent)){
-                        onReturnClick()
-
-                        return
-                    } else {
-                        setCharacterClass(characterClass)
-                    }
-                })
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
         }
     }, [])
 

@@ -1,10 +1,8 @@
 import { useRace } from '../pages/Home'
-import { useState, useEffect } from 'react'
-
-import logic from '../logic'
+import { useEffect } from 'react'
 
 function ConfrimSubrace({ onReturnClick, onSubraceSelected }){
-    const { race, setRace } = useRace()
+    const { race } = useRace()
 
     useEffect(() => {
         if (!(race)) {

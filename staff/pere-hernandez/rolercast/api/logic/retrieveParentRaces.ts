@@ -12,7 +12,7 @@ const { SystemError, NotFoundError } = errors
 
 const { Types: { ObjectId } } = Schema
 
-function retrieveParentRaces(userId: string): Promise<[{ id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }] | { name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }[]> {
+function retrieveParentRaces(userId: string): Promise<[{ id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }] | { id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }[]> {
     //validation
     validate.text(userId, 'userId', true)
 

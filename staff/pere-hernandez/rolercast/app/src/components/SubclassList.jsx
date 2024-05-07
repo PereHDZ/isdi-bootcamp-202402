@@ -2,17 +2,17 @@ import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 
-import { useCharacterClassId } from '../pages/Home'
+import { useCharacterClass } from '../pages/Home'
 
 import SelectSubclassComponent from './SelectSubclassComponent'
 
 function SubclassList({ stamp }){
-    const {characterClassId, setCharacterClassId} = useCharacterClassId()
+    const {characterClass} = useCharacterClass()
     const [subclasses, setSubclasses] = useState([])
 
     const loadSubclasses = () => {
         try {
-            logic.retrieveSubclassesFromClass(characterClassId)
+            logic.retrieveSubclassesFromClass(characterClass._id)
                 .then(setSubclasses)
                 .catch(error => alert(error))
         } catch (error) {

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useCharacterClassId } from '../pages/Home'
+import { useCharacterClass } from '../pages/Home'
 import logic from '../logic'
 
 function AssignStats({ onReturnClick }){
-    const { characterClassId } = useCharacterClassId()
-    const [characterClass, setCharacterClass] = useState(null)
+    const { characterClass } = useCharacterClass()
     const [deities, setDeities] = useState(null)
     const [deity, setDeity] = useState('')
 

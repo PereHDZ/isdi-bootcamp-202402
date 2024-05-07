@@ -1,26 +1,14 @@
-import { useCharacterClassId } from '../pages/Home'
-import { useState, useEffect } from 'react'
-
-import logic from '../logic'
+import { useCharacterClass } from '../pages/Home'
+import { useEffect } from 'react'
 
 function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
-    const [characterClass, setCharacterClass] = useState(null)
-
-    const { characterClassId } = useCharacterClassId()
+    const { characterClass } = useCharacterClass()
 
     useEffect(() => {
-        if (!(characterClassId)) {
+        if (!(characterClass)) {
             onReturnClick()
 
             return
-        }
-
-        try {
-            logic.retrieveCharacterClass(characterClassId)
-                .then(setCharacterClass)
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
         }
     }, [])
 
@@ -99,7 +87,7 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
 
             <p><strong>Key Abilities:</strong></p>
             <ul>
-                {characterClass && characterClass.keyAbilities.map((keyAbility, index) => (
+                { characterClass && characterClass.keyAbilities.map((keyAbility, index) => (
                     <li key={index}>{keyAbility}</li>
                 ))}
             </ul>

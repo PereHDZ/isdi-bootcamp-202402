@@ -1,11 +1,11 @@
 import logic from '../logic'
 
-import { useRace, useCharacterClassId, useCantrips, useSpells } from '../pages/Home'
+import { useRace, useCharacterClass, useCantrips, useSpells } from '../pages/Home'
 import { useEffect, useState } from 'react'
 
 function SelectSpells({ onReturn }){
     const { race } = useRace()
-    const { characterClassId } = useCharacterClassId()
+    const { characterClass } = useCharacterClass()
     const { cantrips } = useCantrips()
     const { spells } = useSpells()
 

@@ -7,7 +7,7 @@ import { validate, errors } from 'com'
 const { SystemError, NotFoundError } = errors
 const { Types: { ObjectId } } = Schema
 
-function retrieveRace(userId: string, raceId: string): Promise<{ name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }>{
+function retrieveRace(userId: string, raceId: string): Promise<{ id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }>{
     //validation
     validate.text(userId, 'userId', true)
     validate.text(raceId, 'raceId', true)
@@ -18,12 +18,12 @@ function retrieveRace(userId: string, raceId: string): Promise<{ name: string, d
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return Race.findById(raceId).select('_id name description speed features proficiencies parent').lean()
+            return Race.findById(raceId).select('id name description speed features proficiencies parent').lean()
         })
         .then(race => {
             if (!race) throw new NotFoundError('race not found')
 
-            return { name: race.name, description: race.description, speed: race.speed, features: race.features, proficiencies: race.proficiencies, parent: race.parent }
+            return { id: race._id.toString(), name: race.name, description: race.description, speed: race.speed, features: race.features, proficiencies: race.proficiencies, parent: race.parent }
         })
 }
 

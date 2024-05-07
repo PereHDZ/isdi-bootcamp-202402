@@ -1,9 +1,9 @@
-import { useCharacterClassId } from "../pages/Home"
+import { useCharacterClass } from "../pages/Home"
 
 function SelectCharacterClassComponent({ item: characterClass }) {
-    const {setCharacterClassId} = useCharacterClassId()
+    const {setCharacterClass} = useCharacterClass()
     const handleCharacterClassClick = () => {
-        setCharacterClassId(characterClass._id)
+        setCharacterClass(characterClass)
     }
 
     return <article className='select-atribute-article'>
