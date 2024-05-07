@@ -1,39 +1,74 @@
 import { useEffect, useState } from 'react'
 import { useCharacterClassId } from '../pages/Home'
+import retrieveCharacterClass from '../logic/retrieveCharacterClass'
 import logic from '../logic'
 
 function AssignStats({ onReturnClick }){
-    const { characterClass } = useCharacterClassId()
-
-    let [minStrength, setMinStrength] = useState(8)
-    let [minDexterity, setMinDexterity] = useState(8)
-    let [minConstitution, setMinConstitution] = useState(8)
-    let [minIntelligence, setMinIntelligence] = useState(8)
-    let [minWisdom, setMinWisdom] = useState(8)
-    let [minCharisma, setMinCharisma] = useState(8)
-
-    let [maxStrength, setMaxStrength] = useState(15)
-    let [maxDexterity, setMaxDexterity] = useState(15)
-    let [maxConstitution, setMaxConstitution] = useState(15)
-    let [maxIntelligence, setMaxIntelligence] = useState(15)
-    let [maxWisdom, setMaxWisdom] = useState(15)
-    let [maxCharisma, setMaxCharisma] = useState(15)
-
-    let [strength, setStrength] = useState(minStrength)
-    let [dexterity, setDexterity] = useState(minDexterity)
-    let [constitution, setConstitution] = useState(minConstitution)
-    let [intelligence, setIntelligence] = useState(minIntelligence)
-    let [wisdom, setWisdom] = useState(minWisdom)
-    let [charisma, setCharisma] = useState(minCharisma)
-
-    let [statPoints, setStatPoints] = useState(27)
-
     const { characterClassId } = useCharacterClassId()
+    const [ characterClass, setCharacterClass ] = useState(null)
+
+    const [skills, setSkills] = useState({
+        Strength: 8,
+        Dexterity: 8,
+        Constitution: 8,
+        Intelligence: 8,
+        Wisdom: 8,
+        Charisma: 8,
+    })
+
+    const [remainingSkillPoints, setRemainingSkillPoints] = useState(27)
+
+    const [plus2Modifier, setPlus2Modifier] = useState(null)
+    const [plus1Modifier, setPlus1Modifier] = useState(null)
 
     const handleReturnClick = () => {
         event.preventDefault()
 
         onReturnClick()
+    }
+
+    try {
+        logic.retrieveCharacterClass(characterClassId)
+            .then(setCharacterClass)
+            .catch(error => alert(error))
+    } catch (error) {
+        alert(error)
+    }
+
+    const handleSkillIncrement = (skill) => {
+        if (remainingSkillPoints > 0 && skills[skill] < 15){
+            const updatedSkills = { ...skills }
+            updatedSkills[skill]++
+            setSkills(updatedSkills)
+            setRemainingSkillPoints(remainingSkillPoints--)
+        }
+    }
+
+    const handleSkillDecrement = (skill) => {
+        if (remainingSkillPoints < 27 && skills[skill] > 8){
+            const updatedSkills = { ...skills }
+            updatedSkills[skill]--
+            setSkills(updatedSkills)
+            setRemainingSkillPoints(remainingSkillPoints++)
+        }          
+    }
+
+    const handleDropdownChange = (e, modifier) => {
+        const selectedSkill = e.target.value
+        if (modifier === 1 && selectedSkill !== plus2Modifier) {
+            setPlus1Modifier(selectedSkill)
+        } else if (modifier === 2 && selectedSkill !== plus1Modifier) {
+            setPlus2Modifier(selectedSkill)
+        }
+    }
+
+    const renderSkillInput = (skill) => {
+        return <div key={skill}>
+            <label htmlFor={skill}>{skill}:</label>
+            <button onClick={() => handleSkillDecrement(skill)}>-</button>
+            <span>{skills[skill]}</span>
+            <button onClick={() => handleSkillIncrement(skill)}>+</button>
+        </div>
     }
 
     const renderSelectDeity = () => {
@@ -42,66 +77,6 @@ function AssignStats({ onReturnClick }){
         } else {
             return <></>
         }
-    }
-
-    const increaseStrength = () => {
-        useEffect(() => {
-            if (statPoints > 0 && strength < maxStrength){
-                setStrength(strength++)
-    
-                setStatPoints(statPoints--)
-            } 
-        }, [strength, statPoints])           
-    }
-
-    const increaseDexterity = () => {
-        useEffect(() => {
-            if (statPoints > 0 && dexterity < maxDexterity){
-                setStrength(dexterity++)
-    
-                setStatPoints(statPoints--)
-            } 
-        }, [dexterity, statPoints])           
-    }
-
-    const increaseConstitution = () => {
-        useEffect(() => {
-            if (statPoints > 0 && constitution < maxConstitution){
-                setStrength(constitution++)
-    
-                setStatPoints(statPoints--)
-            } 
-        }, [constitution, statPoints])           
-    }
-
-    const increaseIntelligence = () => {
-        useEffect(() => {
-            if (statPoints > 0 && intelligence < maxIntelligence){
-                setStrength(intelligence++)
-    
-                setStatPoints(statPoints--)
-            } 
-        }, [intelligence, statPoints])           
-    }
-
-    const increaseWisdom = () => {
-        useEffect(() => {
-            if (statPoints > 0 && wisdom < maxWisdom){
-                setStrength(wisdom++)
-    
-                setStatPoints(statPoints--)
-            } 
-        }, [wisdom, statPoints])           
-    }
-
-    const increaseCharisma = () => {
-        useEffect(() => {
-            if (statPoints > 0 && charisma < maxCharisma){
-                setStrength(charisma++)
-    
-                setStatPoints(statPoints--)
-            } 
-        }, [charisma, statPoints])           
     }
 
     return <section>
@@ -117,107 +92,29 @@ function AssignStats({ onReturnClick }){
         <form className='stats-form'>
             <div className='stats-div'>
                 <div className='distribute-stats'>
-                    <div className='assign-bonus-skill'>
-                        <label htmlFor="+2-skill" className='no-margin'>Assign +2 skill</label>
+                    <label>Assign +2</label>
+                    <select onChange={(e) => handleDropdownChange(e, 2)}>
+                        <option value="">Select Skill</option>
+                        {Object.keys(skills).map((skill) => (
+                            <option key={skill} value={skill}>
+                                {skill}
+                            </option>
+                        ))}
+                    </select>
 
-                        <select name="+2-skill" id="+2-skill">
-                            <option value={null}>Select +2</option>
-                            <option value="Strength">Strength</option>
-                            <option value="Dexterity">Dexterity</option>
-                            <option value="Constitution">Constitution</option>
-                            <option value="Intelligence">Intelligence</option>
-                            <option value="Wisdom">Wisdom</option>
-                            <option value="Charisma">Charisma</option>
-                        </select>
-                    </div>
+                    <label>Assign +1</label>
+                    <select onChange={(e) => handleDropdownChange(e, 1)}>
+                        <option value="">Select Skill</option>
+                        {Object.keys(skills).map((skill) => (
+                            <option key={skill} value={skill}>
+                                {skill}
+                            </option>
+                        ))}
+                    </select>
 
-                    <div className='assign-bonus-skill'>
-                        <label htmlFor="+1-skill" className='no-margin'>Assign +1 skill</label>
+                    {Object.keys(skills).map(renderSkillInput)}
 
-                        <select name="+1-skill" id="+1-skill">
-                            <option value={null}>Select +1</option>
-                            <option value="Strength">Strength</option>
-                            <option value="Dexterity">Dexterity</option>
-                            <option value="Constitution">Constitution</option>
-                            <option value="Intelligence">Intelligence</option>
-                            <option value="Wisdom">Wisdom</option>
-                            <option value="Charisma">Charisma</option>
-                        </select>
-                    </div>   
-                    
-                    <h5>POINTS REMAINING {statPoints}/27</h5>
-
-                    <div className='display-stats'>
-                        <img src='../../public/gallery/Stats_Icons/Strength.png' alt='Strength' className='stats-icons'></img>
-
-                        <span className='stat-span'>Strength</span>
-
-                        <div className='counter-div'>
-                            <button className='counter-button' onClick={increaseStrength}>+</button>
-                            <span>{strength}</span>
-                            <button className='counter-button'>-</button>
-                        </div>                    
-                    </div>
-
-                    <div className='display-stats'>
-                        <img src='../../public/gallery/Stats_Icons/Dexterity.png' alt='Dexterity' className='stats-icons'></img>
-
-                        <span className='stat-span'>Dexterity</span>
-
-                        <div className='counter-div'>
-                            <button className='counter-button' onClick={increaseDexterity}>+</button>
-                            <span>{dexterity}</span>
-                            <button className='counter-button'>-</button>
-                        </div>                    
-                    </div>
-
-                    <div className='display-stats'>
-                        <img src='../../public/gallery/Stats_Icons/Constitution.png' alt='Constitution' className='stats-icons'></img>
-
-                        <span className='stat-span'>Constitution</span>
-
-                        <div className='counter-div'>
-                            <button className='counter-button' onClick={increaseConstitution}>+</button>
-                            <span>{constitution}</span>
-                            <button className='counter-button'>-</button>
-                        </div>                    
-                    </div>
-
-                    <div className='display-stats'>
-                        <img src='../../public/gallery/Stats_Icons/Intelligence.png' alt='Intelligence' className='stats-icons'></img>
-
-                        <span className='stat-span'>Intelligence</span>
-
-                        <div className='counter-div'>
-                            <button className='counter-button' onClick={increaseIntelligence}>+</button>
-                            <span>{intelligence}</span>
-                            <button className='counter-button'>-</button>
-                        </div>                    
-                    </div>
-
-                    <div className='display-stats'>
-                        <img src='../../public/gallery/Stats_Icons/Wisdom.png' alt='Wisdom' className='stats-icons'></img>
-
-                        <span className='stat-span'>Wisdom</span>
-
-                        <div className='counter-div'>
-                            <button className='counter-button' onClick={increaseWisdom}>+</button>
-                            <span>{wisdom}</span>
-                            <button className='counter-button'>-</button>
-                        </div>                    
-                    </div>
-
-                    <div className='display-stats'>
-                        <img src='../../public/gallery/Stats_Icons/Charisma.png' alt='Charisma' className='stats-icons'></img>
-
-                        <span className='stat-span'>Charisma</span>
-
-                        <div className='counter-div'>
-                            <button className='counter-button' onClick={increaseCharisma}>+</button>
-                            <span>{charisma}</span>
-                            <button className='counter-button'>-</button>
-                        </div>                    
-                    </div>                
+                    <p>Remaining Points: {remainingSkillPoints}/27</p>
                 </div>
 
                 <div className='distribute-skills'>

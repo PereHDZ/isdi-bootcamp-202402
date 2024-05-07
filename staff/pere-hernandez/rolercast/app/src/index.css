@@ -292,8 +292,9 @@ footer{
 .distribute-stats {
   display: flex;
   flex-direction: column;
-  padding-left: 5vw;
+  margin: 0px, 2.5vw, 0vw, 2.5vw;
   width: 50vw;
+  background-color: hsla(23, 87%, 9%, 20%);
 }
 
 .distribute-skills {
@@ -331,6 +332,9 @@ footer{
   width: 20px;
   justify-content: center;
   align-items: center;
+  background-color: #2AA6C7;
+  color: white;
+  border: 0;
 }
 
 .stats-div {

@@ -105,7 +105,6 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromConfirmBackground = () => {
         setBackgroundId(null)
-        setBackgroundConfirmed(false)
 
         navigate('/selectBackground')
     }
