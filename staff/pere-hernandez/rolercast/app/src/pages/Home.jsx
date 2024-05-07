@@ -19,40 +19,35 @@ import SelectSpells from "../routes/SelectSpells"
 import retrieveCharacterClass from "../logic/retrieveCharacterClass"
 
 
-const RaceIdContext = createContext(null)
+const RaceContext = createContext(null)
 const CharacterClassIdContext = createContext(null)
-const backgroundIdContext = createContext(null)
+const BackgroundIdContext = createContext(null)
+const SpellsContext = createContext(null)
 
-export const useRaceId = () => useContext(RaceIdContext)
+export const useRace = () => useContext(RaceContext)
 export const useCharacterClassId = () => useContext(CharacterClassIdContext)
-export const useBackgroundId = () => useContext(backgroundIdContext)
+export const useBackgroundId = () => useContext(BackgroundIdContext)
+export const useSpells = () => useContext(SpellsContext)
 
 function Home({ onUserLoggedOut }) {
-    const [raceId, setRaceId] = useState(null)
+    const [race, setRace] = useState(null)
     const [characterClassId, setCharacterClassId] = useState(null)
+    const [spells, setSpells] = useState([])
     const [backgroundId, setBackgroundId] = useState(null)
     
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (raceId !== null && characterClassId === null){
-            try{
-                logic.retrieveRace(raceId)
-                    .then(race => {
-                        if (!!race.parent){
-                            navigate('/confirmSubRace')
+        if (race !== null && characterClassId === null){
+            if (!!race.parent){
+                navigate('/confirmSubRace')
 
-                            return
-                        }
-                            
-                        navigate('/confirmRace')
-                    })
-                    .catch(error => alert(error))
-            } catch (error){
-                alert(error)
+                return
             }
+
+            navigate('/confirmRace')
         }            
-    }, [raceId])
+    }, [race])
     
     useEffect(() => {
         if (characterClassId !== null){
@@ -94,7 +89,7 @@ function Home({ onUserLoggedOut }) {
     const handleCreateClick = () => navigate('/selectRace')
 
     const handleReturn = () => {
-        setRaceId(null)
+        setRace(null)
 
         navigate('/selectRace')
     }
@@ -125,9 +120,9 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromConfirmSubrace = () => {
         try {
-            logic.retrieveRace(raceId)
+            logic.retrieveRace(race)
                 .then(race => {
-                    setRaceId(race.parent)
+                    setRace(race.parent)
                 })
                 .catch(error => alert(error))
         } catch (error) {
@@ -155,10 +150,10 @@ function Home({ onUserLoggedOut }) {
         try {
             logic.retrieveRaces()
                 .then(races => {
-                    const raceChildren = races.filter(race => {
-                        if (!!race.parent){
-                            if (race.parent.toString() === raceId)
-                                return race
+                    const raceChildren = races.filter(raceChild => {
+                        if (!!raceChild.parent){
+                            if (raceChild.parent.toString() === race._id)
+                                return raceChild
                         }
                     })
 
@@ -214,9 +209,10 @@ function Home({ onUserLoggedOut }) {
     const handleReturnFromSelectBackground = () => navigate('/selectClass')
 
     return <>
-    <RaceIdContext.Provider value={{setRaceId, raceId}}>
+    <RaceContext.Provider value={{setRace, race}}>
     <CharacterClassIdContext.Provider value={{setCharacterClassId, characterClassId}}>
-    <backgroundIdContext.Provider value={{setBackgroundId, backgroundId}}>
+    <BackgroundIdContext.Provider value={{setBackgroundId, backgroundId}}>
+    <SpellsContext.Provider value={{setRace, spells}}>
     <main className="home-main">
         <header>
             <button className="transparent-button">
@@ -248,9 +244,10 @@ function Home({ onUserLoggedOut }) {
             <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats}/>}/>
         </Routes>
     </main>
-    </backgroundIdContext.Provider>
+    </SpellsContext.Provider>
+    </BackgroundIdContext.Provider>
     </CharacterClassIdContext.Provider>
-    </RaceIdContext.Provider>
+    </RaceContext.Provider>
     </>
 }
 

@@ -1,34 +1,16 @@
-import { useRaceId } from '../pages/Home'
+import { useRace } from '../pages/Home'
 import { useState, useEffect } from 'react'
 
 import logic from '../logic'
 
 function ConfrimSubrace({ onReturnClick, onSubraceSelected }){
-    const [race, setRace] = useState(null)
-
-    const { raceId } = useRaceId()
+    const { race, setRace } = useRace()
 
     useEffect(() => {
-        if (!(raceId)) {
+        if (!(race)) {
             onReturnClick()
 
             return
-        }
-        
-        try {
-            logic.retrieveRace(raceId)
-                .then(race => {
-                    if (!(race.parent)){
-                        onReturnClick()
-
-                        return
-                    } else {
-                        setRace(race)
-                    }
-                })
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
         }
     }, [])
 

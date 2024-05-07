@@ -1,12 +1,26 @@
-import { useRaceId, useCharacterClassId } from '../pages/Home'
+import { useRace, useCharacterClassId, useSpells } from '../pages/Home'
 
 import logic from '../logic'
+import { useEffect, useState } from 'react'
 
 function SelectSpells({ onReturn }){
-    const { raceId } = useRaceId()
+    const { race, setRace } = useRace()
     const { characterClassId } = useCharacterClassId()
+    const { spells } = useSpells()
+    const [spellsSelected, setSpellsSelected] = useState([])
 
     const handleReturnClick = () => onReturn()
+
+    useEffect(() => {
+        if(!!race && !!race.features.tieflingMagic)
+            console.log(':)')
+    }, [])
+
+    const renderSelectedSpells = () => {
+        return <div>
+            {spellsSelected.map(spell => <p>{spell}</p>)}
+        </div>
+    }
 
     return <section>
         <div className="return-div">
@@ -17,6 +31,8 @@ function SelectSpells({ onReturn }){
         </div>
 
         <h3>SELECT YOUR SPELLS</h3>
+
+        { renderSelectedSpells() }
     </section>
 }
 

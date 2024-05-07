@@ -1,9 +1,9 @@
-import { useRaceId } from "../pages/Home"
+import { useRace } from "../pages/Home"
 
 function SelectRaceComponent({ item: race }) {
-    const {setRaceId} = useRaceId()
+    const {setRace} = useRace()
     const handleRaceClick = () => {
-        setRaceId(race._id)
+        setRace(race)
     }  
 
     return <article className='select-atribute-article'>

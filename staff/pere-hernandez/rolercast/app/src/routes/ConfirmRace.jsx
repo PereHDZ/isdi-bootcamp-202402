@@ -1,26 +1,16 @@
-import { useRaceId } from '../pages/Home'
+import { useRace } from '../pages/Home'
 import { useState, useEffect } from 'react'
 
 import logic from '../logic'
 
 function ConfirmRace({ onReturnClick, onRaceSelected }){
-    const [race, setRace] = useState(null)
-
-    const { raceId } = useRaceId()
+    const { race, setRace } = useRace()
 
     useEffect(() => {
-        if (!(raceId)) {
+        if (!(race)) {
             onReturnClick()
 
             return
-        }
-        
-        try {
-            logic.retrieveRace(raceId)
-                .then(setRace)
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
         }
     }, [])
 

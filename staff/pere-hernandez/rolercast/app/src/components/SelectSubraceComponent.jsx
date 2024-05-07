@@ -1,9 +1,9 @@
-import { useRaceId } from "../pages/Home"
+import { useRace } from "../pages/Home"
 
 function SelectSubraceComponent({ item: subrace }) {
-    const {setRaceId} = useRaceId()
+    const {setRace} = useRace()
     const handleSubraceClick = () => {
-        setRaceId(subrace._id)
+        setRace(subrace)
     }  
 
     return <article className='select-atribute-article'>

@@ -2,17 +2,17 @@ import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 
-import { useRaceId } from '../pages/Home'
+import { useRace } from '../pages/Home'
 
 import SelectSubraceComponent from './SelectSubraceComponent'
 
 function SubraceList({ stamp }){
-    const {raceId, setRaceId} = useRaceId()
+    const {race} = useRace()
     const [subraces, setSubraces] = useState([])
 
     const loadSubraces = () => {
         try {
-            logic.retrieveSubracesFromRace(raceId)
+            logic.retrieveSubracesFromRace(race._id)
                 .then(setSubraces)
                 .catch(error => alert(error))
         } catch (error) {
