@@ -1,8 +1,10 @@
+import logic from '../logic'
 import { useCharacterClass } from '../pages/Home'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
     const { characterClass } = useCharacterClass()
+    const [classActionsData, setClassActionsData] = useState([])
 
     useEffect(() => {
         if (!(characterClass)) {
@@ -58,6 +60,35 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
         }
     }
 
+    const renderClassActions = () => {
+        useEffect(() => {
+            const fetchClassActionsData = () => {
+                Promise.all(
+                    characterClass.classActions.map(classActionId => logic.retrieveClassAction(classActionId)
+                        .then(ObjectClassAction => ObjectClassAction)
+                    )
+                ).then(fetchedData => {
+                    const filteredData = fetchedData.filter(Boolean)
+                    setClassActionsData(filteredData)
+                }).catch(error => {
+                    console.error('Error fetching classData:', error)
+                    return null
+                })
+            }
+
+            fetchClassActionsData()
+        }, [characterClass])
+
+        return <div>
+            <p><strong>Class Actions and other bonuses: </strong></p>
+            <ul>
+                {classActionsData.map(classAction => (
+                    <li><strong>{classAction.name}: </strong>{classAction.description}</li>
+                ))}
+            </ul>
+        </div>
+    }
+
     return <section>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -99,6 +130,8 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
             { characterClass && <p><strong>Spellcasting Ability: </strong>{ characterClass.spellcastingAbility }</p> }
 
             { characterClass && characterClass.spellcasting && <p><strong>Spellcasting: </strong>You will de able to choose {characterClass.spellcasting.cantripCount} cantrips and {characterClass.spellcasting.spellCount} spells from the {characterClass.name} Spell List.</p>}
+
+            { characterClass && characterClass.classActions.length > 0 && renderClassActions() }
 
         </div>
 

@@ -12,11 +12,12 @@ import retrieveCharacterClass from './retrieveCharacterClass.ts'
 import retrieveParentCharacterClasses from './retrieveParentCharacterClasses.ts'
 import retrieveSubclassesFromClass from './retrieveSubclassesFromClass.ts'
 
+import retrieveClassAction from './retrieveClassAction.ts'
+
 import retrieveBackgrounds from './retrieveBackgrounds.ts'
 import retrieveBackground from './retrieveBackground.ts'
 
 import retrieveCantrip from './retrieveCantrip.ts'
-
 import retrieveSpell from './retrieveSpell.ts'
 
 import retrieveDeities from './retrieveDeities.ts'
@@ -40,11 +41,12 @@ const logic = {
     retrieveParentCharacterClasses,
     retrieveSubclassesFromClass,
 
+    retrieveClassAction,
+
     retrieveBackgrounds,
     retrieveBackground,
 
     retrieveCantrip,
-
     retrieveSpell,
 
     retrieveDeities
