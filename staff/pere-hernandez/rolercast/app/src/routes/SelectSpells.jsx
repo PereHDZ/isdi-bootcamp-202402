@@ -12,6 +12,7 @@ function SelectSpells({ onReturn }){
     const [availableSpells, setAvailableSpells] = useState([])
 
     const [spellsSelected, setSpellsSelected] = useState([])
+    const [spellsData, setSpellsData] = useState([])
 
     const handleReturnClick = () => onReturn()
 
@@ -54,9 +55,6 @@ function SelectSpells({ onReturn }){
             setSpellsSelected(newSelectedSpells)
         }
     }, [])
-
-    console.log(spellsSelected)
-
     
     // const renderAvailableSpells = () => {
     //     useEffect(() => {
@@ -79,6 +77,41 @@ function SelectSpells({ onReturn }){
     //     }, [])
     // }
 
+    const renderSelectedSpells = () => {
+        useEffect(() => {
+            const fetchSpellsData = () => {
+                Promise.all(
+                    spellsSelected.map(spellId => 
+                        logic.retrieveSpell(spellId)
+                            .then(objectSpell => objectSpell)
+                            .catch(error => {
+                                console.error('Error fetching spell:', error)
+                                return null
+                            })
+                    )
+                ).then(fetchData => {
+                    const filteredData = fetchData.filter(Boolean)
+                    setSpellsData(filteredData)
+                })
+            }
+
+            fetchSpellsData()
+        }, [spellsSelected])
+
+        return (
+            <div className='margin-top'>
+                <h3 className='selected-spells-title'>Selected Spells:</h3>
+
+                <ul>
+                    {spellsData.map(spell => (
+                        <li key={spell.id}
+                        className='spell-li'><strong>{spell.name}: </strong>{spell.description}</li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
+
     return <section>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -90,10 +123,9 @@ function SelectSpells({ onReturn }){
         <h3>SELECT YOUR SPELLS</h3>
 
         {/* { renderAvailableSpells() } */}
-    </section>
-    
-    
-    
+
+        { renderSelectedSpells() }
+    </section> 
 }
 
 export default SelectSpells

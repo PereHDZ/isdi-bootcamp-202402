@@ -90,7 +90,6 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
     }, [])
 
     const handleCheckboxChange = (event) => {
-
         const selectedCantrip = event.target.value
         let newCheckedCantrips = checkedCantrips
 
@@ -200,7 +199,7 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
                     ))}
                 </ul>
             </div>
-        );
+        )
     }
 
     const renderConfirmButton = () => {
