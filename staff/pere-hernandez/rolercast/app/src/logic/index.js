@@ -19,6 +19,8 @@ import retrieveBackground from './retrieveBackground.js'
 
 import retrieveCantrip from './retrieveCantrip.js'
 
+import retrieveSpell from './retrieveSpell.js'
+
 import retrieveDeities from './retrieveDeities.js'
 
 const logic = { 
@@ -42,6 +44,8 @@ const logic = {
     retrieveBackground,
 
     retrieveCantrip,
+
+    retrieveSpell,
 
     retrieveDeities
 }

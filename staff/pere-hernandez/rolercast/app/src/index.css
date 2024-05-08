@@ -395,3 +395,16 @@ footer{
   font-size: large;
   align-self: center;
 }
+
+.spell-li {
+  margin-bottom: 2vh;
+}
+
+.selected-spells-title {
+  color: #DD5D0E;
+  margin-left: 5vw;
+}
+
+.margin-top{
+  margin-top: 5vh;
+}

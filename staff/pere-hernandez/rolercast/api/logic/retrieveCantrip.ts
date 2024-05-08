@@ -1,7 +1,6 @@
 import { Cantrip, User } from '../data/models'
 
 import { validate, errors } from 'com'
-import { cantrip } from '../data/schemas'
 
 const { SystemError, NotFoundError } = errors
 

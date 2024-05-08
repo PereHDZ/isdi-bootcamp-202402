@@ -88,22 +88,29 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
     }, [])
 
     const handleCheckboxChange = (event) => {
+
         const selectedCantrip = event.target.value
+        let newCheckedCantrips = checkedCantrips
+
         if (event.target.checked){
             if (checkedCantrips.length < maxCantrips){
-                setCheckedCantrips([...checkedCantrips, selectedCantrip])
+                newCheckedCantrips = [...checkedCantrips, selectedCantrip]
+
+                setCheckedCantrips(newCheckedCantrips)
+                setCantripsSelected([...cantripsSelected, selectedCantrip])
             } else {
                 event.target.checked = false
-                alert(`to ${maxCantrips} cantripsYou can only select up to ${maxCantrips} cantrips`)
+                alert(`You can only select up to ${maxCantrips} cantrips`)
             }
         } else {
-            setCheckedCantrips(checkedCantrips.filter(cantrip => cantrip !== selectedCantrip))
-        }
+            newCheckedCantrips = checkedCantrips.filter(cantrip => cantrip !== selectedCantrip)
+            const newCantripsSelected = cantripsSelected.filter(cantrip => cantrip !== selectedCantrip)
 
-        useEffect(() => {
-            setCantripsSelected([...cantripsSelected, ...checkedCantrips])
-        }, [checkedCantrips])
+            setCheckedCantrips(newCheckedCantrips)  
+            setCantripsSelected([...newCantripsSelected])
+        }       
     }
+
 
     const renderAvailableCantrips = () => {
         useEffect(() => {
@@ -111,15 +118,14 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
                 Promise.all(
                     availableCantrips.map(cantripId => logic.retrieveCantrip(cantripId)
                         .then(objectCantrip => objectCantrip)
-                        .catch(error => {
-                            console.error('Error fetching cantrip:', error);
-                            return null
-                        })
                     )
                 ).then(fetchedData => {
                     const filteredData = fetchedData.filter(Boolean)
                     setAvailableCantripsData(filteredData)
-                })
+                }).catch(error => {
+                    console.error('Error fetching cantrip:', error);
+                    return null
+                })                
             }
 
             fetchAvailableCantripsData()
@@ -183,12 +189,12 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
         }, [cantripsSelected])
     
         return (
-            <div>
-                <h3>Selected Cantrips:</h3>
+            <div className='margin-top'>
+                <h3 className='selected-spells-title'>Selected Cantrips:</h3>
 
                 <ul>
                     {cantripsData.map(cantrip => (
-                        <li key={cantrip.id}><strong>{cantrip.name}: </strong>{cantrip.description}</li>
+                        <li key={cantrip.id} className='spell-li'><strong>{cantrip.name}: </strong>{cantrip.description}</li>
                     ))}
                 </ul>
             </div>
@@ -208,7 +214,7 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
             <h3 className="return">RETURN</h3>
         </div>
 
-        <h3>SELECT {maxCantrips} CANTRIPS</h3>
+        <h1 className='home-title'>SELECT {maxCantrips} CANTRIPS</h1>
 
         { renderAvailableCantrips() }
 
