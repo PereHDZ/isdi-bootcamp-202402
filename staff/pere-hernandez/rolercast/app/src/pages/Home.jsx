@@ -202,6 +202,8 @@ function Home({ onUserLoggedOut }) {
 
     const handleCantripsConfirmed = () => navigate('/selectSpells')
 
+    const handleSpellsConfirmed = () => navigate('/selectBackground')
+
     const handleBackgroundSelected = () => navigate('/stats')    
 
     const handleReturnFromSelectBackground = () => navigate('/selectClass')
@@ -211,7 +213,7 @@ function Home({ onUserLoggedOut }) {
     <CharacterClassContext.Provider value={{setCharacterClass, characterClass}}>
     <BackgroundContext.Provider value={{setBackground, background}}>
     <CantripsContext.Provider value={{setCantrips, cantrips}}>
-    <SpellsContext.Provider value={{setRace, spells}}>
+    <SpellsContext.Provider value={{setSpells, spells}}>
     <main className="home-main">
         <header>
             <button className="transparent-button">
@@ -238,7 +240,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectSubclass" element={<SelectSubclass onReturn={handleReturnFromSelectSubclass}/>}/>
             <Route path="/confirmSubclass" element={<ConfirmSubclass onReturnClick={handleReturnFromConfirmSubclass} onSubclassSelected={handleClassSelected}/>}/>
             <Route path="/selectCantrips" element={<SelectCantrips onReturn={handleReturnFromSelectCantrips} onCantripsConfirmed={handleCantripsConfirmed}></SelectCantrips>}/>
-            <Route path="/selectSpells" element={<SelectSpells onReturn={handleReturnFromSelectSpells} />} />
+            <Route path="/selectSpells" element={<SelectSpells onReturn={handleReturnFromSelectSpells} onSpellsConfirmed={handleSpellsConfirmed} />} />
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
             <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground} onBackgroundSelected={handleBackgroundSelected}/>}/>
             <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats}/>}/>

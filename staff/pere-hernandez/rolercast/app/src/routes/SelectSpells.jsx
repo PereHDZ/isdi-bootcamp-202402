@@ -4,10 +4,10 @@ import { useRace, useCharacterClass, useSpells } from '../pages/Home'
 
 import { useEffect, useState } from 'react'
 
-function SelectSpells({ onReturn }){
+function SelectSpells({ onReturn, onSpellsConfirmed }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
-    const { spells } = useSpells()
+    const { setSpells } = useSpells()
 
     const [availableSpells, setAvailableSpells] = useState([])
     const [availableSpellsData, setAvailableSpellsData] = useState([])
@@ -19,6 +19,14 @@ function SelectSpells({ onReturn }){
     const [spellsData, setSpellsData] = useState([])
 
     const handleReturnClick = () => onReturn()
+
+    const handleConfirmClick = () => {
+        event.preventDefault()
+
+        setSpells(spellsSelected)
+
+        onSpellsConfirmed()
+    }
 
     useEffect(() => {
         if (!characterClass.parent){
@@ -169,6 +177,11 @@ function SelectSpells({ onReturn }){
         )
     }
 
+    const renderConfirmButton = () => {
+        if (checkedSpells.length === maxSpells)
+            return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
+    }
+
     return <section>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -177,11 +190,15 @@ function SelectSpells({ onReturn }){
             <h3 className="return">RETURN</h3>
         </div>
 
-        <h1 className='home-title'>SELECT YOUR SPELLS</h1>
+        <h1 className='home-title'>SELECT {maxSpells} SPELLS</h1>
 
         { renderAvailableSpells() }
 
         { renderSelectedSpells() }
+
+        <div className='select-button-div'>
+            { renderConfirmButton() }
+        </div>
     </section> 
 }
 
