@@ -13,6 +13,8 @@ function SelectSpells({ onReturn }){
     const [availableSpellsData, setAvailableSpellsData] = useState([])
     const [maxSpells, setMaxSpells] = useState([])
 
+    const [checkedSpells, setCheckedSpells] = useState([])
+
     const [spellsSelected, setSpellsSelected] = useState([])
     const [spellsData, setSpellsData] = useState([])
 
@@ -57,6 +59,29 @@ function SelectSpells({ onReturn }){
             setSpellsSelected(newSelectedSpells)
         }
     }, [])
+
+    const handleCheckboxChange = (event) => {
+        const selectedSpell = event.target.value
+        let newCheckedSpells = checkedSpells
+
+        if (event.target.checked){
+            if (checkedSpells.length < maxSpells){
+                newCheckedSpells = [...checkedSpells, selectedSpell]
+
+                setCheckedSpells(newCheckedSpells)
+                setSpellsSelected([...spellsSelected, selectedSpell])
+            } else {
+                event.target.checked = false
+                alert(`You can onlu select up to ${maxSpells} spells`)
+            }
+        } else {
+            newCheckedSpells = checkedSpells.filter(spell => spell !== selectedSpell)
+            const newSpellsSelected = spellsSelected.filter(spell => spell !== selectedSpell)
+
+            setCheckedSpells(newCheckedSpells)
+            setSpellsSelected([...newSpellsSelected])
+        }
+    }
     
     const renderAvailableSpells = () => {
         useEffect(() => {
@@ -100,8 +125,8 @@ function SelectSpells({ onReturn }){
                         type='checkbox'
                         value={spell.id}
                         className='checkbox-input'
-                        // onChange={handleCheckboxChange}
-                        // checked={checkedSpells.includes(spell.div)}
+                        onChange={handleCheckboxChange}
+                        checked={checkedSpells.includes(spell.id)}
                     />
                     <label className='cantrip-check'>{spell.name}</label>
                 </div>
