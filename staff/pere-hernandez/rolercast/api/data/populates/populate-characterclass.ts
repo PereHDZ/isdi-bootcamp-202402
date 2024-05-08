@@ -200,7 +200,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     availableCantrips: [new ObjectId('66354088b3c877f621450000'), new ObjectId('66354088b3c877f621450001'),new ObjectId('66354088b3c877f621450003'), new ObjectId('66354088b3c877f621450005'), new ObjectId('66354088b3c877f621450006'), new ObjectId('66354088b3c877f621450009'), new ObjectId('66354088b3c877f62145000a'), new ObjectId('66354088b3c877f621450015')], 
                     
                     spellCount: 2, 
-                    availableSpells: [new ObjectId('66335a87863710c59eae0f3c'), new ObjectId('663104b9505f0221763632f6'),new ObjectId('66335a87863710c59eae0f41'), new ObjectId('66335a87863710c59eae0f53'), new ObjectId('66335a87863710c59eae0f5e'), new ObjectId('66335a87863710c59eae0f60'), new ObjectId('66335a87863710c59eae0f69'), new ObjectId('66335a87863710c59eae0f75')] }), 
+                    availableSpells: [new ObjectId('66335a87863710c59eae0f3c'), new ObjectId('66335a87863710c59eae0f3d'),new ObjectId('66335a87863710c59eae0f41'), new ObjectId('66335a87863710c59eae0f53'), new ObjectId('66335a87863710c59eae0f5e'), new ObjectId('66335a87863710c59eae0f60'), new ObjectId('66335a87863710c59eae0f69'), new ObjectId('66335a87863710c59eae0f75')] }), 
                 classActions: [new ObjectId('663755d85297ed4f922e3a63')] }),
 
             CharacterClass.create({ 

@@ -10,6 +10,8 @@ function SelectSpells({ onReturn }){
     const { spells } = useSpells()
 
     const [availableSpells, setAvailableSpells] = useState([])
+    const [availableSpellsData, setAvailableSpellsData] = useState([])
+    const [maxSpells, setMaxSpells] = useState([])
 
     const [spellsSelected, setSpellsSelected] = useState([])
     const [spellsData, setSpellsData] = useState([])
@@ -56,26 +58,56 @@ function SelectSpells({ onReturn }){
         }
     }, [])
     
-    // const renderAvailableSpells = () => {
-    //     useEffect(() => {
-    //         const fetchAvailableSpellsData = () => {
-    //             Promise.all(
-    //                 availableSpells.map(spellId => logic.retrieveSpell(spellId)
-    //                     .then(ObjectSpell => ObjectSpell)
-    //                     .catch(error => {
-    //                         console.error('Error fetching spell:', error)
-    //                         return null
-    //                     })
-    //                 )
-    //             ).then(fetchedData => {
-    //                 const filteredData = fetchedData.filter(Boolean)
-    //                 setAvailableSpells(filteredData)
-    //             })
-    //         }
+    const renderAvailableSpells = () => {
+        useEffect(() => {
+            const fetchAvailableSpellsData = () => {
+                Promise.all(
+                    availableSpells.map(spellId => logic.retrieveSpell(spellId)
+                        .then(ObjectSpell => ObjectSpell)
+                    )
+                ).then(fetchedData => {
+                    const filteredData = fetchedData.filter(Boolean)
+                    setAvailableSpellsData(filteredData)
+                }).catch(error => {
+                    console.error('Error fetching spell:', error)
+                    return null
+                })
+            }
 
-    //         fetchAvailableSpellsData()
-    //     }, [])
-    // }
+            fetchAvailableSpellsData()
+        }, [availableSpells])
+
+        useEffect(() => {
+            if (!characterClass.parent)
+                setMaxSpells(characterClass.spellcasting.spellCount)
+            else {
+                try {
+                    logic.retrieveCharacterClass(characterClass.parent)
+                        .then(parentClass => {
+                            setMaxSpells(parentClass.spellcasting.spellCount)
+                        })
+                        .catch(error => alert(error))
+                } catch (error) {
+                    alert(error)
+                }
+            }
+        }, [])
+
+        return <div>
+            {availableSpellsData.map(spell => (
+                <div className='align-center'>
+                    <input
+                        type='checkbox'
+                        value={spell.id}
+                        className='checkbox-input'
+                        // onChange={handleCheckboxChange}
+                        // checked={checkedSpells.includes(spell.div)}
+                    />
+                    <label className='cantrip-check'>{spell.name}</label>
+                </div>
+            ))}
+        </div>
+    }
 
     const renderSelectedSpells = () => {
         useEffect(() => {
@@ -120,9 +152,9 @@ function SelectSpells({ onReturn }){
             <h3 className="return">RETURN</h3>
         </div>
 
-        <h3>SELECT YOUR SPELLS</h3>
+        <h1 className='home-title'>SELECT YOUR SPELLS</h1>
 
-        {/* { renderAvailableSpells() } */}
+        { renderAvailableSpells() }
 
         { renderSelectedSpells() }
     </section> 
