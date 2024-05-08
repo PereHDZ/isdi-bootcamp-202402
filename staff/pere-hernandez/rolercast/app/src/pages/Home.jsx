@@ -182,16 +182,19 @@ function Home({ onUserLoggedOut }) {
                     if (classChildren.length > 0){
                         navigate('/selectSubClass')
                     } else {
-                        if (!characterClass.parent && !characterClass.spellcasting) 
+                        if (!characterClass.parent && !characterClass.spellcasting){
                             navigate('/selectBackground')
-                        else if (!!characterClass.spellcasting)
+                        } else if (!!characterClass.spellcasting) {
                             navigate('/selectCantrips')
-                        else if (!!characterClass.parent){
+                        }else if (!!characterClass.parent){
                             retrieveCharacterClass(characterClass.parent)
                                 .then(parentClass => {
-                                    if (!!parentClass.spellcasting)
+                                    if (!!parentClass.spellcasting){
                                         navigate('/selectCantrips')
-                                })
+                                    } else {
+                                        navigate('/selectBackground')
+                                    }
+                                })                           
                         }
                     }
                 })

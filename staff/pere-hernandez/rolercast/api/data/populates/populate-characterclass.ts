@@ -235,7 +235,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         proficiencies: new Proficiencies({ 
                             armour: new Armour({ heavyArmour: 1 }) }), 
                         knownSpells: [new ObjectId('66335a87863710c59eae0f4d'), new ObjectId('66335a87863710c59eae0f3f')],
-                        classActions: [new ObjectId('663755d85297ed4f922e3a66')], parent: clericClass._id }),
+                        classActions: [new ObjectId('663755d85297ed4f922e3a66')], 
+                        parent: clericClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Light Domain', 
