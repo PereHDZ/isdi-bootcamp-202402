@@ -9,17 +9,55 @@ function SelectSpells({ onReturn }){
     const { characterClass } = useCharacterClass()
     const { spells } = useSpells()
 
-    const [availableSpells, setAvailableSpells] = useEffect([])
+    const [availableSpells, setAvailableSpells] = useState([])
+
+    const [spellsSelected, setSpellsSelected] = useState([])
 
     const handleReturnClick = () => onReturn()
 
     useEffect(() => {
         if (!characterClass.parent){
             setAvailableSpells(characterClass.spellcasting.availableSpells)
+        } else {
+            try {
+                logic.retrieveCharacterClass(characterClass.parent)
+                    .then(parentClass => {
+                        const parentAvailableSpells = parentClass.spellcasting.availableSpells
+
+                        if (characterClass.name.includes('The ')){
+                            const newAvailableSpells = parentAvailableSpells.concat(characterClass.spellcasting.availableSpells)
+
+                            setAvailableSpells(newAvailableSpells)
+                        } else {
+                            setAvailableSpells(parentAvailableSpells)
+                        }
+                    })
+                    .catch(error => alert(error))
+            } catch (error) {
+                alert(error)
+            }
         }
     }, [])
 
-    console.log(availableSpells)
+    useEffect(() => {
+        if (race.name === 'Forest Gnome'){
+            const newSelectedSpells = [race.features.additionalSpell.spell]
+
+            setSpellsSelected(newSelectedSpells)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (characterClass.name.includes('Domain')){
+            const newSelectedSpells = characterClass.knownSpells
+
+            setSpellsSelected(newSelectedSpells)
+        }
+    }, [])
+
+    console.log(spellsSelected)
+
+    
     // const renderAvailableSpells = () => {
     //     useEffect(() => {
     //         const fetchAvailableSpellsData = () => {

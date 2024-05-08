@@ -336,7 +336,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         name: 'The Archfey', 
                         description: "Graced by a lady or lord of the fey, you are imbued with all the sumptuous and scary qualities of your patron's extraordinary realm.", 
                         spellcasting: new Spellcasting({ 
-                            avaliableSpells: [new ObjectId('66335a87863710c59eae0f54'), new ObjectId('66335a87863710c59eae0f6f')] }),
+                            availableSpells: [new ObjectId('66335a87863710c59eae0f54'), new ObjectId('66335a87863710c59eae0f6f')] }),
                         classActions: [new ObjectId('663755d85297ed4f922e3a78')], 
                         parent: warlockClass._id }),
 
@@ -344,7 +344,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         name: 'The Fiend', 
                         description: 'You have pledged your soul to the Hells or Abyss in return for a deadly arsenal of fiendish arcana.', 
                         spellcasting: new Spellcasting({ 
-                            avaliableSpells: [new ObjectId('66335a87863710c59eae0f40'), new ObjectId('66335a87863710c59eae0f4a')] }), 
+                            availableSpells: [new ObjectId('66335a87863710c59eae0f40'), new ObjectId('66335a87863710c59eae0f4a')] }), 
                         classActions: [new ObjectId('663755d85297ed4f922e3a76')], 
                         parent: warlockClass._id }),
 

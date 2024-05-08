@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 function SelectCantrips({ onReturn, onCantripsConfirmed }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
-    const { cantrips } = useCantrips()
+    const { setCantrips } = useCantrips()
 
     const [availableCantrips, setAvailableCantrips] = useState([])
     const [availableCantripsData, setAvailableCantripsData] = useState([])
@@ -22,6 +22,8 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
     const handleConfirmClick = () => {
         event.preventDefault()
 
+        setCantrips(cantripsSelected)
+
         onCantripsConfirmed()
     }
 
@@ -32,7 +34,7 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
             try {
                 logic.retrieveCharacterClass(characterClass.parent)
                     .then(parentClass => {
-                        let parentAvailableCantrips = parentClass.spellcasting.availableCantrips
+                        const parentAvailableCantrips = parentClass.spellcasting.availableCantrips
 
                         if (characterClass.name === 'Nature Domain'){
                             const newAvailableCantrips = parentAvailableCantrips.concat(characterClass.spellcasting.availableCantrips)
