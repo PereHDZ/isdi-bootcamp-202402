@@ -4,20 +4,21 @@ import { useState, useEffect, useContext, createContext } from "react"
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
 import HomeRoute from '../routes/HomeRoute'
-import SelectRace from "../routes/SelectRace"
-import ConfirmRace from "../routes/ConfirmRace"
-import SelectSubRace from "../routes/SelectSubrace"
-import SelectCharacterClass from "../routes/SelectCharacterClass"
-import ConfirmCharacterClass from "../routes/ConfirmCharacterClass"
-import ConfirmSubace from "../routes/ConfirmSubrace"
-import SelectBackground from "../routes/SelectBackground"
-import SelectSubclass from "../routes/SelectSubclass"
-import ConfirmSubclass from "../routes/ConfirmSubclass"
-import ConfirmBackground from "../routes/ConfirmBackground"
-import AssignStats from "../routes/AssignStats"
-import SelectSpells from "../routes/SelectSpells"
-import retrieveCharacterClass from "../logic/retrieveCharacterClass"
-import retrieveRace from "../logic/retrieveRace"
+import SelectRace from '../routes/SelectRace'
+import ConfirmRace from '../routes/ConfirmRace'
+import SelectSubRace from '../routes/SelectSubrace'
+import SelectCharacterClass from '../routes/SelectCharacterClass'
+import ConfirmCharacterClass from '../routes/ConfirmCharacterClass'
+import ConfirmSubace from '../routes/ConfirmSubrace'
+import SelectBackground from '../routes/SelectBackground'
+import SelectSubclass from '../routes/SelectSubclass'
+import ConfirmSubclass from '../routes/ConfirmSubclass'
+import ConfirmBackground from '../routes/ConfirmBackground'
+import AssignStats from '../routes/AssignStats'
+import SelectCantrips from '../routes/SelectCantrips'
+import SelectSpells from '../routes/SelectSpells'
+import retrieveCharacterClass from '../logic/retrieveCharacterClass'
+import retrieveRace from '../logic/retrieveRace'
 
 
 const RaceContext = createContext(null)
@@ -111,7 +112,9 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromSelectClass = () => navigate('/selectRace')
 
-    const handleReturnFromSelectSpells = () => navigate('/selectClass')
+    const handleReturnFromSelectCantrips = () => navigate('/selectClass')
+
+    const handleReturnFromSelectSpells = () => navigate('/selectCantrips')
 
     const handleReturnFromConfirmSubrace = () => {
         try {
@@ -182,12 +185,12 @@ function Home({ onUserLoggedOut }) {
                         if (!characterClass.parent && !characterClass.spellcasting) 
                             navigate('/selectBackground')
                         else if (!!characterClass.spellcasting)
-                            navigate('/selectSpells')
+                            navigate('/selectCantrips')
                         else if (!!characterClass.parent){
                             retrieveCharacterClass(characterClass.parent)
                                 .then(parentClass => {
                                     if (!!parentClass.spellcasting)
-                                        navigate('/selectSpells')
+                                        navigate('/selectCantrips')
                                 })
                         }
                     }
@@ -196,6 +199,8 @@ function Home({ onUserLoggedOut }) {
             alert(error)
         }
     }
+
+    const handleCantripsConfirmed = () => navigate('/selectSpells')
 
     const handleBackgroundSelected = () => navigate('/stats')    
 
@@ -232,7 +237,8 @@ function Home({ onUserLoggedOut }) {
             <Route path="/confirmClass" element={<ConfirmCharacterClass onReturnClick={handleReturnFromConfirmClass}  onCharacterClassSelected={handleClassSelected}/>}/>
             <Route path="/selectSubclass" element={<SelectSubclass onReturn={handleReturnFromSelectSubclass}/>}/>
             <Route path="/confirmSubclass" element={<ConfirmSubclass onReturnClick={handleReturnFromConfirmSubclass} onSubclassSelected={handleClassSelected}/>}/>
-            <Route path="/selectSpells" element={<SelectSpells onReturn={handleReturnFromSelectSpells}></SelectSpells>}/>
+            <Route path="/selectCantrips" element={<SelectCantrips onReturn={handleReturnFromSelectCantrips} onCantripsConfirmed={handleCantripsConfirmed}></SelectCantrips>}/>
+            <Route path="/selectSpells" element={<SelectSpells onReturn={handleReturnFromSelectSpells} />} />
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
             <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground} onBackgroundSelected={handleBackgroundSelected}/>}/>
             <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats}/>}/>

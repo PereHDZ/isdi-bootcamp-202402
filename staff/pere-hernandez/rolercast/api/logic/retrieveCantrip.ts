@@ -21,7 +21,7 @@ function retrieveCantrip(userId: string, cantripId: string): Promise<{ name: str
         .then(cantrip => {
             if (!cantrip) throw new NotFoundError('cantrip not found')
 
-            return { name: cantrip.name, description: cantrip.description}
+            return { id: cantrip._id.toString(), name: cantrip.name, description: cantrip.description}
         })
 }
 
