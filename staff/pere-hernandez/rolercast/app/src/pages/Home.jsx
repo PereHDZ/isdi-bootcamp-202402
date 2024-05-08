@@ -130,9 +130,17 @@ function Home({ onUserLoggedOut }) {
     }
 
     const handleReturnFromConfirmSubclass = () => {
-        setCharacterClass(characterClass.parent)
+        try {
+            logic.retrieveCharacterClass(characterClass.parent)
+                .then(parentClass => {
+                    setCharacterClass(parentClass)
 
-        navigate('/selectSubclass')
+                    navigate('/selectSubclass')
+                })
+                .then(error => alert(error))
+        } catch (error) {
+            alert(error)
+        }
     }
 
     const handleRaceSelected = () => {

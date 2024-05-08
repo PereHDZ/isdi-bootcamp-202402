@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useCharacterClass } from '../pages/Home'
 import logic from '../logic'
 
