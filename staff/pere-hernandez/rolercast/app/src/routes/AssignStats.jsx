@@ -12,6 +12,9 @@ function AssignStats({ onReturnClick }){
     const [fightingStyles, setFightingStyles] = useState([])
     const [fightingStyle, setFightingStyle] = useState(null)
 
+    const [archetypes, setArchetypes] = useState([])
+    const [archetype, setArchetype] = useState(null)
+
     useEffect(() => {
         if (characterClass.name.includes('Domain')){
             try {
@@ -58,6 +61,18 @@ function AssignStats({ onReturnClick }){
             try {
                 logic.retrieveFightingStyles()
                     .then(setFightingStyles)
+                    .catch(error => alert(error))
+            } catch (error) {
+                alert(error)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (characterClass.name === 'Ranger'){
+            try{
+                logic.retrieveArchetypes()
+                    .then(setArchetypes)
                     .catch(error => alert(error))
             } catch (error) {
                 alert(error)
@@ -146,6 +161,17 @@ function AssignStats({ onReturnClick }){
         }
     }
 
+    const renderArchetype = () => {
+        if (characterClass.name === 'Ranger' && !!archetype){
+            return <div>
+                <h5 className='margin-left'>YOUR ARCHETYPE</h5>
+                <div className='deity-info'>
+                    <p><strong>{archetype.name}: </strong>{archetype.description}</p>
+                </div>
+            </div>
+        }
+    }
+
     const handleDeityChange = (event) => {
         try {
             logic.retrieveDeity(event.target.value)
@@ -160,6 +186,16 @@ function AssignStats({ onReturnClick }){
         try {
             logic.retrieveFightingStyle(event.target.value)
                 .then(setFightingStyle)
+                .catch(error => alert(error))
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    const handleArchetypeChange = (event) => {
+        try {
+            logic.retrieveArchetype(event.target.value)
+                .then(setArchetype)
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
@@ -198,6 +234,22 @@ function AssignStats({ onReturnClick }){
         }
     } 
 
+    const renderSelectArchetype = () => {
+        if (characterClass.name === 'Ranger'){
+            return <div className='margin-left'>
+                <h5 className='deity-title'>SELECT YOUR ARCHETYPE</h5>
+                <select value={archetype} onChange={handleArchetypeChange}>
+                    <option value={null}>Select Archetype</option>
+                    { archetypes.map(archetype => {
+                        return <option key={archetype._id} value={archetype._id}>{archetype.name}</option>
+                    })}
+                </select>
+            </div>
+        } else {
+            return <></>
+        }
+    } 
+
     return <section>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -206,7 +258,7 @@ function AssignStats({ onReturnClick }){
             <h3 className="return">RETURN</h3>
         </div>
 
-        <h1 className='home-title'>DISTRIBUTE YOUR STATS AND SKILLS</h1>
+        <h1 className='home-title'>DISTRIBUTE YOUR STATS</h1>
 
         <div className='stats-form'>
             <div className='stats-div'>
@@ -236,7 +288,7 @@ function AssignStats({ onReturnClick }){
                     <p>Remaining Points: {remainingSkillPoints}/27</p>
                 </div>
 
-                <div className='distribute-skills'>
+                {/* <div className='distribute-skills'>
                     <h5>BASE SKILLS</h5>
                     
                     <div className='display-skills'>
@@ -304,7 +356,7 @@ function AssignStats({ onReturnClick }){
                             <input type="checkbox" name='skill' className='checkbox'/>Nature 
                         </div>         
                     </div>                    
-                </div>
+                </div> */}
             </div>
 
             { renderSelectDeity() }
@@ -315,7 +367,9 @@ function AssignStats({ onReturnClick }){
 
             { fightingStyle && renderFightingStyle()}           
 
-            {/* { renderSelectArchetype() } */}
+            { renderSelectArchetype() }
+
+            { archetype && renderArchetype() }
         </div>
     </section>
 }

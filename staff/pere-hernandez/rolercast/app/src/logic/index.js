@@ -28,6 +28,9 @@ import retrieveDeity from './retrieveDeity.js'
 import retrieveFightingStyles from './retrieveFightingStyles.js'
 import retrieveFightingStyle from './retrieveFightingStyle.js'
 
+import retrieveArchetypes from './retrieveArchetypes.js'
+import retrieveArchetype from './retrieveArchetype.js'
+
 const logic = { 
     registerUser,
     loginUser,
@@ -57,7 +60,10 @@ const logic = {
     retrieveDeity,
 
     retrieveFightingStyles,
-    retrieveFightingStyle
+    retrieveFightingStyle,
+
+    retrieveArchetypes,
+    retrieveArchetype,
 }
 
 export default logic

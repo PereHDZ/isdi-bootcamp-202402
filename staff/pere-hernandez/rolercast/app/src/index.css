@@ -293,7 +293,7 @@ footer{
   display: flex;
   flex-direction: column;
   margin: 0px, 2.5vw, 0vw, 2.5vw;
-  width: 50vw;
+  width: 90vw;
   background-color: hsla(23, 87%, 9%, 20%);
 }
 
@@ -325,7 +325,6 @@ footer{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 20px;
 }
 
 .counter-button {
@@ -339,17 +338,13 @@ footer{
 
 .stats-div {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   width: 100%;
 }
 
 .checkbox{
   width: fit-content;
   height: fit-content;
-}
-
-.stats-form {
-  width: 100%;
 }
 
 .stat-span {
@@ -411,12 +406,14 @@ footer{
 
 .stat-label {
   margin-left: 0px;
-  width: 130px;
+  text-align: center;
+  align-content: center;
+  width: 70%;
 }
 
 .deity-info {
-  margin-left: 8vw;
-  margin-right: 8vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
   padding-left: 5vw;
   padding-right: 5vw;
   border: 1px solid #2B1203;
@@ -427,12 +424,23 @@ footer{
   margin-bottom: 0px;
 }
 
-.margin-left{
+.margin-left {
   margin-left: 5vw;
 }
 
-.stat-div{
+.stat-div {
     display: flex;
     align-items: center;
     margin-top: 1vh;
+    margin-left: 3vw;
+    width: 100%;
+}
+
+h5 {
+  margin-bottom: 0px;
+}
+
+select {
+  width: 50vw;
+  margin-left: 3vw;
 }
