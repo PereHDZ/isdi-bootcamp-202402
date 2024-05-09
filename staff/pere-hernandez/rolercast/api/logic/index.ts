@@ -21,6 +21,7 @@ import retrieveCantrip from './retrieveCantrip.ts'
 import retrieveSpell from './retrieveSpell.ts'
 
 import retrieveDeities from './retrieveDeities.ts'
+import retrieveDeity from './retrieveDeity.ts'
 
 const logic = {
     users: null,
@@ -49,7 +50,8 @@ const logic = {
     retrieveCantrip,
     retrieveSpell,
 
-    retrieveDeities
+    retrieveDeities,
+    retrieveDeity
 }
 
 export default logic

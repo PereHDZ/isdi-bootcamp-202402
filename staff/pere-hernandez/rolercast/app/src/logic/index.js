@@ -23,6 +23,7 @@ import retrieveCantrip from './retrieveCantrip.js'
 import retrieveSpell from './retrieveSpell.js'
 
 import retrieveDeities from './retrieveDeities.js'
+import retrieveDeity from './retrieveDeity.js'
 
 const logic = { 
     registerUser,
@@ -49,7 +50,8 @@ const logic = {
     retrieveCantrip,
     retrieveSpell,
 
-    retrieveDeities
+    retrieveDeities,
+    retrieveDeity
 }
 
 export default logic

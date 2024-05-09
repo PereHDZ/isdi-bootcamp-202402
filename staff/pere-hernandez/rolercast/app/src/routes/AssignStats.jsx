@@ -14,9 +14,7 @@ function AssignStats({ onReturnClick }){
                 logic.retrieveDeities()
                     .then(retrievedDeities => {
                         const laduguer = retrievedDeities.find(deity => deity.name === 'Laduguer')
-                        console.log(laduguer)
                         const vlaakith = retrievedDeities.find(deity => deity.name === 'Vlaakith')
-                        console.log(vlaakith)
 
                         const filteredDeities = retrievedDeities.filter(deity => deity.name !== 'Laduguer' &&  deity.name !== 'Vlaakith')
 
@@ -42,8 +40,6 @@ function AssignStats({ onReturnClick }){
             }         
         }
     }, [])
-
-    console.log(deities)
 
     useEffect(() => {
         if (race.name === 'Lolth-Sworn Drow' && characterClass.name.includes('Domain')){
@@ -115,7 +111,7 @@ function AssignStats({ onReturnClick }){
     const renderDeity = () => {
         if (characterClass.name.includes('Domain') && !!deity){
             return <div>
-                <h5>YOUR DEITY</h5>
+                <h5 className='margin-left'>YOUR DEITY</h5>
                 <div className='deity-info'>
                     <p><strong>{deity.name}: </strong>{deity.description}</p>
                 </div>                
@@ -123,34 +119,31 @@ function AssignStats({ onReturnClick }){
         }
     }
 
-    // const handleDeityChange = (event) => {
-    //     setDeity(event.target.value)
-    // }
+    const handleDeityChange = (event) => {
+        try {
+            logic.retrieveDeity(event.target.value)
+                .then(setDeity)
+                .catch(error => alert(error))
+        } catch (error) {
+            alert(error)
+        }
+    }
 
-    // const renderSelectDeity = () => {
-    //     if (characterClass.name.includes('Domain')){
-    //         try {
-    //             logic.retrieveDeities()
-    //                 .then(setDeities)
-    //                 .then(() => {
-    //                     return <div>
-    //                         <label>SELECT YOUR DEITY</label>
-    //                         <select value={deity} onChange={handleDeityChange}>
-    //                             <option value={''}>Select Deity</option>
-    //                             { deities && deities.map(deity => {
-    //                                 return <option key={deity.name} value={deity}>{deity.name}</option>
-    //                             })}
-    //                         </select>
-    //                     </div>
-    //                 })
-    //                 .catch(error => alert(error))
-    //         } catch (error) {
-    //             alert(error)
-    //         }          
-    //     } else {
-    //         return <></>
-    //     }
-    // }
+    const renderSelectDeity = () => {
+        if (characterClass.name.includes('Domain')){
+            return <div className='margin-left'>
+                <h5 className='deity-title'>SELECT YOUR DEITY</h5>
+                <select value={deity} onChange={handleDeityChange}>
+                    <option value={null}>Select Deity</option>
+                    { deities.map(deity => {
+                        return <option key={deity._id} value={deity._id}>{deity.name}</option>
+                    })}
+                </select>
+            </div>
+        } else {
+            return <></>
+        }
+    } 
 
     return <section>
         <div className="return-div">
@@ -261,15 +254,15 @@ function AssignStats({ onReturnClick }){
                 </div>
             </div>
 
-            {/* { characterClass && renderSelectDeity() } */}
+            { renderSelectDeity() }
 
             { deity && renderDeity() }
 
-            { characterClass && characterClass.name === 'Fighter' &&<h5>SELECT YOUR FIGHTING STYLE</h5>}            
+            { characterClass.name === 'Fighter' &&<h5>SELECT YOUR FIGHTING STYLE</h5>}            
 
-            { characterClass && characterClass.name === 'Ranger' && <h5>SELECT YOR FAVOURED ENEMY</h5>}      
+            { characterClass.name === 'Ranger' && <h5>SELECT YOR FAVOURED ENEMY</h5>}      
 
-            { characterClass && characterClass.name === 'Ranger' && <h5>SELECT YOR NATURAL EXPLORER</h5>}  
+            { characterClass.name === 'Ranger' && <h5>SELECT YOR NATURAL EXPLORER</h5>}  
         </div>
     </section>
 }

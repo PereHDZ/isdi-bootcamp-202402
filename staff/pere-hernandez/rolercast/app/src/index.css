@@ -423,6 +423,10 @@ footer{
   border-radius: 5%;
 }
 
-h5{
-  margin-left: 8vw;
+.deity-title {
+  margin-bottom: 0px;
+}
+
+.margin-left{
+  margin-left: 5vw;
 }
