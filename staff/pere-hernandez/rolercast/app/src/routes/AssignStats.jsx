@@ -315,9 +315,7 @@ function AssignStats({ onReturnClick }){
 
             { fightingStyle && renderFightingStyle()}           
 
-            { characterClass.name === 'Ranger' && <h5>SELECT YOR FAVOURED ENEMY</h5>}      
-
-            { characterClass.name === 'Ranger' && <h5>SELECT YOR NATURAL EXPLORER</h5>}  
+            {/* { renderSelectArchetype() } */}
         </div>
     </section>
 }

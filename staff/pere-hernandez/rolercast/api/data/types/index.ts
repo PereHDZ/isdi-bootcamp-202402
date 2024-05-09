@@ -1,3 +1,4 @@
+import ArchetypeType from './ArchetypeType'
 import ArmourType from './ArmourType'
 import CantripType from './CantripType'
 import SkillsType from './SkillsType'
@@ -16,4 +17,4 @@ import ClassActionType from './ClassActionType'
 import DeityType from './DeityType'
 import FightingStyleType from './FightingStyleType'
 
-export { ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType, SavingThrowProficienciesType, SpellcastingType, ClassActionType, DeityType, FightingStyleType }
+export { ArchetypeType, ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType, SavingThrowProficienciesType, SpellcastingType, ClassActionType, DeityType, FightingStyleType }

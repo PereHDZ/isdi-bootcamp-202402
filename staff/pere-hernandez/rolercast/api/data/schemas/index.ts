@@ -1,3 +1,4 @@
+import archetype from './archetype.ts'
 import armour from './armour.ts'
 import background from './background.ts'
 import cantrip from './cantrip.ts'
@@ -16,4 +17,4 @@ import spellcasting from './spellcasting.ts'
 import user from './user.ts'
 import weapons from './weapons.ts'
 
-export { armour, background, cantrip, characterClass, classAction, deity, features, fightingStyle, proficiencies, race, raceAction, savingThrowProficiencies, skills, spell, spellcasting, user, weapons }
+export { archetype, armour, background, cantrip, characterClass, classAction, deity, features, fightingStyle, proficiencies, race, raceAction, savingThrowProficiencies, skills, spell, spellcasting, user, weapons }
