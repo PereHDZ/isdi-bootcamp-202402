@@ -17,6 +17,38 @@ function AssignStats({ onReturnClick }){
 
     const [naturalExplorers, setNaturalExplorers] = useState([])
     const [naturalExplorer, setNaturalExplorer] = useState(null)
+    
+    const [skills, setSkills] = useState({
+        Strength: 8,
+        Dexterity: 8,
+        Constitution: 8,
+        Intelligence: 8,
+        Wisdom: 8,
+        Charisma: 8,
+    })
+    
+    const [minValues, setMinValues] = useState({
+        Strength: 8,
+        Dexterity: 8,
+        Constitution: 8,
+        Intelligence: 8,
+        Wisdom: 8,
+        Charisma: 8,
+    })
+    
+    const [maxValues, setMaxValues] = useState({
+        Strength: 15,
+        Dexterity: 15,
+        Constitution: 15,
+        Intelligence: 15,
+        Wisdom: 15,
+        Charisma: 15,
+    })
+
+    const [remainingSkillPoints, setRemainingSkillPoints] = useState(27)
+
+    const [plus2Modifier, setPlus2Modifier] = useState(null)
+    const [plus1Modifier, setPlus1Modifier] = useState(null)
 
     useEffect(() => {
         if (characterClass.name.includes('Domain')){
@@ -97,20 +129,6 @@ function AssignStats({ onReturnClick }){
         }
     }, [])
 
-    const [skills, setSkills] = useState({
-        Strength: 8,
-        Dexterity: 8,
-        Constitution: 8,
-        Intelligence: 8,
-        Wisdom: 8,
-        Charisma: 8,
-    })
-
-    const [remainingSkillPoints, setRemainingSkillPoints] = useState(27)
-
-    const [plus2Modifier, setPlus2Modifier] = useState(null)
-    const [plus1Modifier, setPlus1Modifier] = useState(null)
-
     const handleReturnClick = () => {
         event.preventDefault()
 
@@ -118,7 +136,7 @@ function AssignStats({ onReturnClick }){
     }
 
     const handleSkillIncrement = (skill) => {
-        if (remainingSkillPoints > 0 && skills[skill] < 15){
+        if (remainingSkillPoints > 0 && skills[skill] < maxValues[skill]){
             const updatedSkills = { ...skills }
             updatedSkills[skill]++
             setSkills(updatedSkills)
@@ -127,7 +145,7 @@ function AssignStats({ onReturnClick }){
     }
 
     const handleSkillDecrement = (skill) => {
-        if (remainingSkillPoints < 27 && skills[skill] > 8){
+        if (remainingSkillPoints < 27 && skills[skill] > minValues[skill]){
             const updatedSkills = { ...skills }
             updatedSkills[skill]--
             setSkills(updatedSkills)
@@ -135,14 +153,97 @@ function AssignStats({ onReturnClick }){
         }          
     }
 
-    const handleDropdownChange = (e, modifier) => {
+    const handlePlusOneDropdownChange = (e, modifier) => {
         const selectedSkill = e.target.value
+
+        let originalSkills = {         
+            Strength: 8,
+            Dexterity: 8,
+            Constitution: 8,
+            Intelligence: 8,
+            Wisdom: 8,
+            Charisma: 8 
+        }
+        if (!!plus2Modifier)
+            originalSkills[plus2Modifier] = originalSkills[plus2Modifier] + 2
+
+        const originalMinValues = { ...originalSkills }
+
+        const originalMaxValues = { 
+            Strength: 15,
+            Dexterity: 15,
+            Constitution: 15,
+            Intelligence: 15,
+            Wisdom: 15,
+            Charisma: 15  
+        }
+        if (!!plus2Modifier)
+            originalMaxValues[plus2Modifier] = originalMaxValues[plus2Modifier] + 2
+
         if (modifier === 1 && selectedSkill !== plus2Modifier) {
             setPlus1Modifier(selectedSkill)
-        } else if (modifier === 2 && selectedSkill !== plus1Modifier) {
-            setPlus2Modifier(selectedSkill)
+
+            const newSkills = {...originalSkills}
+            newSkills[selectedSkill]++
+            setSkills(newSkills)
+
+            const newMinValues = {...originalMinValues}
+            newMinValues[selectedSkill]++
+            setMinValues(newMinValues)
+
+            const newMaxValues = {...originalMaxValues}
+            newMaxValues[selectedSkill]++
+            setMaxValues(newMaxValues)
+
+            setRemainingSkillPoints(27)
         }
     }
+
+    const handlePlusTwoDropdownChange = (e, modifier) => {
+        const selectedSkill = e.target.value
+
+        let originalSkills = {         
+            Strength: 8,
+            Dexterity: 8,
+            Constitution: 8,
+            Intelligence: 8,
+            Wisdom: 8,
+            Charisma: 8 
+        }
+        if (!!plus2Modifier)
+            originalSkills[plus2Modifier]++
+
+        const originalMinValues = { ...originalSkills }
+
+        let originalMaxValues = { 
+            Strength: 15,
+            Dexterity: 15,
+            Constitution: 15,
+            Intelligence: 15,
+            Wisdom: 15,
+            Charisma: 15  
+        }
+        if (!!plus2Modifier)
+            originalMaxValues[plus2Modifier]++
+
+        if (modifier === 2 && selectedSkill !== plus1Modifier) {
+            setPlus2Modifier(selectedSkill)
+
+            const newSkills = {...originalSkills}
+            newSkills[selectedSkill] = newSkills[selectedSkill] + 2
+            setSkills(newSkills)
+
+            const newMinValues = {...originalMinValues}
+            newMinValues[selectedSkill] = newMinValues[selectedSkill] + 2
+            setMinValues(newMinValues)
+
+            const newMaxValues = {...originalMaxValues}
+            newMaxValues[selectedSkill] = newMaxValues[selectedSkill] + 2
+            setMaxValues(newMaxValues)
+
+            setRemainingSkillPoints(27)
+        }
+    }   
 
     const renderSkillInput = (skill) => {
         return <div key={skill} className='stat-div'>
@@ -318,7 +419,7 @@ function AssignStats({ onReturnClick }){
             <div className='stats-div'>
                 <div className='distribute-stats'>
                     <label>Assign +2</label>
-                    <select onChange={(e) => handleDropdownChange(e, 2)}>
+                    <select onChange={(e) => handlePlusTwoDropdownChange(e, 2)}>
                         <option value="">Select Skill</option>
                         {Object.keys(skills).map((skill) => (
                             <option key={skill} value={skill}>
@@ -328,7 +429,7 @@ function AssignStats({ onReturnClick }){
                     </select>
 
                     <label>Assign +1</label>
-                    <select onChange={(e) => handleDropdownChange(e, 1)}>
+                    <select onChange={(e) => handlePlusOneDropdownChange(e, 1)}>
                         <option value="">Select Skill</option>
                         {Object.keys(skills).map((skill) => (
                             <option key={skill} value={skill}>
