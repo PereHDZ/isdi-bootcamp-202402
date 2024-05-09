@@ -25,6 +25,9 @@ import retrieveSpell from './retrieveSpell.js'
 import retrieveDeities from './retrieveDeities.js'
 import retrieveDeity from './retrieveDeity.js'
 
+import retrieveFightingStyles from './retrieveFightingStyles.js'
+import retrieveFightingStyle from './retrieveFightingStyle.js'
+
 const logic = { 
     registerUser,
     loginUser,
@@ -51,7 +54,10 @@ const logic = {
     retrieveSpell,
 
     retrieveDeities,
-    retrieveDeity
+    retrieveDeity,
+
+    retrieveFightingStyles,
+    retrieveFightingStyle
 }
 
 export default logic

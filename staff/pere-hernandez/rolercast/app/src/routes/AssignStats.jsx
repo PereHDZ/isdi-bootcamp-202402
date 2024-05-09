@@ -5,8 +5,12 @@ import logic from '../logic'
 function AssignStats({ onReturnClick }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
+
     const [deities, setDeities] = useState([])
     const [deity, setDeity] = useState(null)
+
+    const [fightingStyles, setFightingStyles] = useState([])
+    const [fightingStyle, setFightingStyle] = useState(null)
 
     useEffect(() => {
         if (characterClass.name.includes('Domain')){
@@ -47,7 +51,19 @@ function AssignStats({ onReturnClick }){
 
             setDeity(lolth)
         }
-    })
+    }, [])
+
+    useEffect(() => {
+        if (characterClass.name === 'Fighter'){
+            try {
+                logic.retrieveFightingStyles()
+                    .then(setFightingStyles)
+                    .catch(error => alert(error))
+            } catch (error) {
+                alert(error)
+            }
+        }
+    }, [])
 
     const [skills, setSkills] = useState({
         Strength: 8,
@@ -97,7 +113,7 @@ function AssignStats({ onReturnClick }){
     }
 
     const renderSkillInput = (skill) => {
-        return <div key={skill} className='header-logo-div'>
+        return <div key={skill} className='stat-div'>
             <img src={`../../public/gallery/Stats_Icons/${skill}.png`} alt={`${skill}`} className='stats-icons'></img>
             <label htmlFor={skill} className='stat-label'>{skill}:</label>
             <div className='counter-div'>
@@ -119,10 +135,31 @@ function AssignStats({ onReturnClick }){
         }
     }
 
+    const renderFightingStyle = () => {
+        if (characterClass.name === 'Fighter' && !!fightingStyle){
+            return <div>
+                <h5 className='margin-left'>YOUR FIGHTING STYLE</h5>
+                <div className='deity-info'>
+                    <p><strong>{fightingStyle.name}: </strong>{fightingStyle.description}</p>
+                </div>                
+            </div>
+        }
+    }
+
     const handleDeityChange = (event) => {
         try {
             logic.retrieveDeity(event.target.value)
                 .then(setDeity)
+                .catch(error => alert(error))
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    const handleFightingStyleChange = (event) => {
+        try {
+            logic.retrieveFightingStyle(event.target.value)
+                .then(setFightingStyle)
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
@@ -137,6 +174,22 @@ function AssignStats({ onReturnClick }){
                     <option value={null}>Select Deity</option>
                     { deities.map(deity => {
                         return <option key={deity._id} value={deity._id}>{deity.name}</option>
+                    })}
+                </select>
+            </div>
+        } else {
+            return <></>
+        }
+    } 
+
+    const renderSelectFightingStyle = () => {
+        if (characterClass.name === 'Fighter'){
+            return <div className='margin-left'>
+                <h5 className='deity-title'>SELECT YOUR FIGHTING STYLE</h5>
+                <select value={fightingStyle} onChange={handleFightingStyleChange}>
+                    <option value={null}>Select Fighting Style</option>
+                    { fightingStyles.map(fightingStyle => {
+                        return <option key={fightingStyle._id} value={fightingStyle._id}>{fightingStyle.name}</option>
                     })}
                 </select>
             </div>
@@ -258,7 +311,9 @@ function AssignStats({ onReturnClick }){
 
             { deity && renderDeity() }
 
-            { characterClass.name === 'Fighter' &&<h5>SELECT YOUR FIGHTING STYLE</h5>}            
+            { renderSelectFightingStyle() } 
+
+            { fightingStyle && renderFightingStyle()}           
 
             { characterClass.name === 'Ranger' && <h5>SELECT YOR FAVOURED ENEMY</h5>}      
 

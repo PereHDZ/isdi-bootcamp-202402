@@ -7,6 +7,7 @@ import colors from 'colors'
 import jwt from 'jsonwebtoken'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import fightingStyle from './data/schemas/fightingStyle.ts'
 
 dotenv.config()
 
@@ -692,6 +693,83 @@ mongoose.connect(MONGODB_URL)
 
                 logic.retrieveDeity(userId as string, deityId)
                     .then(deity => res.json(deity))
+                    .catch(error => {
+                        if (error instanceof SystemError) {
+                            logger.error(error.message)
+
+                            res.status(500).json({ error: error.constructor.name, message: error.message })
+                        } else if (error instanceof NotFoundError) {
+                            logger.warn(error.message)
+
+                            res.status(404).json({ error: error.constructor.name, message: error.message })
+                        }
+                    })
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof ContentError){
+                    logger.warn(error.message)
+
+                    res.status(406).json({ error: UnauthorizedError.name, message: 'session expired' })
+                } else {
+                    logger.warn(error.message)
+
+                    res.status(500).json({ error: SystemError.name, message: error.message })
+                }
+            }
+        })
+
+
+
+
+        api.get('/fightingstyles', (req, res) => {
+            try {
+                const { authorization } = req.headers
+
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+                logic.retrieveFightingStyles(userId as string)
+                    .then(fightingStyles => res.json(fightingStyles))
+                    .catch(error => {
+                        if (error instanceof SystemError) {
+                            logger.error(error.message)
+
+                            res.status(500).json({ error: error.constructor.name, message: error.message })
+                        } else if (error instanceof NotFoundError) {
+                            logger.warn(error.message)
+
+                            res.status(404).json({ error: error.constructor.name, message: error.message })
+                        }
+                    })
+            } catch (error) {
+                if (error instanceof TypeError || error instanceof ContentError){
+                    logger.warn(error.message)
+
+                    res.status(406).json({ error: error.constructor.name, message: error.message })
+                } else if (error instanceof TokenExpiredError) {
+                    logger.warn(error.message)
+
+                    res.status(498).json({ error: error.constructor.name, message: error.message })
+                } else {
+                    logger.warn(error.message)
+
+                    res.status(500).json({ error: error.constructor.name, message: error.message })
+                }
+            }
+        })
+
+        api.get('/fightingstyles/:fightingStyleId', (req, res) => {
+            try {
+                const { authorization } = req.headers
+
+                const token = authorization.slice(7)
+
+                const { sub: userId } = jwt.verify(token, JWT_SECRET)
+
+                const { fightingStyleId } = req.params
+
+                logic.retrieveFightingStyle(userId as string, fightingStyleId)
+                    .then(fightingStyle => res.json(fightingStyle))
                     .catch(error => {
                         if (error instanceof SystemError) {
                             logger.error(error.message)

@@ -23,6 +23,10 @@ import retrieveSpell from './retrieveSpell.ts'
 import retrieveDeities from './retrieveDeities.ts'
 import retrieveDeity from './retrieveDeity.ts'
 
+import retrieveFightingStyles from './retrieveFightingStyles.ts'
+import fightingStyle from '../data/schemas/fightingStyle.ts'
+import retrieveFightingStyle from './retrieveFightingStyle.ts'
+
 const logic = {
     users: null,
     races: null,
@@ -51,7 +55,10 @@ const logic = {
     retrieveSpell,
 
     retrieveDeities,
-    retrieveDeity
+    retrieveDeity,
+
+    retrieveFightingStyles,
+    retrieveFightingStyle
 }
 
 export default logic

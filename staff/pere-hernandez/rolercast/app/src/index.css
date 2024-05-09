@@ -430,3 +430,9 @@ footer{
 .margin-left{
   margin-left: 5vw;
 }
+
+.stat-div{
+    display: flex;
+    align-items: center;
+    margin-top: 1vh;
+}
