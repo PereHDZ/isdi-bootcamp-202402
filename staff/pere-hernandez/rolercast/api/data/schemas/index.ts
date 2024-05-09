@@ -7,6 +7,7 @@ import classAction from './classAction.ts'
 import deity from './deity.ts'
 import features from './features.ts'
 import fightingStyle from './fightingStyle.ts'
+import naturalExplorer from './naturalExplorer.ts'
 import proficiencies from './proficiencies.ts'
 import race from './race.ts'
 import raceAction from './raceAction.ts'
@@ -17,4 +18,4 @@ import spellcasting from './spellcasting.ts'
 import user from './user.ts'
 import weapons from './weapons.ts'
 
-export { archetype, armour, background, cantrip, characterClass, classAction, deity, features, fightingStyle, proficiencies, race, raceAction, savingThrowProficiencies, skills, spell, spellcasting, user, weapons }
+export { archetype, armour, background, cantrip, characterClass, classAction, deity, features, fightingStyle, naturalExplorer, proficiencies, race, raceAction, savingThrowProficiencies, skills, spell, spellcasting, user, weapons }

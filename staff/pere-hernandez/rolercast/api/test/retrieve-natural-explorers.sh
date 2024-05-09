@@ -1,0 +1,1 @@
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjM0YjZmNzY5YTM2NTIxZmEzMDRkZDQiLCJpYXQiOjE3MTUyNjQwODAsImV4cCI6MTcxNTI3NDA4MH0.XLolW9VK12cDDFT2_rAflnClDFGCI1kOTSh9IkvNuyM" http://localhost:9000/naturalexplorers -v

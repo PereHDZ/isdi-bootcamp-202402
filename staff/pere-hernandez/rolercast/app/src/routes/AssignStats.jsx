@@ -15,6 +15,9 @@ function AssignStats({ onReturnClick }){
     const [archetypes, setArchetypes] = useState([])
     const [archetype, setArchetype] = useState(null)
 
+    const [naturalExplorers, setNaturalExplorers] = useState([])
+    const [naturalExplorer, setNaturalExplorer] = useState(null)
+
     useEffect(() => {
         if (characterClass.name.includes('Domain')){
             try {
@@ -79,6 +82,22 @@ function AssignStats({ onReturnClick }){
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (characterClass.name === 'Ranger'){
+            try{
+                logic.retrieveNaturalExplorers()
+                    .then(newNaturalExplorers => {
+                        setNaturalExplorers(newNaturalExplorers)
+                    })
+                    .catch(error => alert(error))
+            } catch (error) {
+                alert(error)
+            }
+        }
+    }, [])
+
+    console.log(naturalExplorers)
 
     const [skills, setSkills] = useState({
         Strength: 8,
@@ -237,11 +256,27 @@ function AssignStats({ onReturnClick }){
     const renderSelectArchetype = () => {
         if (characterClass.name === 'Ranger'){
             return <div className='margin-left'>
-                <h5 className='deity-title'>SELECT YOUR ARCHETYPE</h5>
+                <h5 className='deity-title'>SELECT YOUR FAVOURED ENEMY</h5>
                 <select value={archetype} onChange={handleArchetypeChange}>
-                    <option value={null}>Select Archetype</option>
+                    <option value={null}>Select Favoured Enemy</option>
                     { archetypes.map(archetype => {
                         return <option key={archetype._id} value={archetype._id}>{archetype.name}</option>
+                    })}
+                </select>
+            </div>
+        } else {
+            return <></>
+        }
+    } 
+
+    const renderSelectNaturalExplorer = () => {
+        if (characterClass.name === 'Ranger'){
+            return <div className='margin-left'>
+                <h5 className='deity-title'>SELECT YOUR NATURAL EXPLORER</h5>
+                <select value={naturalExplorer} /*onChange={handleNaturalExplorerChange}*/>
+                    <option value={null}>Select Natural Explorer</option>
+                    { naturalExplorers.map(naturalExplorer => {
+                        return <option key={naturalExplorer._id} value={naturalExplorer._id}>{naturalExplorer.name}</option>
                     })}
                 </select>
             </div>
@@ -370,6 +405,8 @@ function AssignStats({ onReturnClick }){
             { renderSelectArchetype() }
 
             { archetype && renderArchetype() }
+
+            { renderSelectNaturalExplorer() }
         </div>
     </section>
 }

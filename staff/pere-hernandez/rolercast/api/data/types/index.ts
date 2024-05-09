@@ -16,5 +16,6 @@ import SpellcastingType from './SpellcastingType'
 import ClassActionType from './ClassActionType'
 import DeityType from './DeityType'
 import FightingStyleType from './FightingStyleType'
+import NaturalExplorerType from './NaturalExplorerType'
 
-export { ArchetypeType, ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType, SavingThrowProficienciesType, SpellcastingType, ClassActionType, DeityType, FightingStyleType }
+export { ArchetypeType, ArmourType, CantripType, SkillsType, UserType , WeaponsType, ProficienciesType, FeaturesType, RaceType, BackgroundType, CharacterClassType, SpellType, RaceActionType, SavingThrowProficienciesType, SpellcastingType, ClassActionType, DeityType, FightingStyleType, NaturalExplorerType }
