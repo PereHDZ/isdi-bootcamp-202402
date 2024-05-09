@@ -285,8 +285,8 @@ footer{
 }
 
 .stats-icons {
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
 }
 
 .distribute-stats {
@@ -407,4 +407,22 @@ footer{
 
 .margin-top{
   margin-top: 5vh;
+}
+
+.stat-label {
+  margin-left: 0px;
+  width: 130px;
+}
+
+.deity-info {
+  margin-left: 8vw;
+  margin-right: 8vw;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  border: 1px solid #2B1203;
+  border-radius: 5%;
+}
+
+h5{
+  margin-left: 8vw;
 }

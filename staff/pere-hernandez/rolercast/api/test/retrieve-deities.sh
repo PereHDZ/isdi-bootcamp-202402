@@ -1,0 +1,1 @@
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjM0YjZmNzY5YTM2NTIxZmEzMDRkZDQiLCJpYXQiOjE3MTUyMzk5MjMsImV4cCI6MTcxNTI0OTkyM30.SWAgPeFoQNEGYwWvXsP2d9__a9g5n_Mru6wMwHcmm6Q" http://localhost:9000/deities -v
