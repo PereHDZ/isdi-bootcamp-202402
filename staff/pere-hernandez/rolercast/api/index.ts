@@ -911,7 +911,7 @@ mongoose.connect(MONGODB_URL)
             }
         })
 
-        api.get('/naturalexplorer/:naturalExplorerId', (req, res) => {
+        api.get('/naturalexplorers/:naturalExplorerId', (req, res) => {
             try {
                 const { authorization } = req.headers
 

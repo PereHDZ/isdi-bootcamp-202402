@@ -97,8 +97,6 @@ function AssignStats({ onReturnClick }){
         }
     }, [])
 
-    console.log(naturalExplorers)
-
     const [skills, setSkills] = useState({
         Strength: 8,
         Dexterity: 8,
@@ -191,6 +189,17 @@ function AssignStats({ onReturnClick }){
         }
     }
 
+    const renderNaturalExplorer = () => {
+        if (characterClass.name === 'Ranger' && !!naturalExplorer){
+            return <div>
+                <h5 className='margin-left'>YOUR NATURAL EXPLORER</h5>
+                <div className='deity-info'>
+                    <p><strong>{naturalExplorer.name}: </strong>{naturalExplorer.description}</p>
+                </div>
+            </div>
+        }
+    }
+
     const handleDeityChange = (event) => {
         try {
             logic.retrieveDeity(event.target.value)
@@ -215,6 +224,16 @@ function AssignStats({ onReturnClick }){
         try {
             logic.retrieveArchetype(event.target.value)
                 .then(setArchetype)
+                .catch(error => alert(error))
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    const handleNaturalExplorerChange = (event) => {
+        try {
+            logic.retrieveNaturalExplorer(event.target.value)
+                .then(setNaturalExplorer)
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
@@ -273,7 +292,7 @@ function AssignStats({ onReturnClick }){
         if (characterClass.name === 'Ranger'){
             return <div className='margin-left'>
                 <h5 className='deity-title'>SELECT YOUR NATURAL EXPLORER</h5>
-                <select value={naturalExplorer} /*onChange={handleNaturalExplorerChange}*/>
+                <select value={naturalExplorer} onChange={handleNaturalExplorerChange}>
                     <option value={null}>Select Natural Explorer</option>
                     { naturalExplorers.map(naturalExplorer => {
                         return <option key={naturalExplorer._id} value={naturalExplorer._id}>{naturalExplorer.name}</option>
@@ -407,6 +426,8 @@ function AssignStats({ onReturnClick }){
             { archetype && renderArchetype() }
 
             { renderSelectNaturalExplorer() }
+
+            { naturalExplorer && renderNaturalExplorer()}
         </div>
     </section>
 }
