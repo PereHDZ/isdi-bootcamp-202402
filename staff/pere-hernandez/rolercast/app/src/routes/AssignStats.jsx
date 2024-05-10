@@ -209,6 +209,14 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             alert("One single stat can't get both bonuses. Please, select two different stats")
 
             e.target.value = ''
+
+            setSelectedStats(originalStats)
+
+            setMinValues(originalMinValues)
+
+            setMaxValues(originalMaxValues)
+
+            setRemainingStatPoints(27)
         }
     }
 
@@ -259,6 +267,14 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             alert("One single stat can't get both bonuses. Please, select two different stats")
 
             e.target.value = ''
+
+            setSelectedStats(originalStats)
+
+            setMinValues(originalMinValues)
+
+            setMaxValues(originalMaxValues)
+            
+            setRemainingStatPoints(27)
         }
     }   
 

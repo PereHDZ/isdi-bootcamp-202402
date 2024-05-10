@@ -421,7 +421,7 @@ footer{
 }
 
 .deity-title {
-  margin-bottom: 0px;
+  margin-bottom: 2vh;
 }
 
 .margin-left {
@@ -434,10 +434,6 @@ footer{
     margin-top: 1vh;
     margin-left: 3vw;
     width: 100%;
-}
-
-h5 {
-  margin-bottom: 0px;
 }
 
 select {
