@@ -2,11 +2,12 @@ import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 
-import { useRace, useCharacterClass } from '../pages/Home'
+import { useRace, useCharacterClass, useStats } from '../pages/Home'
 
 function AssignSkills (){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
+    const { stats } = useStats()
 
     const [inheritedWeapons, setInheritedWeapons] = useState([])
     const [inheritedArmour, setInheritedArmour] = useState([])
@@ -15,7 +16,44 @@ function AssignSkills (){
     const [availableSkills, setAvailableSkills] = useState([])
     const [skillPoints, setSkillPoints] = useState(null)
 
-    const allSkills = ['acrobatics', 'animalHandling', 'arcana', 'athletics', 'deception', 'history', 'insight', 'intimidation', 'investigation', 'medicine', 'nature', 'perception', 'performance', 'religion', 'sleightOfHand', 'stealth', 'survival']
+    const allSkills = [
+        { name:'acrobatics', stat: 'Dexterity' },
+        { name: 'animalHandling', stat: 'Wisdom' },
+        { name: 'arcana', stat: 'Intelligence' }, 
+        { name: 'athletics', stat: 'Strength '}, 
+        { name: 'deception', stat: 'Charisma' }, 
+        { name: 'history', stat: 'Intelligence' },
+        { name: 'insight', stat: 'Wisdom' }, 
+        { name: 'intimidation', stat: 'Charisma' }, 
+        { name: 'investigation', stat: 'Intelligence' },         , 
+        { name: 'medicine', stat: 'Wisdom' }, 
+        { name: 'nature', stat: 'Intelligence' }, 
+        { name: 'perception', stat: 'Wisdom' }, 
+        { name: 'performance', stat: 'Charisma' }, 
+        { name: 'persuassion', stat: 'Charisma' }, 
+        { name: 'religion', stat: 'Intelligence' }, 
+        { name: 'sleightOfHand', stat: 'Dexterity' }, 
+        { name: 'stealth', stat: 'Dexterity' }, 
+        { name: 'survival', stat: 'Wisdom' }
+    ]
+
+    const bonuses = {}
+
+    for (const stat in stats){
+        const value = stats[stat]
+
+        if (value > 15){
+            bonuses[stat] = 5
+        } else if (value > 13 && value < 16){
+            bonuses[stat] = 4
+        } else if (value > 11 && value < 14){
+            bonuses[stat] = 3
+        } else if (value > 9 && value < 12){
+            bonuses[stat] = 2
+        } else {
+            bonuses[stat] = 1
+        }
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -164,9 +202,12 @@ function AssignSkills (){
 
         newSkillPoints = classWithPoints.skillCount
 
-        if (characterClass.name === 'Nature Domain' || race.name === 'Human')
+        if (characterClass.name === 'Nature Domain')
             newSkillPoints++
 
+        if (race.name === 'Human')
+            newSkillPoints++
+        
         setSkillPoints(newSkillPoints)
     }
 
@@ -191,7 +232,13 @@ function AssignSkills (){
         </div>
     }
 
-    console.log(skillPoints)
+    const renderBonuses = () => {
+        return <div>
+            <p><strong>Your stat bonuses: </strong>Str: +{bonuses.Strength}, Dex: +{bonuses.Dexterity}, Cons: +{bonuses.Constitution}, Int: +{bonuses.Intelligence}, Wis: +{bonuses.Wisdom}, Char: +{bonuses.Charisma}</p>
+        </div>
+    }
+
+    console.log(bonuses)
 
     return <section>
         <div className="return-div">
@@ -203,7 +250,11 @@ function AssignSkills (){
 
         <h1 className='home-title'>SELECT YOUR PROFICIENCIES</h1>
 
-        <div className='distribute-stats'>Hola</div>
+        <div className='distribute-stats'>
+            <span>SELECT {skillPoints} SKILLS</span>
+
+            { renderBonuses() }
+        </div>
 
         { inheritedWeapons.length > 0 && renderInheritedWeapons()}
 
