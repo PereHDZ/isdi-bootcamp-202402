@@ -12,18 +12,22 @@ function AssignSkills (){
     const [inheritedArmour, setInheritedArmour] = useState([])
     const [inheritedSkills, setInheritedSkills] = useState([])
 
+    const [availableSkills, setAvailableSkills] = useState([])
+    const [skillPoints, setSkillPoints] = useState(null)
+
     const allSkills = ['acrobatics', 'animalHandling', 'arcana', 'athletics', 'deception', 'history', 'insight', 'intimidation', 'investigation', 'medicine', 'nature', 'perception', 'performance', 'religion', 'sleightOfHand', 'stealth', 'survival']
 
     useEffect(() => {
         const fetchData = async () => {
             await inheritSkillsFromRace()
+            await inheritSkillsFromClass()
         }
         fetchData()
     }, [])
 
     useEffect(() => {
         const fetchData = async () => {
-            await inheritSkillsFromClass()
+            await inheritSkillPoints()
         }
         fetchData()
     }, [])
@@ -94,7 +98,6 @@ function AssignSkills (){
 
         const newInheritedWeapons = [...inheritedWeapons]
         const newInheritedArmour = [...inheritedArmour]
-        const newInheritedskills = [...inheritedSkills]
 
         if (!characterClass.parent){
             classWithProficiencies = characterClass
@@ -144,6 +147,29 @@ function AssignSkills (){
         }
     }
 
+    const inheritSkillPoints = async () => {
+        let classWithPoints
+        let newSkillPoints
+
+        if (!characterClass.parent){
+            classWithPoints = characterClass
+        } else {
+            try {
+                const parentClass = await logic.retrieveCharacterClass(characterClass.parent)
+                classWithPoints = parentClass
+            } catch (error) {
+                alert(error)
+            }
+        }
+
+        newSkillPoints = classWithPoints.skillCount
+
+        if (characterClass.name === 'Nature Domain' || race.name === 'Human')
+            newSkillPoints++
+
+        setSkillPoints(newSkillPoints)
+    }
+
     const renderInheritedWeapons = () => {
         const p = inheritedWeapons.join(', ')
         return <div>
@@ -164,6 +190,8 @@ function AssignSkills (){
             <p><strong>Skill proficiencies inherited from race: </strong>{p}</p>
         </div>
     }
+
+    console.log(skillPoints)
 
     return <section>
         <div className="return-div">
