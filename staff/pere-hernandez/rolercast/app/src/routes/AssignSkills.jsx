@@ -22,10 +22,13 @@ function AssignSkills (){
     const [availableExpertises, setAvailableExpertises] = useState([])
 
     const [checkedSkills, setCheckedSkills] = useState([])
+    const [checkedExpertises, setCheckedExpertises] = useState([])
 
     const [selectedSkills, setSelectedSkills] = useState([])
+    const [selectedExpertises, setSelectedExpertises] = useState([])
 
     const [totalProficiencies, setTotalProficiencies] = useState([])
+    const [totalExpertises, setTotalExpertises] = useState([])
 
     const allSkills = [
         { name:'acrobatics', stat: 'Dexterity' },
@@ -88,6 +91,10 @@ function AssignSkills (){
     useEffect(() => {
         setTotalProficiencies([...inheritedSkills, ...selectedSkills])
     }, [inheritedSkills, selectedSkills])
+
+    useEffect(() => {
+        setTotalExpertises([...inheritedExpertises, ...selectedExpertises])
+    }, [inheritedExpertises, selectedExpertises])
 
     const inheritSkillsFromRace = async () => {
         let raceWithProficiencies
@@ -357,21 +364,24 @@ function AssignSkills (){
 
     const renderAvailableExpertises = () => {
         return (
-            <div className='distribute-stats margin'>
+            <div className='distribute-stats margins margin-top'>
                 <span><strong>SELECT {expertisePoints} SKILLS TO SET AS EXPERTISE</strong></span>
 
-                {availableExpertises.map(expertise => (
-                    <div className='align-center' key={expertise}>
-                        <input
-                            type='checkbox'
-                            value={expertise}
-                            className='check-box-input'
-                            // onChange={handleExpertiseCheckboxChange}
-                            // checked={checkedExpertises.includes(expertise)}
-                        />
-                        <label className='skill-check-label'>{expertise}</label>
-                    </div>
-                ))}
+                <div className='skills-div'>
+                    {availableExpertises.map(expertise => (
+                        <div className='align-center' key={expertise}>
+                            <input
+                                type='checkbox'
+                                value={expertise}
+                                className='check-box-input'
+                                onChange={handleExpertiseCheckboxChange}
+                                checked={checkedExpertises.includes(expertise)}
+                            />
+                            <label className='skill-check-label'>{expertise}</label>
+                        </div>
+                    ))}
+                </div>
+                
             </div>
         )
     }
@@ -395,15 +405,39 @@ function AssignSkills (){
 
             const newSelectedSkills = selectedSkills.filter(skill => skill !== selectedSkill)
 
-            setSelectedSkills(newCheckedSkills)
+            setCheckedSkills(newCheckedSkills)
             setSelectedSkills([...newSelectedSkills])
         }
     }
 
-    console.log('availableExpertises')
-    console.log(availableExpertises)
-    console.log('totalProficiencies')
-    console.log(totalProficiencies)
+    const handleExpertiseCheckboxChange = (event) => {
+        const selectedExpertise = event.target.value
+        let newCheckedExpertises = checkedExpertises
+
+        if (event.target.checked){
+            if (checkedExpertises.length < expertisePoints){
+                newCheckedExpertises = [...selectedExpertises, selectedExpertise]
+
+                setCheckedExpertises(newCheckedExpertises)
+                setSelectedExpertises([...selectedExpertises, selectedExpertise])
+            } else {
+                event.target.checked = false
+                alert(`You can only select up to ${expertisePoints} expertise skills`)
+            }
+        } else {
+            newCheckedExpertises = checkedExpertises.filter(expertise => expertise !== selectedExpertise)
+
+            const newSelectedExpertises = selectedExpertises.filter(expertise => expertise !== selectedExpertise)
+
+            setCheckedExpertises(newCheckedExpertises)
+            setSelectedExpertises([...newSelectedExpertises])
+        }
+    }
+
+    console.log('selectedExpertises')
+    console.log(selectedExpertises)
+    console.log('totalExpertises')
+    console.log(totalExpertises)
 
     return <section>
         <div className="return-div">
@@ -415,15 +449,21 @@ function AssignSkills (){
 
         <h1 className='home-title'>SELECT YOUR PROFICIENCIES</h1>
 
-        <div className='distribute-stats margins'>
-            <span><strong>SELECT {skillPoints} SKILLS</strong></span>
+        <div className='stats-form'>
+            <div className='stats-div'>
+                <div className='distribute-stats margins'>
+                    <span><strong>SELECT {skillPoints} SKILLS</strong></span>
 
-            { renderBonuses() }
+                    { renderBonuses() }
 
-            { renderAvailableSkills() }
+                    { renderAvailableSkills() }
+                </div>
+            </div>
+            
+            <div className='stats-div'>
+                { availableExpertises.length > 0 && renderAvailableExpertises() }   
+            </div>            
         </div>
-
-        {/* { availableExpertises.length > 0 && renderAvailableExpertises() } */}
 
         <div className='margins'>
             { inheritedWeapons.length > 0 && renderInheritedWeapons() }
