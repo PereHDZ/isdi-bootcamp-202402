@@ -34,17 +34,17 @@ function AssignSkills (){
         { name:'acrobatics', stat: 'Dexterity' },
         { name: 'animalHandling', stat: 'Wisdom' },
         { name: 'arcana', stat: 'Intelligence' }, 
-        { name: 'athletics', stat: 'Strength '}, 
+        { name: 'athletics', stat: 'Strength'}, 
         { name: 'deception', stat: 'Charisma' }, 
         { name: 'history', stat: 'Intelligence' },
         { name: 'insight', stat: 'Wisdom' }, 
         { name: 'intimidation', stat: 'Charisma' }, 
-        { name: 'investigation', stat: 'Intelligence' },         , 
+        { name: 'investigation', stat: 'Intelligence' },
         { name: 'medicine', stat: 'Wisdom' }, 
         { name: 'nature', stat: 'Intelligence' }, 
         { name: 'perception', stat: 'Wisdom' }, 
         { name: 'performance', stat: 'Charisma' }, 
-        { name: 'persuassion', stat: 'Charisma' }, 
+        { name: 'persuasion', stat: 'Charisma' }, 
         { name: 'religion', stat: 'Intelligence' }, 
         { name: 'sleightOfHand', stat: 'Dexterity' }, 
         { name: 'stealth', stat: 'Dexterity' }, 
@@ -355,12 +355,15 @@ function AssignSkills (){
                             onChange={handleCheckboxChange}
                             checked={checkedSkills.includes(skill)}
                         />
-                        <label className='skill-check-label'>{skill}</label>
+                        <label className='skill-check-label'>
+                            {skill} +{bonuses[allSkills.find(s => s.name === skill).stat]}
+                            </label>
                     </div>
                 ))}
             </div>
         )
     }
+
 
     const renderAvailableExpertises = () => {
         return (
@@ -377,7 +380,9 @@ function AssignSkills (){
                                 onChange={handleExpertiseCheckboxChange}
                                 checked={checkedExpertises.includes(expertise)}
                             />
-                            <label className='skill-check-label'>{expertise}</label>
+                            <label className='skill-check-label'>
+                                {expertise} +{bonuses[allSkills.find(s => s.name === expertise).stat]}
+                            </label>
                         </div>
                     ))}
                 </div>
@@ -438,6 +443,7 @@ function AssignSkills (){
     console.log(selectedExpertises)
     console.log('totalExpertises')
     console.log(totalExpertises)
+    console.log(bonuses)
 
     return <section>
         <div className="return-div">
