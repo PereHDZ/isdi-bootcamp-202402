@@ -87,17 +87,6 @@ function AssignSkills (){
 
             setInheritedArmour(newInheritedArmour)
         }
-
-        
-
-        console.log('weapons from race')
-        console.log(newInheritedWeapons)
-    
-        console.log('armour from race')
-        console.log(newInheritedArmour)
-    
-        console.log('skills from race')
-        console.log(newInheritedskills)
     }
 
     const inheritSkillsFromClass = async () => {
@@ -153,27 +142,47 @@ function AssignSkills (){
 
             setInheritedArmour(newInheritedArmour)
         }
-
-        console.log('weapons from class')
-        console.log(newInheritedWeapons)
-    
-        console.log('armour from class')
-        console.log(newInheritedArmour)
-    
-        console.log('skills from class')
-        console.log(newInheritedskills)
     }
 
-    console.log('weapons')
-    console.log(inheritedWeapons)
+    const renderInheritedWeapons = () => {
+        const p = inheritedWeapons.join(', ')
+        return <div>
+            <p><strong>Weapon proficiencies inherited from race or class: </strong>{p}</p>
+        </div>
+    }
 
-    console.log('armour')
-    console.log(inheritedArmour)
+    const renderInheritedArmour = () => {
+        const p = inheritedArmour.join(', ')
+        return <div>
+            <p><strong>Armour proficiencies inherited from race or class: </strong>{p}</p>
+        </div>
+    }
 
-    console.log('skills')
-    console.log(inheritedSkills)
+    const renderInheritedSkills = () => {
+        const p = inheritedSkills.join(', ')
+        return <div>
+            <p><strong>Skill proficiencies inherited from race: </strong>{p}</p>
+        </div>
+    }
 
-    return <h1>Hola</h1>
+    return <section>
+        <div className="return-div">
+            <button className="transparent-button">
+                <img src="../../public/icons/return.png" className="icon"></img>
+            </button>
+            <h3 className="return">RETURN</h3>
+        </div>
+
+        <h1 className='home-title'>SELECT YOUR PROFICIENCIES</h1>
+
+        <div className='distribute-stats'>Hola</div>
+
+        { inheritedWeapons.length > 0 && renderInheritedWeapons()}
+
+        { inheritedArmour.length > 0 && renderInheritedArmour()}
+
+        { inheritedSkills.length > 0 && renderInheritedSkills()}
+    </section>
 }
 
 export default AssignSkills
