@@ -7,7 +7,7 @@ import { SavingThrowProficienciesType, ProficienciesType, SpellcastingType } fro
 const { SystemError, NotFoundError } = errors
 const { Types: { ObjectId } } = Schema
 
-function retrieveCharacterClass(userId: string, characterClassId: string): Promise<{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: SpellcastingType, parent?: ObjectId }>{
+function retrieveCharacterClass(userId: string, characterClassId: string): Promise<{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, skillCount?: number, spellcastingAbility?: string, spellcasting?: SpellcastingType, parent?: ObjectId }>{
     //validation
     validate.text(userId, 'userId', true)
     validate.text(characterClassId, 'characterClassId', true)
@@ -18,12 +18,12 @@ function retrieveCharacterClass(userId: string, characterClassId: string): Promi
         .then(user => {
             if (!user) throw new NotFoundError('user not found')
 
-            return CharacterClass.findById(characterClassId).select('id name description hp hpPerLevel keyAbilities savingThrowProficiencies proficiencies spellcastingAbility spellcasting parent').lean()
+            return CharacterClass.findById(characterClassId).select('id name description hp hpPerLevel keyAbilities savingThrowProficiencies proficiencies skillCount spellcastingAbility spellcasting parent').lean()
         })
         .then (characterClass => {
             if (!characterClass) throw new NotFoundError('character class not found')
 
-            return { id: characterClass._id.toString(), name: characterClass.name, description: characterClass.description, hp: characterClass.hp, hpPerLevel: characterClass.hpPerLevel, keyAbilities: characterClass.keyAbilities, savingThrowProficiencies: characterClass.savingThrowProficiencies, proficiencies: characterClass.proficiencies, spellcastingAbility: characterClass.spellcastingAbility, spellcasting: characterClass.spellcasting, parent: characterClass.parent }
+            return { id: characterClass._id.toString(), name: characterClass.name, description: characterClass.description, hp: characterClass.hp, hpPerLevel: characterClass.hpPerLevel, keyAbilities: characterClass.keyAbilities, savingThrowProficiencies: characterClass.savingThrowProficiencies, proficiencies: characterClass.proficiencies, skillCount: characterClass.skillCount, spellcastingAbility: characterClass.spellcastingAbility, spellcasting: characterClass.spellcasting, parent: characterClass.parent }
         })
 }
 

@@ -17,8 +17,11 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                 savingThrowProficiencies: new SavingThrowProficiencies({ strength: 1, constitution: 1 }), 
                 proficiencies: new Proficiencies({ 
                     weapons: new Weapons({ clubs: 1, daggers: 1, handAxes: 1, javelins: 1, lightHammers: 1, maces: 1, sickles: 1, quarterstaves: 1, spears: 1, greatClubs: 1, lightCrossbows: 1, shortBows: 1, flails: 1, morningstars: 1, rapiers: 1, scimitars: 1, shortSwords: 1, warPicks: 1, battleAxes: 1, longSwords: 1, tridents: 1, warHammers: 1, glaives: 1, greatAxes: 1, halberds: 1, greatSwords: 1, mauls: 1, pikes: 1, handCrossbows: 1, heavyCrossbows: 1, longbows: 1 }), 
+
                     armour: new Armour({ lightArmour: 1, mediumArmour: 1, shields: 1 }), 
-                    skills: new Skills({ animalHandling: 0, athletics: 0, intimidation: 0, nature: 0, survival: 0, perception: 0 }) }), 
+
+                    skills: new Skills({ animalHandling: 0, athletics: 0, intimidation: 0, nature: 0, survival: 0, perception: 0 }) }),
+                skillCount: 2,
                 spellcastingAbility: 'Charisma for the effective use of items, scrolls, and equipment.', 
                 classActions: [new ObjectId('663755d85297ed4f922e3a52'), new ObjectId('663755d85297ed4f922e3a53')] }),
                 
@@ -34,16 +37,16 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     armour: new Armour({ lightArmour: 1 }),
 
-                    skills: new Skills({ history: 0, insight: 0, medicine: 0, persuasion: 0, religion: 0, deception: 0, intimidation: 0, performance: 0, acrobatics: 0, sleightOfHand: 0, stealth: 0, animalHandling: 0, arcana: 0, investigation: 0, athletics: 0, nature: 0, perception: 0, survival: 0 }) }),
-                    
-                    spellcastingAbility: 'Charisma', 
-                    spellcasting: new Spellcasting({ 
-                        cantripCount: 2, 
-                        availableCantrips: [new ObjectId('66354088b3c877f621450000'), new ObjectId('66354088b3c877f621450006'),new ObjectId('66354088b3c877f621450015'), new ObjectId('66354088b3c877f621450005'), new ObjectId('66354088b3c877f621450002'), new ObjectId('66354088b3c877f621450008'), new ObjectId('66354088b3c877f621450009'), new ObjectId('66354088b3c877f621450016')], 
+                    skills: new Skills({ history: 0, insight: 0, medicine: 0, persuasion: 0, religion: 0, deception: 0, intimidation: 0, performance: 0, acrobatics: 0, sleightOfHand: 0, stealth: 0, animalHandling: 0, arcana: 0, investigation: 0, athletics: 0, nature: 0, perception: 0, survival: 0 }) }),                    
+                skillCount: 3,
+                spellcastingAbility: 'Charisma', 
+                spellcasting: new Spellcasting({ 
+                    cantripCount: 2, 
+                    availableCantrips: [new ObjectId('66354088b3c877f621450000'), new ObjectId('66354088b3c877f621450006'),new ObjectId('66354088b3c877f621450015'), new ObjectId('66354088b3c877f621450005'), new ObjectId('66354088b3c877f621450002'), new ObjectId('66354088b3c877f621450008'), new ObjectId('66354088b3c877f621450009'), new ObjectId('66354088b3c877f621450016')], 
 
-                        spellCount: 4, 
-                        availableSpells: [new ObjectId('66335a87863710c59eae0f3b'), new ObjectId('66335a87863710c59eae0f3e'),new ObjectId('66335a87863710c59eae0f41'), new ObjectId('66335a87863710c59eae0f4d'), new ObjectId('66335a87863710c59eae0f4e'), new ObjectId('66335a87863710c59eae0f4f'), new ObjectId('66335a87863710c59eae0f54'), new ObjectId('66335a87863710c59eae0f56'), new ObjectId('66335a87863710c59eae0f5d'), new ObjectId('66335a87863710c59eae0f5f'),new ObjectId('66335a87863710c59eae0f65'), new ObjectId('66335a87863710c59eae0f6f'), new ObjectId('66335a87863710c59eae0f70'), new ObjectId('66335a87863710c59eae0f71'), new ObjectId('66335a87863710c59eae0f73')] }), 
-                    classActions: [new ObjectId('663755d85297ed4f922e3a54'), new ObjectId('663755d85297ed4f922e3a55'), new ObjectId('663755d85297ed4f922e3a56'),] }),
+                    spellCount: 4, 
+                    availableSpells: [new ObjectId('66335a87863710c59eae0f3b'), new ObjectId('66335a87863710c59eae0f3e'),new ObjectId('66335a87863710c59eae0f41'), new ObjectId('66335a87863710c59eae0f4d'), new ObjectId('66335a87863710c59eae0f4e'), new ObjectId('66335a87863710c59eae0f4f'), new ObjectId('66335a87863710c59eae0f54'), new ObjectId('66335a87863710c59eae0f56'), new ObjectId('66335a87863710c59eae0f5d'), new ObjectId('66335a87863710c59eae0f5f'),new ObjectId('66335a87863710c59eae0f65'), new ObjectId('66335a87863710c59eae0f6f'), new ObjectId('66335a87863710c59eae0f70'), new ObjectId('66335a87863710c59eae0f71'), new ObjectId('66335a87863710c59eae0f73')] }), 
+                classActions: [new ObjectId('663755d85297ed4f922e3a54'), new ObjectId('663755d85297ed4f922e3a55'), new ObjectId('663755d85297ed4f922e3a56'),] }),
 
             CharacterClass.create({ 
                 name: 'Cleric', 
@@ -57,7 +60,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     armour: new Armour({ lightArmour: 1, mediumArmour: 1, shields: 1 }), 
                     
-                    skills: new Skills({ history: 0, insight: 0, medicine: 0, persuasion: 0, religion: 0 }) }), 
+                    skills: new Skills({ history: 0, insight: 0, medicine: 0, persuasion: 0, religion: 0 }) }),
+                skillCount: 2,                    
                 spellcastingAbility: 'Wisdom', 
                 spellcasting: new Spellcasting({ 
                     cantripCount: 3, 
@@ -79,6 +83,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     armour: new Armour({ lightArmour: 1, mediumArmour: 1, shields: 1 }), 
                     
                     skills: new Skills({ arcana: 0, animalHandling: 0, insight: 0, medicine: 0, nature: 0, perception: 0, religion: 0, survival: 0 }) }), 
+                skillCount: 2,
                 spellcastingAbility: 'Wisdom', 
                 spellcasting: new Spellcasting({ 
                     cantripCount: 2, 
@@ -100,6 +105,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     armour: new Armour({ lightArmour: 1, mediumArmour: 1, heavyArmour: 1, shields: 1 }), 
                     
                     skills: new Skills({ acrobatics: 0, animalHandling: 0, athletics: 0, history: 0, insight: 0, intimidation: 0, perception: 0, survival: 0 }) }), 
+                skillCount: 2,
                 spellcastingAbility: 'Intelligence for the effective use of items, scrolls, and equipment.', 
                 classActions: [new ObjectId('663755d85297ed4f922e3a57')] }),
 
@@ -114,6 +120,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     weapons: new Weapons({ clubs: 1, daggers: 1, handAxes: 1, javelins: 1, lightHammers: 1, maces: 1, sickles: 1, quarterstaves: 1, spears: 1, greatClubs: 1, lightCrossbows: 1, shortBows: 1, shortSwords: 1 }), 
                     
                     skills: new Skills({ history: 0, insight: 0, religion: 0, acrobatics: 0, stealth: 0, athletics: 0 }) }),
+                skillCount: 2,
                 spellcastingAbility: 'Wisdom', 
                 classActions: [new ObjectId('663755d85297ed4f922e3a58'), new ObjectId('663755d85297ed4f922e3a59'), new ObjectId('663755d85297ed4f922e3a5a'), new ObjectId('663755d85297ed4f922e3a5b'), new ObjectId('663755d85297ed4f922e3a5c'), new ObjectId('663755d85297ed4f922e3a5d')] }),
 
@@ -129,7 +136,9 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     armour: new Armour({ lightArmour: 1, mediumArmour: 1, heavyArmour: 1, shields: 1 }), 
                     
-                    skills: new Skills({ athletics: 0, insight: 0, intimidation: 0, medicine: 0, persuasion: 0, religion: 0 }) }), spellcastingAbility: 'Charisma', 
+                    skills: new Skills({ athletics: 0, insight: 0, intimidation: 0, medicine: 0, persuasion: 0, religion: 0 }) }),
+                skillCount: 2,
+                spellcastingAbility: 'Charisma', 
                 classActions: [new ObjectId('663755d85297ed4f922e3a5e'), new ObjectId('663755d85297ed4f922e3a5f')] }),
 
             CharacterClass.create({ 
@@ -144,7 +153,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     armour: new Armour({ lightArmour: 1, mediumArmour: 1, heavyArmour: 1, shields: 1 }), 
                     
-                    skills: new Skills({ animalHandling: 0, athletics: 0, insight: 0, nature: 0, perception: 0, stealth: 0, survival: 0 }) }), 
+                    skills: new Skills({ animalHandling: 0, athletics: 0, insight: 0, nature: 0, perception: 0, stealth: 0, survival: 0 }) }),
+                skillCount: 3,
                 spellcastingAbility: 'Wisdom' }),
 
             CharacterClass.create({ 
@@ -159,7 +169,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     armour: new Armour({ lightArmour: 1 }), 
                     
-                    skills: new Skills({ acrobatics: 0, athletics: 0, deception: 0, insight: 0, intimidation: 0, investigation: 0, perception: 0, performance: 0, persuasion: 0, sleightOfHand: 0, stealth: 0 }) }), 
+                    skills: new Skills({ acrobatics: 0, athletics: 0, deception: 0, insight: 0, intimidation: 0, investigation: 0, perception: 0, performance: 0, persuasion: 0, sleightOfHand: 0, stealth: 0 }) }),
+                skillCount: 4,
                 spellcastingAbility: ' Intelligence for the effective use of items, scrolls, and equipment.', 
                 classActions: [new ObjectId('663755d85297ed4f922e3a60'), new ObjectId('663755d85297ed4f922e3a61'), new ObjectId('663755d85297ed4f922e3a62')] }),
 
@@ -172,7 +183,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                 savingThrowProficiencies: new SavingThrowProficiencies({ charisma: 1, constitution: 1 }), 
                 proficiencies: new Proficiencies({ 
                     weapons: new Weapons({ daggers: 1, quarterstaves: 1, lightCrossbows: 1 }), 
-                    skills: new Skills({ arcana: 0, deception: 0, insight: 0, intimidation: 0, persuasion: 0, religion: 0 }) }), 
+                    skills: new Skills({ arcana: 0, deception: 0, insight: 0, intimidation: 0, persuasion: 0, religion: 0 }) }),
+                skillCount: 2,
                 spellcastingAbility: 'Charisma', 
                 spellcasting: new Spellcasting({ 
                     cantripCount: 4, 
@@ -193,7 +205,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     armour: new Armour({ lightArmour: 1 }), 
                     
-                    skills: new Skills({ arcana: 0, deception: 0, history: 0, intimidation: 0, investigation: 0, nature: 0, religion: 0 }) }), 
+                    skills: new Skills({ arcana: 0, deception: 0, history: 0, intimidation: 0, investigation: 0, nature: 0, religion: 0 }) }),
+                skillCount: 2,
                 spellcastingAbility: 'Charisma', 
                 spellcasting: new Spellcasting({ 
                     cantripCount: 2, 
@@ -213,6 +226,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                 proficiencies: new Proficiencies({ 
                     weapons: new Weapons({ daggers: 1, quarterstaves: 1, lightCrossbows: 1 }), 
                     skills: new Skills({ arcana: 0, history: 0, investigation: 0, insight: 0, medicine: 0, religion: 0 }) }), 
+                skillCount: 2,
                 spellcastingAbility: 'Intelligence', 
                 spellcasting: new Spellcasting({ 
                     cantripCount: 3, 
@@ -265,8 +279,10 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         name: 'Nature Domain', 
                         description: "You embody the vast viridian power of the natural world, an avatar of the subtle divinity of fruitfall, avian migration, woodland silence, and the landslide's roaring fury.", 
                         proficiencies: new Proficiencies({ 
-                            armour: new Armour({ heavyArmour: 1 }) }), 
-                        skills: new Skills({ animalHandling: 0, nature: 0, survival: 0 }), 
+                            armour: new Armour({ heavyArmour: 1 }),
+                            skills: new Skills({ animalHandling: 0, nature: 0, survival: 0 })
+                        }),
+                        skillCount: 1,
                         spellcasting: new Spellcasting({ 
                             cantripCount: 1, 
                             availableCantrips: [new ObjectId('66354088b3c877f62145000a'), new ObjectId('66354088b3c877f62145000b'), new ObjectId('66354088b3c877f621450011'), new ObjectId('66354088b3c877f621450014'),] }), 

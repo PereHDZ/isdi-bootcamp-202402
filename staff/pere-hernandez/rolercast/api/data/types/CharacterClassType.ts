@@ -12,6 +12,7 @@ type CharacterClassType = {
     keyAbilities?: [string],
     savingThrowProficiencies?: SavingThrowProficienciesType,
     proficiencies?: ProficienciesType,
+    skillCount?: number,
     expertises?: SkillsType,
     spellcastingAbility?: string,
     spellcasting?: SpellcastingType,

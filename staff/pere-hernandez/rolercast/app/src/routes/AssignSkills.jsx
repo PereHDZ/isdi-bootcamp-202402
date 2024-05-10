@@ -31,9 +31,9 @@ function AssignSkills (){
     const inheritSkillsFromRace = async () => {
         let raceWithProficiencies
 
-        const newInheritedWeapons = []
-        const newInheritedArmour = []
-        const newInheritedskills = []
+        const newInheritedWeapons = [...inheritedWeapons]
+        const newInheritedArmour = [...inheritedArmour]
+        const newInheritedskills = [...inheritedSkills]
 
         if (!race.parent){
             raceWithProficiencies = race
@@ -88,6 +88,8 @@ function AssignSkills (){
             setInheritedArmour(newInheritedArmour)
         }
 
+        
+
         console.log('weapons from race')
         console.log(newInheritedWeapons)
     
@@ -101,9 +103,9 @@ function AssignSkills (){
     const inheritSkillsFromClass = async () => {
         let classWithProficiencies
 
-        const newInheritedWeapons = []
-        const newInheritedArmour = []
-        const newInheritedskills = []
+        const newInheritedWeapons = [...inheritedWeapons]
+        const newInheritedArmour = [...inheritedArmour]
+        const newInheritedskills = [...inheritedSkills]
 
         if (!characterClass.parent){
             classWithProficiencies = characterClass
@@ -115,6 +117,51 @@ function AssignSkills (){
                 alert(error)
             }
         }
+
+        if (!!classWithProficiencies.proficiencies && !!classWithProficiencies.proficiencies.weapons){           
+            for (const weapon in classWithProficiencies.proficiencies.weapons){
+                if (weapon !== '_id'){
+                    newInheritedWeapons.push(weapon)
+
+                    setInheritedWeapons(newInheritedWeapons)
+                }
+            }
+        }
+
+        if (!!classWithProficiencies.proficiencies && !!classWithProficiencies.proficiencies.armour){
+            for (const armour in classWithProficiencies.proficiencies.armour){
+                if (armour !== '_id'){
+                    newInheritedArmour.push(armour)
+
+                    setInheritedArmour(newInheritedArmour)
+                }
+            }
+        }
+
+        if (characterClass.name === 'War Domain'){
+            for (const weapon in characterClass.proficiencies.weapons){
+                if (weapon !== '_id'){
+                    newInheritedWeapons.push(weapon)
+
+                    setInheritedWeapons(newInheritedWeapons)
+                }
+            }
+        }
+
+        if (characterClass.name === 'Life Domain' || characterClass.name === 'Nature Domain' || characterClass.name === 'Tempest Domain' || characterClass.name === 'War Domain') {
+            newInheritedArmour.push('heavyArmour')
+
+            setInheritedArmour(newInheritedArmour)
+        }
+
+        console.log('weapons from class')
+        console.log(newInheritedWeapons)
+    
+        console.log('armour from class')
+        console.log(newInheritedArmour)
+    
+        console.log('skills from class')
+        console.log(newInheritedskills)
     }
 
     console.log('weapons')

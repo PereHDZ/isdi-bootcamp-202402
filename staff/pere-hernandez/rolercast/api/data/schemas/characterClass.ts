@@ -37,6 +37,10 @@ const characterClass = new Schema ({
         type: proficiencies,
         required: false
     },
+    skillCount: {
+        type: Number,
+        required: false
+    },
     expertises: {
         type: skills,
         required: false
