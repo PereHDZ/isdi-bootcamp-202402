@@ -18,6 +18,10 @@ function AssignSkills (){
     const [availableSkills, setAvailableSkills] = useState([])
     const [skillPoints, setSkillPoints] = useState(null)
 
+    const [checkedSkills, setCheckedSkills] = useState([])
+
+    const [selectedSkills, setSelectedSkills] = useState([])
+
     const allSkills = [
         { name:'acrobatics', stat: 'Dexterity' },
         { name: 'animalHandling', stat: 'Wisdom' },
@@ -290,10 +294,51 @@ function AssignSkills (){
             <p><strong>Your stat bonuses: </strong>Str: +{bonuses.Strength}, Dex: +{bonuses.Dexterity}, Cons: +{bonuses.Constitution}, Int: +{bonuses.Intelligence}, Wis: +{bonuses.Wisdom}, Char: +{bonuses.Charisma}</p>
         </div>
     }
-    console.log('inheritedExpertises')
-    console.log(inheritedExpertises)
-    console.log('availableSkills')
-    console.log(availableSkills)
+
+    const renderAvailableSkills = () => {
+        return (
+            <div className='skills-div'>
+                {availableSkills.map(skill => (
+                    <div className='align-center' key={skill}>
+                        <input
+                            type='checkbox'
+                            value={skill}
+                            className='check-box-input'
+                            onChange={handleCheckboxChange}
+                            checked={checkedSkills.includes(skill)}
+                        />
+                        <label className='skill-check-label'>{skill}</label>
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    const handleCheckboxChange = (event) => {
+        const selectedSkill = event.target.value
+        let newCheckedSkills = checkedSkills
+
+        if (event.target.checked){
+            if (checkedSkills.length < skillPoints){
+                newCheckedSkills = [...selectedSkills, selectedSkill]
+
+                setCheckedSkills(newCheckedSkills)
+                setSelectedSkills([...selectedSkills, selectedSkill])
+            } else {
+                event.target.checked = false
+                alert(`You can only select up to ${skillPoints} skills`)
+            }
+        } else {
+            newCheckedSkills = checkedSkills.filter(skill => skill !== selectedSkill)
+
+            const newSelectedSkills = selectedSkills.filter(skill => skill !== selectedSkill)
+
+            setSelectedSkills(newCheckedSkills)
+            setSelectedSkills([...newSelectedSkills])
+        }
+    }
+
+    console.log(selectedSkills)
 
     return <section>
         <div className="return-div">
@@ -305,19 +350,24 @@ function AssignSkills (){
 
         <h1 className='home-title'>SELECT YOUR PROFICIENCIES</h1>
 
-        <div className='distribute-stats'>
-            <span>SELECT {skillPoints} SKILLS</span>
+        <div className='distribute-stats margins'>
+            <span><strong>SELECT {skillPoints} SKILLS</strong></span>
 
             { renderBonuses() }
+
+            { renderAvailableSkills() }
         </div>
 
-        { inheritedWeapons.length > 0 && renderInheritedWeapons() }
+        <div className='margins'>
+            { inheritedWeapons.length > 0 && renderInheritedWeapons() }
 
-        { inheritedArmour.length > 0 && renderInheritedArmour() }
+            { inheritedArmour.length > 0 && renderInheritedArmour() }
 
-        { inheritedSkills.length > 0 && renderInheritedSkills() }
+            { inheritedSkills.length > 0 && renderInheritedSkills() }
 
-        { inheritedExpertises.length > 0 && renderInheritedExpertises() }
+            { inheritedExpertises.length > 0 && renderInheritedExpertises() }
+        </div>
+
     </section>
 }
 

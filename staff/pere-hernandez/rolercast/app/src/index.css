@@ -440,3 +440,28 @@ select {
   width: 50vw;
   margin-left: 3vw;
 }
+
+.skills-div {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.check-box-input {
+  width: 20px;
+  height: 20px;
+}
+
+.skill-check-label {
+  display: flex;
+  margin: 0%;
+  margin-left: 2vw;
+  font-size: large;
+  align-self: center;
+  width: 36vw;
+}
+
+.margins {
+  margin-left: 2.5vw;
+  margin-right: 2.5vw;
+}
