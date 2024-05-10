@@ -18,9 +18,14 @@ function AssignSkills (){
     const [availableSkills, setAvailableSkills] = useState([])
     const [skillPoints, setSkillPoints] = useState(null)
 
+    const [availableExpertises, setAvailableExpertises] = useState([])
+    const [expertisePoints, setExpertisePoints] = useState(null)
+
     const [checkedSkills, setCheckedSkills] = useState([])
 
     const [selectedSkills, setSelectedSkills] = useState([])
+
+    const [totalProficiencies, setTotalProficiencies] = useState([])
 
     const allSkills = [
         { name:'acrobatics', stat: 'Dexterity' },
@@ -72,6 +77,14 @@ function AssignSkills (){
 
         inheritExpertises()
     }, [])
+
+    useEffect(() => {
+        inheritAvailableExpertises()
+    }, [totalProficiencies])
+
+    useEffect(() => {
+        setTotalProficiencies([...inheritedSkills, ...selectedSkills])
+    }, [inheritedSkills, selectedSkills])
 
     const inheritSkillsFromRace = async () => {
         let raceWithProficiencies
@@ -261,6 +274,20 @@ function AssignSkills (){
         }
     }
 
+    const inheritAvailableExpertises = async () => {
+        let newAvailableExpertises = []
+
+        if (characterClass.name === 'Knowledge Domain'){
+            newAvailableExpertises.push('arcana', 'history', 'nature', 'religion')
+
+            setAvailableExpertises(newAvailableExpertises)
+        } else if (characterClass.name === 'Rogue'){
+            newAvailableExpertises = [...totalProficiencies]
+
+            setAvailableExpertises(newAvailableExpertises)
+        }
+    }
+
     const renderInheritedWeapons = () => {
         const p = inheritedWeapons.join(', ')
         return <div>
@@ -314,6 +341,10 @@ function AssignSkills (){
         )
     }
 
+    // renderAvailableExpertises = () => {
+        
+    // }
+
     const handleCheckboxChange = (event) => {
         const selectedSkill = event.target.value
         let newCheckedSkills = checkedSkills
@@ -338,7 +369,10 @@ function AssignSkills (){
         }
     }
 
-    console.log(selectedSkills)
+    console.log('availableExpertises')
+    console.log(availableExpertises)
+    console.log('totalProficiencies')
+    console.log(totalProficiencies)
 
     return <section>
         <div className="return-div">
@@ -357,6 +391,8 @@ function AssignSkills (){
 
             { renderAvailableSkills() }
         </div>
+
+        {/* { characterClass.name === 'Knowledge Domain' || characterClass.name === 'Rogue' && renderAvailableExpertises() } */}
 
         <div className='margins'>
             { inheritedWeapons.length > 0 && renderInheritedWeapons() }
