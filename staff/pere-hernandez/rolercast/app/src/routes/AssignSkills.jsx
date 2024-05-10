@@ -13,6 +13,8 @@ function AssignSkills (){
     const [inheritedArmour, setInheritedArmour] = useState([])
     const [inheritedSkills, setInheritedSkills] = useState([])
 
+    const [inheritedExpertises, setInheritedExpertises] = useState([])
+
     const [availableSkills, setAvailableSkills] = useState([])
     const [skillPoints, setSkillPoints] = useState(null)
 
@@ -59,15 +61,12 @@ function AssignSkills (){
         const fetchData = async () => {
             await inheritSkillsFromRace()
             await inheritSkillsFromClass()
-        }
-        fetchData()
-    }, [])
-
-    useEffect(() => {
-        const fetchData = async () => {
             await inheritSkillPoints()
+            await inheritAvailableSkills()
         }
         fetchData()
+
+        inheritExpertises()
     }, [])
 
     const inheritSkillsFromRace = async () => {
@@ -108,7 +107,7 @@ function AssignSkills (){
             }
         }
 
-        if (!!raceWithProficiencies.proficiencies && !!raceWithProficiencies.proficiencies){
+        if (!!raceWithProficiencies.proficiencies && !!raceWithProficiencies.proficiencies.skills){
             for (const skill in raceWithProficiencies.proficiencies.skills){
                 if (raceWithProficiencies.proficiencies.skills[skill] === 1){
                     newInheritedskills.push(skill)
@@ -211,6 +210,53 @@ function AssignSkills (){
         setSkillPoints(newSkillPoints)
     }
 
+    const inheritExpertises = () => {
+        const newInheritedExpertises = []
+        if (race.name === 'Rock Gnome'){
+            newInheritedExpertises.push('history')
+
+            setInheritedExpertises(newInheritedExpertises)
+        }
+
+        if (characterClass.name === 'Knowledge Domain'){
+            newInheritedExpertises.push('arcana', 'history', 'nature', 'religion')
+
+            setInheritedExpertises(newInheritedExpertises)
+        }
+    } 
+
+    const inheritAvailableSkills = async () => {
+        let classWithSkills
+        const newAvailableSkills = []
+
+        if (!characterClass.parent) {
+            classWithSkills = characterClass
+        } else {
+            try {
+                const parentClass = await logic.retrieveCharacterClass(characterClass.parent) 
+                classWithSkills = parentClass
+            } catch (error) {
+                alert (error)
+            }
+        }
+
+        if (!!classWithSkills.proficiencies && !!classWithSkills.proficiencies.skills){
+            for (const skill in classWithSkills.proficiencies.skills){
+                if (classWithSkills.proficiencies.skills[skill] === 0){
+                    newAvailableSkills.push(skill)
+
+                    setAvailableSkills(newAvailableSkills)
+                }
+            }
+        }
+
+        if (characterClass.name === 'Nature Domain'){
+            newAvailableSkills.push('animalHandling', 'nature', 'survival')
+
+            setAvailableSkills(newAvailableSkills)
+        }
+    }
+
     const renderInheritedWeapons = () => {
         const p = inheritedWeapons.join(', ')
         return <div>
@@ -232,13 +278,22 @@ function AssignSkills (){
         </div>
     }
 
+    const renderInheritedExpertises = () => {
+        const p = inheritedExpertises.join(', ')
+        return <div>
+            <p><strong>Expertises inherited from race or class: </strong>{p}</p>
+        </div>
+    }
+
     const renderBonuses = () => {
         return <div>
             <p><strong>Your stat bonuses: </strong>Str: +{bonuses.Strength}, Dex: +{bonuses.Dexterity}, Cons: +{bonuses.Constitution}, Int: +{bonuses.Intelligence}, Wis: +{bonuses.Wisdom}, Char: +{bonuses.Charisma}</p>
         </div>
     }
-
-    console.log(bonuses)
+    console.log('inheritedExpertises')
+    console.log(inheritedExpertises)
+    console.log('availableSkills')
+    console.log(availableSkills)
 
     return <section>
         <div className="return-div">
@@ -256,11 +311,13 @@ function AssignSkills (){
             { renderBonuses() }
         </div>
 
-        { inheritedWeapons.length > 0 && renderInheritedWeapons()}
+        { inheritedWeapons.length > 0 && renderInheritedWeapons() }
 
-        { inheritedArmour.length > 0 && renderInheritedArmour()}
+        { inheritedArmour.length > 0 && renderInheritedArmour() }
 
-        { inheritedSkills.length > 0 && renderInheritedSkills()}
+        { inheritedSkills.length > 0 && renderInheritedSkills() }
+
+        { inheritedExpertises.length > 0 && renderInheritedExpertises() }
     </section>
 }
 
