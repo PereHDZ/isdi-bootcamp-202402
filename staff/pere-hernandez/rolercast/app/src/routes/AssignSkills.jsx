@@ -2,11 +2,12 @@ import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 
-import { useRace, useCharacterClass, useStats } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useStats } from '../pages/Home'
 
 function AssignSkills (){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
+    const { background } = useBackground()
     const { stats } = useStats()
 
     const [inheritedWeapons, setInheritedWeapons] = useState([])
@@ -19,7 +20,6 @@ function AssignSkills (){
     const [skillPoints, setSkillPoints] = useState(null)
 
     const [availableExpertises, setAvailableExpertises] = useState([])
-    const [expertisePoints, setExpertisePoints] = useState(null)
 
     const [checkedSkills, setCheckedSkills] = useState([])
 
@@ -48,6 +48,8 @@ function AssignSkills (){
         { name: 'survival', stat: 'Wisdom' }
     ]
 
+    const expertisePoints = 2
+
     const bonuses = {}
 
     for (const stat in stats){
@@ -70,6 +72,7 @@ function AssignSkills (){
         const fetchData = async () => {
             await inheritSkillsFromRace()
             await inheritSkillsFromClass()
+            inheritSkillsFromBackground()
             await inheritSkillPoints()
             await inheritAvailableSkills()
         }
@@ -201,6 +204,17 @@ function AssignSkills (){
         }
     }
 
+    const inheritSkillsFromBackground = () => {
+        const newInheritedskills = [...inheritedSkills]
+
+        for (const skill in background.skills)
+            if (skill !== '_id'){
+                newInheritedskills.push(skill)
+
+                setInheritedSkills(newInheritedskills)
+            }
+    }
+
     const inheritSkillPoints = async () => {
         let classWithPoints
         let newSkillPoints
@@ -305,7 +319,7 @@ function AssignSkills (){
     const renderInheritedSkills = () => {
         const p = inheritedSkills.join(', ')
         return <div>
-            <p><strong>Skill proficiencies inherited from race: </strong>{p}</p>
+            <p><strong>Skill proficiencies inherited from race or background: </strong>{p}</p>
         </div>
     }
 
@@ -341,9 +355,26 @@ function AssignSkills (){
         )
     }
 
-    // renderAvailableExpertises = () => {
-        
-    // }
+    const renderAvailableExpertises = () => {
+        return (
+            <div className='distribute-stats margin'>
+                <span><strong>SELECT {expertisePoints} SKILLS TO SET AS EXPERTISE</strong></span>
+
+                {availableExpertises.map(expertise => (
+                    <div className='align-center' key={expertise}>
+                        <input
+                            type='checkbox'
+                            value={expertise}
+                            className='check-box-input'
+                            // onChange={handleExpertiseCheckboxChange}
+                            // checked={checkedExpertises.includes(expertise)}
+                        />
+                        <label className='skill-check-label'>{expertise}</label>
+                    </div>
+                ))}
+            </div>
+        )
+    }
 
     const handleCheckboxChange = (event) => {
         const selectedSkill = event.target.value
@@ -392,7 +423,7 @@ function AssignSkills (){
             { renderAvailableSkills() }
         </div>
 
-        {/* { characterClass.name === 'Knowledge Domain' || characterClass.name === 'Rogue' && renderAvailableExpertises() } */}
+        {/* { availableExpertises.length > 0 && renderAvailableExpertises() } */}
 
         <div className='margins'>
             { inheritedWeapons.length > 0 && renderInheritedWeapons() }
