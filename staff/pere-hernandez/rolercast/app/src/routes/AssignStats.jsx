@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useRace, useCharacterClass, useStats, useDeity, useFightingstyle, useArchetype, useNaturalExplorer } from '../pages/Home'
+import { useRace, useCharacterClass, useStats, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
 import logic from '../logic'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
@@ -10,6 +10,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const { setFightingStyle } = useFightingstyle()
     const { setArchetype } = useArchetype()
     const { setNaturalExplorer } = useNaturalExplorer()
+    const { setInstrument } = useInstrument()
 
     const [deities, setDeities] = useState([])
     const [chosenDeity, setChosenDeity] = useState(null)
@@ -382,6 +383,10 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         }
     }
 
+    const handleInstrumentChange = (event) => {
+        setInstrument(event.target.value)
+    }
+
     const renderSelectDeity = () => {
         if (characterClass.name.includes('Domain')){
             return <div className='margin-left'>
@@ -443,6 +448,22 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             </div>
         } else {
             return <></>
+        }
+    }
+
+    const renderSelectInstrument = () => {
+        if (characterClass.name === 'Bard'){
+            return <div className='margin-left'>
+                <h5 className='deity-title'>SELECT YOUR INSTRUMENT</h5>
+                <select value={null} onChange={handleInstrumentChange}>
+                    <option value={null}>Select Instrument</option>
+                    <option value={'Hand Drum'}>Hand Drum</option>
+                    <option value={'Flute'}>Flute</option>
+                    <option value={'Lute'}>Lute</option>
+                    <option value={'Lyre'}>Lyre</option>
+                    <option value={'Violin'}>Violin</option>
+                </select>
+            </div>
         }
     }
 
@@ -516,6 +537,8 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             { renderSelectNaturalExplorer() }
 
             { chosenNaturalExplorer && renderNaturalExplorer()}
+
+            { renderSelectInstrument() }
 
             <div className='select-button-div'>
                 { renderConfirmButton() }

@@ -17,8 +17,6 @@ import ConfirmBackground from '../routes/ConfirmBackground'
 import AssignStats from '../routes/AssignStats'
 import SelectCantrips from '../routes/SelectCantrips'
 import SelectSpells from '../routes/SelectSpells'
-import retrieveCharacterClass from '../logic/retrieveCharacterClass'
-import retrieveRace from '../logic/retrieveRace'
 import AssignSkills from "../routes/AssignSkills"
 import ConfirmCharacter from "../routes/ConfirmCharacter"
 
@@ -33,6 +31,7 @@ const DeityContext = createContext(null)
 const FightingStyleContext = createContext(null)
 const ArchetypeContext = createContext(null)
 const NaturalExplorerContext = createContext(null)
+const InstrumentContext = createContext(null)
 const ProficienciesContext = createContext(null)
 const ExpertisesContext = createContext(null)
 
@@ -48,6 +47,7 @@ export const useArchetype = () => useContext(ArchetypeContext)
 export const useNaturalExplorer = () => useContext(NaturalExplorerContext)
 export const useProficiencies = () => useContext(ProficienciesContext)
 export const useExpertises = () => useContext(ExpertisesContext)
+export const useInstrument = () => useContext(InstrumentContext)
 
 function Home({ onUserLoggedOut }) {
     const [race, setRace] = useState(null)
@@ -60,6 +60,7 @@ function Home({ onUserLoggedOut }) {
     const [fightingStyle, setFightingStyle] = useState(null)
     const [archetype, setArchetype] = useState(null)
     const [naturalExplorer, setNaturalExplorer] = useState(null)
+    const [instrument, setInstrument] = useState(null)
     const [proficiencies, setProficiencies] = useState(null)
     const [expertises, setExpertises] = useState(null)
     
@@ -240,6 +241,7 @@ function Home({ onUserLoggedOut }) {
     <FightingStyleContext.Provider value={{setFightingStyle, fightingStyle}}>
     <ArchetypeContext.Provider value={{setArchetype, archetype}}>
     <NaturalExplorerContext.Provider value={{setNaturalExplorer, naturalExplorer}}>
+    <InstrumentContext.Provider value={{setInstrument, instrument}}>
     <ProficienciesContext.Provider value={{setProficiencies, proficiencies}}>
     <ExpertisesContext.Provider value={{setExpertises, expertises}}>
     <main className="home-main">
@@ -278,6 +280,7 @@ function Home({ onUserLoggedOut }) {
     </main>
     </ExpertisesContext.Provider>
     </ProficienciesContext.Provider>
+    </InstrumentContext.Provider>
     </NaturalExplorerContext.Provider>
     </ArchetypeContext.Provider>
     </FightingStyleContext.Provider>
