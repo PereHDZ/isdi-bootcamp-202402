@@ -234,7 +234,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     spellCount: 2, 
                     availableSpells: [new ObjectId('66335a87863710c59eae0f40'), new ObjectId('66335a87863710c59eae0f41'),new ObjectId('66335a87863710c59eae0f42'), new ObjectId('66335a87863710c59eae0f49'), new ObjectId('66335a87863710c59eae0f4e'), new ObjectId('66335a87863710c59eae0f64'), new ObjectId('66335a87863710c59eae0f53'), new ObjectId('66335a87863710c59eae0f55'), new ObjectId('66335a87863710c59eae0f56'), new ObjectId('66335a87863710c59eae0f57'),new ObjectId('66335a87863710c59eae0f58'), new ObjectId('66335a87863710c59eae0f5a'), new ObjectId('66335a87863710c59eae0f62'), new ObjectId('66335a87863710c59eae0f65'), new ObjectId('66335a87863710c59eae0f67'), new ObjectId('66335a87863710c59eae0f68'), new ObjectId('66335a87863710c59eae0f69'), new ObjectId('66335a87863710c59eae0f6a'), new ObjectId('66335a87863710c59eae0f6d'), new ObjectId('66335a87863710c59eae0f6f'), new ObjectId('66335a87863710c59eae0f71'), new ObjectId('66335a87863710c59eae0f73'), new ObjectId('66335a87863710c59eae0f75')] }), 
-                classActions: [new ObjectId('663fae6b571a7a6038b76fcc'), new ObjectId('663755d85297ed4f922e3a65')] })
+                classActions: [new ObjectId('663fae6b571a7a6038b76fcc'), new ObjectId('663fae6b571a7a6038b76fcd')] })
         ])
             .then((characterClasses) => {
                 const clericClass = characterClasses.find(characterClass => characterClass.name === 'Cleric')
@@ -249,7 +249,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         proficiencies: new Proficiencies({ 
                             armour: new Armour({ heavyArmour: 1 }) }), 
                         knownSpells: [new ObjectId('66335a87863710c59eae0f4d'), new ObjectId('66335a87863710c59eae0f3f')],
-                        classActions: [new ObjectId('663755d85297ed4f922e3a66')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fce')], 
                         parent: clericClass._id }),
 
                     CharacterClass.create({ 
@@ -257,14 +257,14 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         description: 'The Light domain is offered by deities of justice, majesty, and primordial flame, providing spells that dispel darkness and harm the undead.', 
                         knownSpells: [new ObjectId('66335a87863710c59eae0f40'), new ObjectId('66335a87863710c59eae0f54')], 
                         knownCantrips: [new ObjectId('66354088b3c877f621450008')], 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a67')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fcf')], 
                         parent: clericClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Trickery Domain', 
                         description: 'A domain shared by wicked, chaotic, and mischievous deities alike, those who channel Trickery specialise in deception and illusion magic', 
                         knownSpells: [new ObjectId('66335a87863710c59eae0f41'), new ObjectId('66335a87863710c59eae0f4e')], 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a68')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd0')], 
                         parent: clericClass._id }),
 
                     CharacterClass.create({ 
@@ -272,7 +272,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         description: 'Adaptable and adroit in all manner of languages and skills, your mind is an intellectual cup brimming with exquisite knowing.', 
                         expertises: new Skills({ arcana: 0, history: 0, nature: 0, religion: 0 }), 
                         knownSpells: [new ObjectId('66335a87863710c59eae0f4a'), new ObjectId('66335a87863710c59eae0f6f')], 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a69')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd1')], 
                         parent: clericClass._id }),
 
                     CharacterClass.create({ 
@@ -288,7 +288,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                             availableCantrips: [new ObjectId('66354088b3c877f62145000a'), new ObjectId('66354088b3c877f62145000b'), new ObjectId('66354088b3c877f621450011'), new ObjectId('66354088b3c877f621450014'),] }), 
                             
                         knownSpells: [new ObjectId('66335a87863710c59eae0f70'), new ObjectId('66335a87863710c59eae0f3b')], 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a6a')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd2')], 
                         parent: clericClass._id }),
 
                     CharacterClass.create({ 
@@ -299,7 +299,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                             
                             armour: new Armour({ heavyArmour: 1 }) }), 
                         knownSpells: [new ObjectId('66335a87863710c59eae0f73'), new ObjectId('66335a87863710c59eae0f58')], 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a6b')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd3')], 
                         parent: clericClass._id }),
 
                     CharacterClass.create({ 
@@ -310,43 +310,43 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                             
                             armour: new Armour({ heavyArmour: 1 }) }), 
                         knownSpells: [new ObjectId('66335a87863710c59eae0f50'), new ObjectId('66335a87863710c59eae0f6e')], 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a6c')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd4')], 
                         parent: clericClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Oath of the Ancients', 
                         description: 'You fight on the side of light in the cosmic struggle against darkness to preserve the sanctity of life and the beauty of nature.', 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a6d')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd5')], 
                         parent: paladinClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Oath of Devotion', 
                         description: 'Following the ideal of the knight in shining armour, you act with honour and virtue to protect the weak and pursue the greater good.', 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a6e')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd6')], 
                         parent: paladinClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Oath of Vengeance', 
                         description: 'You have set aside even your own purity to right wrongs and deliver justice to those who have committed the most grievous sins.', 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a6f')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd7')], 
                         parent: paladinClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Wild Magic', 
                         description: 'Your powers come from ancient forces of chaos. They churn within you -- waiting to burst free at any time.', 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a70'), new ObjectId('663755d85297ed4f922e3a71')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fd8'), new ObjectId('663fae6b571a7a6038b76fd9')], 
                         parent: sorcererClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Draconic Bloodline', 
                         description: 'Your veins carry draconic magic, the result of a powerful dragon ancestor.', 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a72'), new ObjectId('663755d85297ed4f922e3a73'), new ObjectId('663755d85297ed4f922e3a74')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fda'), new ObjectId('663fae6b571a7a6038b76fdb'), new ObjectId('663fae6b571a7a6038b76fdc')], 
                         parent: sorcererClass._id }),
 
                     CharacterClass.create({ 
                         name: 'Storm Sorcery', 
                         description: 'Whether crackling with the energy of ancient deluges or pierced by gales and hurricanes, your lineage is a strange tapestry scrawled by a tempest.', 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a75')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fdd')], 
                         parent: sorcererClass._id }),
 
                     CharacterClass.create({ 
@@ -354,7 +354,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         description: "Graced by a lady or lord of the fey, you are imbued with all the sumptuous and scary qualities of your patron's extraordinary realm.", 
                         spellcasting: new Spellcasting({ 
                             availableSpells: [new ObjectId('66335a87863710c59eae0f54'), new ObjectId('66335a87863710c59eae0f6f')] }),
-                        classActions: [new ObjectId('663755d85297ed4f922e3a78')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fde')], 
                         parent: warlockClass._id }),
 
                     CharacterClass.create({ 
@@ -362,7 +362,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         description: 'You have pledged your soul to the Hells or Abyss in return for a deadly arsenal of fiendish arcana.', 
                         spellcasting: new Spellcasting({ 
                             availableSpells: [new ObjectId('66335a87863710c59eae0f40'), new ObjectId('66335a87863710c59eae0f4a')] }), 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a76')], 
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fdf')], 
                         parent: warlockClass._id }),
 
                     CharacterClass.create({ 
@@ -370,7 +370,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         description: 'You pledged something unthinkable to an unspeakably ancient entity - which in return furnished you with powers of cerebral entropy and control.', 
                         spellcasting: new Spellcasting({ 
                             availableSpells: [new ObjectId('66335a87863710c59eae0f4f'), new ObjectId('66335a87863710c59eae0f71')] }), 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a77')],
+                        classActions: [new ObjectId('663fae6b571a7a6038b76fe0')],
                         parent: warlockClass._id })
                 ])
             })
