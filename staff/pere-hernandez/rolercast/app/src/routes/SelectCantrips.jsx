@@ -128,9 +128,7 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
                     return null
                 })                
             }
-
             fetchAvailableCantripsData()
-
         }, [availableCantrips])
 
         useEffect(() => {

@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import logic from '../logic'
-import { useRace, useCharacterClass, useBackground, useStats } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useStats, useCantrips, useSpells } from '../pages/Home'
 
 function ConfirmCharacter ({ onRetrunClick }) {
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { background } = useBackground()
     const { stats } = useStats()
+    const { cantrips } = useCantrips()
+    const { spells } = useSpells()
 
     const [parentRace, setParentRace] = useState(null)
     const [parentClass, setParentClass] = useState(null)
+
+    const [cantripsData, setCantripsData] = useState([])
+    const [spellsData, setSpellsData] = useState([])
 
     useEffect(() => {
         if (race.parent){
@@ -28,6 +33,38 @@ function ConfirmCharacter ({ onRetrunClick }) {
             } catch(error) {
                 alert(error)
             }
+        }
+
+        if (cantrips.length > 0) {
+            const fetchCantripsData = () => {
+                Promise.all(
+                    cantrips.map(cantripId => logic.retrieveCantrip(cantripId)
+                        .then(objectCantrip => objectCantrip))
+                ).then(fetchedData => {
+                    const filteredData = fetchedData.filter(Boolean)
+                    setCantripsData(filteredData)
+                }).catch(error => {
+                    console.error('Error fetching cantrip:', error)
+                    return null
+                })
+            }
+            fetchCantripsData()
+        }
+
+        if (spells.length > 0) {
+            const fetchSpellsData = () => {
+                Promise.all(
+                    spells.map(spellId => logic.retrieveSpell(spellId)
+                        .then(objectSpell => objectSpell))
+                ).then(fetchedData => {
+                    const filteredData = fetchedData.filter(Boolean)
+                    setSpellsData(filteredData)
+                }).catch(error => {
+                    console.error('Error fetching cantrip:', error)
+                    return null
+                })
+            }
+            fetchSpellsData()
         }
     }, [])
 
@@ -77,6 +114,31 @@ function ConfirmCharacter ({ onRetrunClick }) {
         </div>
     }
 
+    const renderSpells = () => {
+        let cantripsDiv = <></>
+        let spellsDiv = <></>
+
+        if (cantrips.length > 0 ){
+            const cantripNames = cantripsData.map(cantrip => cantrip.name).join(', ')
+            cantripsDiv = <div>
+                <h4>YOUR CANTRIPS</h4>
+
+                <p className='spell-p'>{cantripNames}</p>
+            </div>
+        }
+
+        if (spells.length > 0 ){
+            const spellNames = spellsData.map(spell => spell.name).join(', ')
+            spellsDiv = <div>
+                <h4>YOUR SPELLS</h4>
+
+                <p className='spell-p'>{spellNames}</p>
+            </div>
+        }
+        
+        return <>{cantripsDiv}{spellsDiv}</>
+    }
+
     return <div>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -94,6 +156,8 @@ function ConfirmCharacter ({ onRetrunClick }) {
             <input type='text' id='name'></input>
 
             { renderStats() }
+
+            { renderSpells() }
         </form>
     </div>
 }

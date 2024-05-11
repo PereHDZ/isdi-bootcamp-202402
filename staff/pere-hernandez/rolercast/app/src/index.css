@@ -532,3 +532,13 @@ select {
   margin-left: 0vw;
   width: 100%;
 }
+
+h4{
+  margin-bottom: 0px;
+}
+
+.spell-p{
+  margin: 0px;
+  margin-left: 4vw;
+  margin-right: 4vw;
+}
