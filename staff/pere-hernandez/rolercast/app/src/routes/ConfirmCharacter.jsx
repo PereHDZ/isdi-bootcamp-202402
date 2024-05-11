@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import logic from '../logic'
-import { useRace, useCharacterClass } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useStats } from '../pages/Home'
 
-function ConfirmCharacter () {
+function ConfirmCharacter ({ onRetrunClick }) {
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
+    const { background } = useBackground()
+    const { stats } = useStats()
+
     const [parentRace, setParentRace] = useState(null)
     const [parentClass, setParentClass] = useState(null)
 
@@ -28,9 +31,16 @@ function ConfirmCharacter () {
         }
     }, [])
 
+    const handleReturnClick = () => {
+        event.preventDefault()
+
+        onRetrunClick()
+    }
+
     const renderClassAndName = () => {
         return <div>
-            <h2>{race.name} {parentClass ? `${parentClass.name}: ${characterClass.name}` : characterClass.name}</h2>
+            <h2 className='no-margin-bottom'>{race.name} {parentClass ? `${parentClass.name}: ${characterClass.name}` : characterClass.name}</h2>
+            <span>{`(${background.name})`}</span>
 
             <div  className='show-class-race'>
                 <div className='display-row'>
@@ -55,11 +65,35 @@ function ConfirmCharacter () {
             </div>            
         </div>
     }
+
+    const renderStats = () => {
+        return <div className='final-stats-div'>
+            {Object.keys(stats).map(stat => {
+                return <div key={stat}>
+                    <img src={`../../public/gallery/Stats_Icons/${stat}.png`} alt={stat} className='small-stat-icon'/>
+                    <span>{stats[stat]}</span>
+                </div>
+            })}
+        </div>
+    }
+
     return <div>
+        <div className="return-div">
+            <button className="transparent-button" onClick={handleReturnClick}>
+                <img src="../../public/icons/return.png" className="icon"></img>
+            </button>
+            <h3 className="return">RETURN</h3>
+        </div>
+
         <h1>CONFIRM YOUR CHARACTER</h1>
 
         <form className='character-form'>
             { renderClassAndName() }
+
+            <label htmlFor='name' className='name-label'>Write your character name</label>
+            <input type='text' id='name'></input>
+
+            { renderStats() }
         </form>
     </div>
 }

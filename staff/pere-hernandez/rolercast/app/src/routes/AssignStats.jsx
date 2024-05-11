@@ -288,7 +288,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     const renderStatInput = (stat) => {
         return <div key={stat} className='stat-div'>
-            <img src={`../../public/gallery/Stats_Icons/${stat}.png`} alt={`${stat}`} className='stats-icons'></img>
+            <img src={`../../public/gallery/Stats_Icons/${stat}.png`} alt={stat}className='stats-icons'></img>
             <label htmlFor={stat} className='stat-label'>{stat}:</label>
             <div className='counter-div'>
                 <button type='button' onClick={() => handleStatIncrement(stat)}>+</button>
@@ -499,7 +499,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
                     <p>Remaining Points: {remainingStatPoints}/27</p>
                 </div>
-
             </div>
 
             { renderSelectDeity() }

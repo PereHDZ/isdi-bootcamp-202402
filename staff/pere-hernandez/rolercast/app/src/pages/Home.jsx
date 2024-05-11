@@ -135,6 +135,8 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromAssignSkills = () => navigate('/stats')
 
+    const handleRetrunFromConfirmCharacter = () => navigate('/skills')
+
     const handleReturnFromSelectClass = () => navigate('/selectRace')
 
     const handleReturnFromSelectCantrips = () => navigate('/selectClass')
@@ -284,7 +286,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground} onBackgroundSelected={handleBackgroundSelected}/>}/>
             <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats} onStatsSelected={handleStatsSelected}/>}/>
             <Route path="/skills" element={<AssignSkills onRetrunClick={handleReturnFromAssignSkills} onSkillsConfirmed={handleSkillsSelected}/>}/>
-            <Route path="/confirmCharacter" element={<ConfirmCharacter/>}/>
+            <Route path="/confirmCharacter" element={<ConfirmCharacter onRetrunClick={handleRetrunFromConfirmCharacter}/>}/>
         </Routes>
     </main>
     </ExpertisesContext.Provider>

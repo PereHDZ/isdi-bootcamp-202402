@@ -508,4 +508,27 @@ select {
 .show-class-race {
   display: flex;
   justify-content: center;
+  margin-top: 2vh;
+}
+
+.name-label {
+    align-self: center;
+    width: auto;
+    margin-left: 0px;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0px;
+}
+
+.small-stat-icon {
+  width: 15vw;
+}
+
+.final-stats-div {
+  display: flex;
+  align-items: center;
+  margin-top: 4vh;
+  margin-left: 0vw;
+  width: 100%;
 }
