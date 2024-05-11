@@ -20,6 +20,7 @@ import SelectSpells from '../routes/SelectSpells'
 import retrieveCharacterClass from '../logic/retrieveCharacterClass'
 import retrieveRace from '../logic/retrieveRace'
 import AssignSkills from "../routes/AssignSkills"
+import ConfirmCharacter from "../routes/ConfirmCharacter"
 
 
 const RaceContext = createContext(null)
@@ -28,6 +29,12 @@ const BackgroundContext = createContext(null)
 const CantripsContext = createContext(null)
 const SpellsContext = createContext(null)
 const StatsContext = createContext(null)
+const DeityContext = createContext(null)
+const FightingStyleContext = createContext(null)
+const ArchetypeContext = createContext(null)
+const NaturalExplorerContext = createContext(null)
+const ProficienciesContext = createContext(null)
+const ExpertisesContext = createContext(null)
 
 export const useRace = () => useContext(RaceContext)
 export const useCharacterClass = () => useContext(CharacterClassContext)
@@ -35,6 +42,12 @@ export const useBackground = () => useContext(BackgroundContext)
 export const useCantrips = () => useContext(CantripsContext)
 export const useSpells = () => useContext(SpellsContext)
 export const useStats = () => useContext(StatsContext)
+export const useDeity = () => useContext(DeityContext)
+export const useFightingstyle = () => useContext(FightingStyleContext)
+export const useArchetype = () => useContext(ArchetypeContext)
+export const useNaturalExplorer = () => useContext(NaturalExplorerContext)
+export const useProficiencies = () => useContext(ProficienciesContext)
+export const useExpertises = () => useContext(ExpertisesContext)
 
 function Home({ onUserLoggedOut }) {
     const [race, setRace] = useState(null)
@@ -43,6 +56,12 @@ function Home({ onUserLoggedOut }) {
     const [spells, setSpells] = useState([])
     const [background, setBackground] = useState(null)
     const [stats, setStats] = useState(null)
+    const [deity, setDeity] = useState(null)
+    const [fightingStyle, setFightingStyle] = useState(null)
+    const [archetype, setArchetype] = useState(null)
+    const [naturalExplorer, setNaturalExplorer] = useState(null)
+    const [proficiencies, setProficiencies] = useState(null)
+    const [expertises, setExpertises] = useState(null)
     
     const navigate = useNavigate()
 
@@ -113,6 +132,8 @@ function Home({ onUserLoggedOut }) {
     const handleReturnFromSelectSubclass = () => navigate('/confirmClass')
 
     const handleReturnFromAssignStats = () => navigate('/confirmBackground')
+
+    const handleReturnFromAssignSkills = () => navigate('/stats')
 
     const handleReturnFromSelectClass = () => navigate('/selectRace')
 
@@ -217,6 +238,8 @@ function Home({ onUserLoggedOut }) {
 
     const handleStatsSelected = () => navigate('/skills')
 
+    const handleSkillsSelected = () => navigate('/confirmCharacter')
+
     return <>
     <RaceContext.Provider value={{setRace, race}}>
     <CharacterClassContext.Provider value={{setCharacterClass, characterClass}}>
@@ -224,6 +247,12 @@ function Home({ onUserLoggedOut }) {
     <CantripsContext.Provider value={{setCantrips, cantrips}}>
     <SpellsContext.Provider value={{setSpells, spells}}>
     <StatsContext.Provider value={{setStats, stats}}>
+    <DeityContext.Provider value={{setDeity, deity}}>
+    <FightingStyleContext.Provider value={{setFightingStyle, fightingStyle}}>
+    <ArchetypeContext.Provider value={{setArchetype, archetype}}>
+    <NaturalExplorerContext.Provider value={{setNaturalExplorer, naturalExplorer}}>
+    <ProficienciesContext.Provider value={{setProficiencies, proficiencies}}>
+    <ExpertisesContext.Provider value={{setExpertises, expertises}}>
     <main className="home-main">
         <header>
             <button className="transparent-button">
@@ -254,9 +283,16 @@ function Home({ onUserLoggedOut }) {
             <Route path="/selectBackground" element={<SelectBackground onReturn={handleReturnFromSelectBackground}/>}/>
             <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground} onBackgroundSelected={handleBackgroundSelected}/>}/>
             <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats} onStatsSelected={handleStatsSelected}/>}/>
-            <Route path="/skills" element={<AssignSkills/>}/>
+            <Route path="/skills" element={<AssignSkills onRetrunClick={handleReturnFromAssignSkills} onSkillsConfirmed={handleSkillsSelected}/>}/>
+            <Route path="/confirmCharacter" element={<ConfirmCharacter/>}/>
         </Routes>
     </main>
+    </ExpertisesContext.Provider>
+    </ProficienciesContext.Provider>
+    </NaturalExplorerContext.Provider>
+    </ArchetypeContext.Provider>
+    </FightingStyleContext.Provider>
+    </DeityContext.Provider>
     </StatsContext.Provider>
     </SpellsContext.Provider>
     </CantripsContext.Provider>

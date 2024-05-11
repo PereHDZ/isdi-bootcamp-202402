@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react'
-import { useRace, useCharacterClass, useStats } from '../pages/Home'
+import { useRace, useCharacterClass, useStats, useDeity, useFightingstyle, useArchetype, useNaturalExplorer } from '../pages/Home'
 import logic from '../logic'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { setStats } = useStats()
+    const { setDeity } = useDeity()
+    const { setFightingStyle } = useFightingstyle()
+    const { setArchetype } = useArchetype()
+    const { setNaturalExplorer } = useNaturalExplorer()
 
     const [deities, setDeities] = useState([])
-    const [deity, setDeity] = useState(null)
+    const [chosenDeity, setChosenDeity] = useState(null)
 
     const [fightingStyles, setFightingStyles] = useState([])
-    const [fightingStyle, setFightingStyle] = useState(null)
+    const [chosenFightingStyle, setChosenFightingStyle] = useState(null)
 
     const [archetypes, setArchetypes] = useState([])
-    const [archetype, setArchetype] = useState(null)
+    const [chosenArchetype, setChosenArchetype] = useState(null)
 
     const [naturalExplorers, setNaturalExplorers] = useState([])
-    const [naturalExplorer, setNaturalExplorer] = useState(null)
+    const [chosenNaturalExplorer, setChosenNaturalExplorer] = useState(null)
     
     const [selectedStats, setSelectedStats] = useState({
         Strength: 8,
@@ -61,6 +65,10 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         event.preventDefault()
 
         setStats(selectedStats)
+        setDeity(chosenDeity)
+        setFightingStyle(chosenFightingStyle)
+        setArchetype(chosenArchetype)
+        setNaturalExplorer(chosenNaturalExplorer)
 
         onStatsSelected()
     }
@@ -102,7 +110,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         if (race.name === 'Lolth-Sworn Drow' && characterClass.name.includes('Domain')){
             const lolth = deities.find(deity => deity.name === 'Lolth')
 
-            setDeity(lolth)
+            setChosenDeity(lolth)
         }
     }, [])
 
@@ -291,44 +299,44 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     }
 
     const renderDeity = () => {
-        if (characterClass.name.includes('Domain') && !!deity){
+        if (characterClass.name.includes('Domain') && !!chosenDeity){
             return <div>
                 <h5 className='margin-left'>YOUR DEITY</h5>
                 <div className='deity-info'>
-                    <p><strong>{deity.name}: </strong>{deity.description}</p>
+                    <p><strong>{chosenDeity.name}: </strong>{chosenDeity.description}</p>
                 </div>                
             </div>
         }
     }
 
     const renderFightingStyle = () => {
-        if (characterClass.name === 'Fighter' && !!fightingStyle){
+        if (characterClass.name === 'Fighter' && !!chosenFightingStyle){
             return <div>
                 <h5 className='margin-left'>YOUR FIGHTING STYLE</h5>
                 <div className='deity-info'>
-                    <p><strong>{fightingStyle.name}: </strong>{fightingStyle.description}</p>
+                    <p><strong>{chosenFightingStyle.name}: </strong>{chosenFightingStyle.description}</p>
                 </div>                
             </div>
         }
     }
 
     const renderArchetype = () => {
-        if (characterClass.name === 'Ranger' && !!archetype){
+        if (characterClass.name === 'Ranger' && !!chosenArchetype){
             return <div>
-                <h5 className='margin-left'>YOUR ARCHETYPE</h5>
+                <h5 className='margin-left'>YOUR FAVOURED ENEMY</h5>
                 <div className='deity-info'>
-                    <p><strong>{archetype.name}: </strong>{archetype.description}</p>
+                    <p><strong>{chosenArchetype.name}: </strong>{chosenArchetype.description}</p>
                 </div>
             </div>
         }
     }
 
     const renderNaturalExplorer = () => {
-        if (characterClass.name === 'Ranger' && !!naturalExplorer){
+        if (characterClass.name === 'Ranger' && !!chosenNaturalExplorer){
             return <div>
                 <h5 className='margin-left'>YOUR NATURAL EXPLORER</h5>
                 <div className='deity-info'>
-                    <p><strong>{naturalExplorer.name}: </strong>{naturalExplorer.description}</p>
+                    <p><strong>{chosenNaturalExplorer.name}: </strong>{chosenNaturalExplorer.description}</p>
                 </div>
             </div>
         }
@@ -337,7 +345,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const handleDeityChange = (event) => {
         try {
             logic.retrieveDeity(event.target.value)
-                .then(setDeity)
+                .then(setChosenDeity)
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
@@ -347,7 +355,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const handleFightingStyleChange = (event) => {
         try {
             logic.retrieveFightingStyle(event.target.value)
-                .then(setFightingStyle)
+                .then(setChosenFightingStyle)
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
@@ -357,7 +365,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const handleArchetypeChange = (event) => {
         try {
             logic.retrieveArchetype(event.target.value)
-                .then(setArchetype)
+                .then(setChosenArchetype)
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
@@ -367,7 +375,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const handleNaturalExplorerChange = (event) => {
         try {
             logic.retrieveNaturalExplorer(event.target.value)
-                .then(setNaturalExplorer)
+                .then(setChosenNaturalExplorer)
                 .catch(error => alert(error))
         } catch (error) {
             alert(error)
@@ -378,7 +386,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         if (characterClass.name.includes('Domain')){
             return <div className='margin-left'>
                 <h5 className='deity-title'>SELECT YOUR DEITY</h5>
-                <select value={deity} onChange={handleDeityChange}>
+                <select value={chosenDeity} onChange={handleDeityChange}>
                     <option value={null}>Select Deity</option>
                     { deities.map(deity => {
                         return <option key={deity._id} value={deity._id}>{deity.name}</option>
@@ -394,7 +402,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         if (characterClass.name === 'Fighter'){
             return <div className='margin-left'>
                 <h5 className='deity-title'>SELECT YOUR FIGHTING STYLE</h5>
-                <select value={fightingStyle} onChange={handleFightingStyleChange}>
+                <select value={chosenFightingStyle} onChange={handleFightingStyleChange}>
                     <option value={null}>Select Fighting Style</option>
                     { fightingStyles.map(fightingStyle => {
                         return <option key={fightingStyle._id} value={fightingStyle._id}>{fightingStyle.name}</option>
@@ -410,7 +418,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         if (characterClass.name === 'Ranger'){
             return <div className='margin-left'>
                 <h5 className='deity-title'>SELECT YOUR FAVOURED ENEMY</h5>
-                <select value={archetype} onChange={handleArchetypeChange}>
+                <select value={chosenArchetype} onChange={handleArchetypeChange}>
                     <option value={null}>Select Favoured Enemy</option>
                     { archetypes.map(archetype => {
                         return <option key={archetype._id} value={archetype._id}>{archetype.name}</option>
@@ -426,7 +434,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         if (characterClass.name === 'Ranger'){
             return <div className='margin-left'>
                 <h5 className='deity-title'>SELECT YOUR NATURAL EXPLORER</h5>
-                <select value={naturalExplorer} onChange={handleNaturalExplorerChange}>
+                <select value={chosenNaturalExplorer} onChange={handleNaturalExplorerChange}>
                     <option value={null}>Select Natural Explorer</option>
                     { naturalExplorers.map(naturalExplorer => {
                         return <option key={naturalExplorer._id} value={naturalExplorer._id}>{naturalExplorer.name}</option>
@@ -440,13 +448,13 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     const renderConfirmButton = () => {
         if (characterClass.name === 'Fighter'){
-            if (remainingStatPoints === 0 && !!fightingStyle && !!plus1Modifier && plus2Modifier)
+            if (remainingStatPoints === 0 && !!chosenFightingStyle && !!plus1Modifier && plus2Modifier)
                 return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
         } else if (characterClass.name.includes('Domain')){
-            if (remainingStatPoints === 0 && !!deity && !!plus1Modifier && plus2Modifier)
+            if (remainingStatPoints === 0 && !!chosenDeity && !!plus1Modifier && plus2Modifier)
                 return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
         } else if (characterClass.name === 'Ranger'){
-            if (remainingStatPoints === 0 && !!archetype && naturalExplorer && !!plus1Modifier && plus2Modifier)
+            if (remainingStatPoints === 0 && !!chosenArchetype && chosenNaturalExplorer && !!plus1Modifier && plus2Modifier)
                 return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
         } else {
             if (remainingStatPoints === 0 && !!plus1Modifier && plus2Modifier)
@@ -496,19 +504,19 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
             { renderSelectDeity() }
 
-            { deity && renderDeity() }
+            { chosenDeity && renderDeity() }
 
             { renderSelectFightingStyle() } 
 
-            { fightingStyle && renderFightingStyle()}           
+            { chosenFightingStyle && renderFightingStyle()}           
 
             { renderSelectArchetype() }
 
-            { archetype && renderArchetype() }
+            { chosenArchetype && renderArchetype() }
 
             { renderSelectNaturalExplorer() }
 
-            { naturalExplorer && renderNaturalExplorer()}
+            { chosenNaturalExplorer && renderNaturalExplorer()}
 
             <div className='select-button-div'>
                 { renderConfirmButton() }

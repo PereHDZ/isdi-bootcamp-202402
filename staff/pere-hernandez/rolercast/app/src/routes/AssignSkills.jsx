@@ -2,13 +2,15 @@ import logic from '../logic'
 
 import { useState, useEffect } from 'react'
 
-import { useRace, useCharacterClass, useBackground, useStats } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, useExpertises } from '../pages/Home'
 
-function AssignSkills (){
+function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { background } = useBackground()
     const { stats } = useStats()
+    const { setProficiencies } = useProficiencies()
+    const { setExpertises } = useExpertises()
 
     const [inheritedWeapons, setInheritedWeapons] = useState([])
     const [inheritedArmour, setInheritedArmour] = useState([])
@@ -95,6 +97,44 @@ function AssignSkills (){
     useEffect(() => {
         setTotalExpertises([...inheritedExpertises, ...selectedExpertises])
     }, [inheritedExpertises, selectedExpertises])
+
+    const handleReturnClick = () => {
+        event.preventDefault()
+
+        onRetrunClick()
+    }
+
+    const handleConfirmClick = () => {
+        event.preventDefault()
+
+        const armourObject = inheritedArmour.reduce((accumulator, armour) => {
+            accumulator[armour] = 1
+            return accumulator
+        }, {})
+        
+        const weaponsObject = inheritedWeapons.reduce((accumulator, weapon) => {
+            accumulator[weapon] = 1
+            return accumulator
+        }, {})
+
+        const proficienciesObject = totalProficiencies.reduce((accumulator, proficiency) => {
+            accumulator[proficiency] = 1
+            return accumulator
+        }, {})
+
+        const expertisesObject = totalExpertises.reduce((accumulator, expertise) => {
+            accumulator[expertise] = 2
+            return accumulator
+        }, {})
+
+        const newProficiencies = { armour: armourObject, weapons: weaponsObject, proficiencies: proficienciesObject }
+        const newExpertises = expertisesObject
+
+        setProficiencies(newProficiencies)
+        setExpertises(newExpertises)
+
+        onSkillsConfirmed()
+    }
 
     const inheritSkillsFromRace = async () => {
         let raceWithProficiencies
@@ -439,15 +479,21 @@ function AssignSkills (){
         }
     }
 
-    console.log('selectedExpertises')
-    console.log(selectedExpertises)
-    console.log('totalExpertises')
-    console.log(totalExpertises)
-    console.log(bonuses)
+    const renderConfirmButton = () => {
+        if (checkedSkills.length === skillPoints){
+            if (characterClass.name === 'Knowledge Domain' || characterClass.name === 'Rogue' && checkedExpertises < expertisePoints){
+                return <></>
+            } else {
+                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
+            }
+        } else {
+            return <></>
+        }
+    }
 
     return <section>
         <div className="return-div">
-            <button className="transparent-button">
+            <button className="transparent-button" onClick={handleReturnClick}>
                 <img src="../../public/icons/return.png" className="icon"></img>
             </button>
             <h3 className="return">RETURN</h3>
@@ -481,6 +527,9 @@ function AssignSkills (){
             { inheritedExpertises.length > 0 && renderInheritedExpertises() }
         </div>
 
+        <div className='select-button-div'>
+            { renderConfirmButton() }
+        </div>
     </section>
 }
 
