@@ -64,7 +64,7 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
         useEffect(() => {
             const fetchClassActionsData = () => {
                 Promise.all(
-                    characterClass.classActions.map(classActionId => logic.retrieveClassAction(classActionId)
+                    characterClass.classActions.map(classActionId => logic.retrieveAction(classActionId)
                         .then(ObjectClassAction => ObjectClassAction)
                     )
                 ).then(fetchedData => {

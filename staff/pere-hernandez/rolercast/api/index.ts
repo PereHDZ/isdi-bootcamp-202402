@@ -452,7 +452,7 @@ mongoose.connect(MONGODB_URL)
 
 
 
-        api.get('/classactions/:classActionId', (req, res) => {
+        api.get('/actions/:actionId', (req, res) => {
             try {
                 const { authorization } = req.headers
 
@@ -460,10 +460,10 @@ mongoose.connect(MONGODB_URL)
 
                 const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-                const { classActionId } = req.params
+                const { actionId } = req.params
 
-                logic.retrieveClassAction(userId as string, classActionId)
-                    .then(race => res.json(race))
+                logic.retrieveAction(userId as string, actionId)
+                    .then(action => res.json(action))
                     .catch(error => {
                         if (error instanceof SystemError) {
                             logger.error(error.message)

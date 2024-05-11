@@ -14,7 +14,7 @@ import retrieveCharacterClass from './retrieveCharacterClass.js'
 import retrieveParentCharacterClasses from './retrieveParentCharacterClasses.js'
 import retrieveSubclassesFromClass from './retrieveSubclassesFromParent.js'
 
-import retrieveClassAction from './retrieveClassAction.js'
+import retrieveAction from './retrieveAction.js'
 
 import retrieveBackgrounds from './retrieveBackgrounds.js'
 import retrieveBackground from './retrieveBackground.js'
@@ -51,7 +51,7 @@ const logic = {
     retrieveParentCharacterClasses,
     retrieveSubclassesFromClass,
 
-    retrieveClassAction,
+    retrieveAction,
 
     retrieveBackgrounds,
     retrieveBackground,

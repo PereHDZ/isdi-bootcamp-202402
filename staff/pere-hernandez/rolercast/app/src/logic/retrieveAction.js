@@ -1,12 +1,12 @@
 import { validate, errors } from 'com'
 
-function retrieveClassAction(classActionId) {
+function retrieveAction(actionId) {
     //validation
     validate.token(sessionStorage.token)
-    validate.text(classActionId, 'classActionId', true)
+    validate.text(actionId, 'actionId', true)
 
     //logic
-    return fetch(`${import.meta.env.VITE_API_URL}/classactions/${classActionId}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/actions/${actionId}`, {
         headers: {
             Authorization: `Bearer ${sessionStorage.token}`
         }
@@ -25,4 +25,4 @@ function retrieveClassAction(classActionId) {
         })
 }
 
-export default retrieveClassAction
+export default retrieveAction

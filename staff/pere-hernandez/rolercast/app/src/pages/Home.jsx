@@ -64,18 +64,6 @@ function Home({ onUserLoggedOut }) {
     const [expertises, setExpertises] = useState(null)
     
     const navigate = useNavigate()
-
-    useEffect(() => {
-        if (race !== null && characterClass === null){
-            if (!!race.parent){
-                navigate('/confirmSubRace')
-
-                return
-            }
-
-            navigate('/confirmRace')
-        }            
-    }, [race])
     
     useEffect(() => {
         if (characterClass !== null){
@@ -107,7 +95,43 @@ function Home({ onUserLoggedOut }) {
 
     const handleCreateClick = () => navigate('/selectRace')
 
-    const handleReturn = () => {
+    const handleReturnFromSelectRace = () => navigate('/*')
+
+    useEffect(() => {
+        if (race !== null){
+            if (!!race.parent){
+                navigate('/confirmSubRace')
+
+                return
+            }
+
+            navigate('/confirmRace')
+        }
+    }, [race])
+
+    const handleClassSelected = () => {
+        try {
+            logic.retrieveCharacterClasses()
+                .then(characterClasses => {
+                    const classChildren = characterClasses.filter(classChild => {
+                        if (!!classChild.parent){
+                            if(classChild.parent.toString() === characterClass._id)
+                                return classChild
+                        }
+                    })
+
+                    if (classChildren.length > 0){
+                        navigate('/selectSubClass')
+                    } else {
+                        navigate('/selectBackground')
+                    }
+                })
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    const handleReturnFromConfirmRace = () => {
         setRace(null)
 
         navigate('/selectRace')
@@ -124,8 +148,6 @@ function Home({ onUserLoggedOut }) {
 
         navigate('/selectBackground')
     }
-
-    const handleReturnFromSelectRace = () => navigate('/*')
 
     const handleReturnFromSelectSubrace = () => navigate('/confirmRace')
 
@@ -194,41 +216,6 @@ function Home({ onUserLoggedOut }) {
             alert(error)
         }     
     }
-    
-    const handleClassSelected = () => {
-        try {
-            logic.retrieveCharacterClasses()
-                .then(characterClasses => {
-                    const classChildren = characterClasses.filter(classChild => {
-                        if (!!classChild.parent){
-                            if(classChild.parent.toString() === characterClass._id)
-                                return classChild
-                        }
-                    })
-
-                    if (classChildren.length > 0){
-                        navigate('/selectSubClass')
-                    } else {
-                        if (!characterClass.parent && !characterClass.spellcasting){
-                            navigate('/selectBackground')
-                        } else if (!!characterClass.spellcasting) {
-                            navigate('/selectCantrips')
-                        }else if (!!characterClass.parent){
-                            retrieveCharacterClass(characterClass.parent)
-                                .then(parentClass => {
-                                    if (!!parentClass.spellcasting){
-                                        navigate('/selectCantrips')
-                                    } else {
-                                        navigate('/selectBackground')
-                                    }
-                                })                           
-                        }
-                    }
-                })
-        } catch (error) {
-            alert(error)
-        }
-    }
 
     const handleCantripsConfirmed = () => navigate('/selectSpells')
 
@@ -273,7 +260,7 @@ function Home({ onUserLoggedOut }) {
         <Routes>
             <Route path="/*" element={<HomeRoute onCreateClick={handleCreateClick}/>}></Route>
             <Route path="/selectRace" element={<SelectRace onReturn={handleReturnFromSelectRace}/>}/>
-            <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturn} onRaceSelected={handleRaceSelected}/>}/>
+            <Route path="/confirmRace" element={<ConfirmRace onReturnClick={handleReturnFromConfirmRace} onRaceSelected={handleRaceSelected}/>}/>
             <Route path="/selectSubrace" element={<SelectSubRace onReturn={handleReturnFromSelectSubrace}/>}/>
             <Route path="/confirmSubrace" element={<ConfirmSubace onReturnClick={handleReturnFromConfirmSubrace} onSubraceSelected={handleRaceSelected}/>}/>
             <Route path="/selectClass" element={<SelectCharacterClass onReturn={handleReturnFromSelectClass}/>}/>
