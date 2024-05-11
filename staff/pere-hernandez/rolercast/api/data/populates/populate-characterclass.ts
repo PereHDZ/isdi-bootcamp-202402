@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     skills: new Skills({ animalHandling: 0, athletics: 0, intimidation: 0, nature: 0, survival: 0, perception: 0 }) }),
                 skillCount: 2,
                 spellcastingAbility: 'Charisma for the effective use of items, scrolls, and equipment.', 
-                classActions: [new ObjectId('663755d85297ed4f922e3a52'), new ObjectId('663755d85297ed4f922e3a53')] }),
+                classActions: [new ObjectId('663fae6b571a7a6038b76fba'), new ObjectId('663fae6b571a7a6038b76fbb')] }),
                 
             CharacterClass.create({ 
                 name: 'Bard', 
@@ -46,7 +46,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
 
                     spellCount: 4, 
                     availableSpells: [new ObjectId('66335a87863710c59eae0f3b'), new ObjectId('66335a87863710c59eae0f3e'),new ObjectId('66335a87863710c59eae0f41'), new ObjectId('66335a87863710c59eae0f4d'), new ObjectId('66335a87863710c59eae0f4e'), new ObjectId('66335a87863710c59eae0f4f'), new ObjectId('66335a87863710c59eae0f54'), new ObjectId('66335a87863710c59eae0f56'), new ObjectId('66335a87863710c59eae0f5d'), new ObjectId('66335a87863710c59eae0f5f'),new ObjectId('66335a87863710c59eae0f65'), new ObjectId('66335a87863710c59eae0f6f'), new ObjectId('66335a87863710c59eae0f70'), new ObjectId('66335a87863710c59eae0f71'), new ObjectId('66335a87863710c59eae0f73')] }), 
-                classActions: [new ObjectId('663755d85297ed4f922e3a54'), new ObjectId('663755d85297ed4f922e3a55'), new ObjectId('663755d85297ed4f922e3a56'),] }),
+                classActions: [new ObjectId('663fae6b571a7a6038b76fbc'), new ObjectId('663fae6b571a7a6038b76fbd'), new ObjectId('663fae6b571a7a6038b76fbe'),] }),
 
             CharacterClass.create({ 
                 name: 'Cleric', 
@@ -107,7 +107,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     skills: new Skills({ acrobatics: 0, animalHandling: 0, athletics: 0, history: 0, insight: 0, intimidation: 0, perception: 0, survival: 0 }) }), 
                 skillCount: 2,
                 spellcastingAbility: 'Intelligence for the effective use of items, scrolls, and equipment.', 
-                classActions: [new ObjectId('663755d85297ed4f922e3a57')] }),
+                classActions: [new ObjectId('663fae6b571a7a6038b76fbf')] }),
 
             CharacterClass.create({ 
                 name: 'Monk', 
@@ -122,7 +122,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     skills: new Skills({ history: 0, insight: 0, religion: 0, acrobatics: 0, stealth: 0, athletics: 0 }) }),
                 skillCount: 2,
                 spellcastingAbility: 'Wisdom', 
-                classActions: [new ObjectId('663755d85297ed4f922e3a58'), new ObjectId('663755d85297ed4f922e3a59'), new ObjectId('663755d85297ed4f922e3a5a'), new ObjectId('663755d85297ed4f922e3a5b'), new ObjectId('663755d85297ed4f922e3a5c'), new ObjectId('663755d85297ed4f922e3a5d')] }),
+                classActions: [new ObjectId('663fae6b571a7a6038b76fc0'), new ObjectId('663fae6b571a7a6038b76fc1'), new ObjectId('663fae6b571a7a6038b76fc2'), new ObjectId('663fae6b571a7a6038b76fc3'), new ObjectId('663fae6b571a7a6038b76fc4'), new ObjectId('663fae6b571a7a6038b76fc5')] }),
 
             CharacterClass.create({ 
                 name: 'Paladin', 
@@ -139,7 +139,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     skills: new Skills({ athletics: 0, insight: 0, intimidation: 0, medicine: 0, persuasion: 0, religion: 0 }) }),
                 skillCount: 2,
                 spellcastingAbility: 'Charisma', 
-                classActions: [new ObjectId('663755d85297ed4f922e3a5e'), new ObjectId('663755d85297ed4f922e3a5f')] }),
+                classActions: [new ObjectId('663fae6b571a7a6038b76fc6'), new ObjectId('663fae6b571a7a6038b76fc7')] }),
 
             CharacterClass.create({ 
                 name: 'Ranger', 
@@ -172,7 +172,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     skills: new Skills({ acrobatics: 0, athletics: 0, deception: 0, insight: 0, intimidation: 0, investigation: 0, perception: 0, performance: 0, persuasion: 0, sleightOfHand: 0, stealth: 0 }) }),
                 skillCount: 4,
                 spellcastingAbility: ' Intelligence for the effective use of items, scrolls, and equipment.', 
-                classActions: [new ObjectId('663755d85297ed4f922e3a60'), new ObjectId('663755d85297ed4f922e3a61'), new ObjectId('663755d85297ed4f922e3a62')] }),
+                classActions: [new ObjectId('663fae6b571a7a6038b76fc8'), new ObjectId('663fae6b571a7a6038b76fc9'), new ObjectId('663fae6b571a7a6038b76fca')] }),
 
             CharacterClass.create({ 
                 name: 'Sorcerer', 
@@ -214,7 +214,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     spellCount: 2, 
                     availableSpells: [new ObjectId('66335a87863710c59eae0f3c'), new ObjectId('66335a87863710c59eae0f3d'),new ObjectId('66335a87863710c59eae0f41'), new ObjectId('66335a87863710c59eae0f53'), new ObjectId('66335a87863710c59eae0f5e'), new ObjectId('66335a87863710c59eae0f60'), new ObjectId('66335a87863710c59eae0f69'), new ObjectId('66335a87863710c59eae0f75')] }), 
-                classActions: [new ObjectId('663755d85297ed4f922e3a63')] }),
+                classActions: [new ObjectId('663fae6b571a7a6038b76fcb')] }),
 
             CharacterClass.create({ 
                 name: 'Wizard', 
@@ -234,7 +234,7 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                     
                     spellCount: 2, 
                     availableSpells: [new ObjectId('66335a87863710c59eae0f40'), new ObjectId('66335a87863710c59eae0f41'),new ObjectId('66335a87863710c59eae0f42'), new ObjectId('66335a87863710c59eae0f49'), new ObjectId('66335a87863710c59eae0f4e'), new ObjectId('66335a87863710c59eae0f64'), new ObjectId('66335a87863710c59eae0f53'), new ObjectId('66335a87863710c59eae0f55'), new ObjectId('66335a87863710c59eae0f56'), new ObjectId('66335a87863710c59eae0f57'),new ObjectId('66335a87863710c59eae0f58'), new ObjectId('66335a87863710c59eae0f5a'), new ObjectId('66335a87863710c59eae0f62'), new ObjectId('66335a87863710c59eae0f65'), new ObjectId('66335a87863710c59eae0f67'), new ObjectId('66335a87863710c59eae0f68'), new ObjectId('66335a87863710c59eae0f69'), new ObjectId('66335a87863710c59eae0f6a'), new ObjectId('66335a87863710c59eae0f6d'), new ObjectId('66335a87863710c59eae0f6f'), new ObjectId('66335a87863710c59eae0f71'), new ObjectId('66335a87863710c59eae0f73'), new ObjectId('66335a87863710c59eae0f75')] }), 
-                classActions: [new ObjectId('663755d85297ed4f922e3a64'), new ObjectId('663755d85297ed4f922e3a65')] })
+                classActions: [new ObjectId('663fae6b571a7a6038b76fcc'), new ObjectId('663755d85297ed4f922e3a65')] })
         ])
             .then((characterClasses) => {
                 const clericClass = characterClasses.find(characterClass => characterClass.name === 'Cleric')
