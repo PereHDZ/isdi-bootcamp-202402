@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const classAction = new Schema ({
+const action = new Schema ({
     name: {
         type: String,
         requierd: true
@@ -13,4 +13,4 @@ const classAction = new Schema ({
     }
 })
 
-export default classAction
+export default action
