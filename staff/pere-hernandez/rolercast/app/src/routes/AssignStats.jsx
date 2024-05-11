@@ -540,6 +540,8 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
             { renderSelectInstrument() }
 
+            {/* { renderSelectAncestor() } */}
+
             <div className='select-button-div'>
                 { renderConfirmButton() }
             </div>

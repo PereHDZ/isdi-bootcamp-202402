@@ -1,16 +1,37 @@
-import { useCharacterClass } from '../pages/Home'
+import { useCharacterClass, useSpells } from '../pages/Home'
 import { useState, useEffect } from 'react'
 
 import logic from '../logic'
 
 function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
     const { characterClass } = useCharacterClass()
+    const { spells, setSpells } = useSpells()
+    const [spellsData, setSpellsData] = useState([])
 
     useEffect(() => {
         if (!(characterClass)) {
             onReturnClick()
 
             return
+        }
+
+        if (!!characterClass.knownSpells){
+            setSpells(characterClass.knownSpells)
+
+            const fetchSpellsData = () => {
+                Promise.all(
+                    characterClass.knownSpells.map(spellId => logic.retrieveSpell(spellId)
+                        .then(objectSpell => objectSpell)
+                    )
+                ).then(fetchedData => {
+                    const filteredData = fetchedData.filter(Boolean)
+                    setSpellsData(filteredData)
+                }).catch(error => {
+                    console.error('Error fetching spell: ', error)
+                    return null
+                })
+            }
+            fetchSpellsData()
         }
     }, [])
 
@@ -49,6 +70,22 @@ function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
         }
     }
 
+    const getSpells = () => {
+        if (spellsData.length > 0){
+            const spellNames = spellsData.map(spell => spell.name).join(', ')
+
+            return <div>
+                <p><strong>You know the following spells: </strong>{spellNames}</p>
+            </div>
+        }
+
+        return <></>
+    }
+
+    // const getActions = () => {
+        
+    // }
+
     return <section>
     <div className="return-div">
         <button className="transparent-button" onClick={handleReturnClick}>
@@ -71,6 +108,12 @@ function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
         <h3>CLASS FEATURES</h3>
 
         { characterClass && getProficiencies() }
+
+        { characterClass && characterClass.spellcasting && <p><strong>Spellcasting: </strong>You will de able to choose {characterClass.spellcasting.cantripCount} cantrips and {characterClass.spellcasting.spellCount} spells from the {characterClass.name} Spell List.</p>}
+
+        { characterClass && getSpells() }
+
+        {/* { characterClass && getActions() } */}
 
     </div>
 

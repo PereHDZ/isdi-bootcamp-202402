@@ -96,7 +96,7 @@ function SelectSpells({ onReturn, onSpellsConfirmed }){
             const fetchAvailableSpellsData = () => {
                 Promise.all(
                     availableSpells.map(spellId => logic.retrieveSpell(spellId)
-                        .then(ObjectSpell => ObjectSpell)
+                        .then(objectSpell => objectSpell)
                     )
                 ).then(fetchedData => {
                     const filteredData = fetchedData.filter(Boolean)
@@ -106,7 +106,6 @@ function SelectSpells({ onReturn, onSpellsConfirmed }){
                     return null
                 })
             }
-
             fetchAvailableSpellsData()
         }, [availableSpells])
 
