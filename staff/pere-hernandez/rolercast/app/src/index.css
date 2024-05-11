@@ -465,3 +465,47 @@ select {
   margin-left: 2.5vw;
   margin-right: 2.5vw;
 }
+
+.main-attribute {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center ;
+  background-color: #2B1203;
+  border-radius: 100%;
+  border: 4px solid #DD5D0E;
+  margin-right: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+}
+
+.child-attribute {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center ;
+  background-color: #2B1203;
+  border-radius: 100%;
+  border: 4px solid #DD5D0E;
+  margin-right: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+}
+
+.small-size {
+  width: 70px;
+  height: 70px;
+}
+
+.character-form {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+.show-class-race {
+  display: flex;
+  justify-content: center;
+}
