@@ -16,6 +16,9 @@ function ConfirmCharacter ({ onRetrunClick }) {
     const [cantripsData, setCantripsData] = useState([])
     const [spellsData, setSpellsData] = useState([])
 
+    const [actions, setActions] = useState([])
+    const [actionsData, setActionsData] = useState([])
+
     useEffect(() => {
         if (race.parent){
             try {
@@ -67,6 +70,42 @@ function ConfirmCharacter ({ onRetrunClick }) {
             fetchSpellsData()
         }
     }, [])
+
+    useEffect(() => {
+        const newActions = []
+        
+        if (!!characterClass.parent && !!parentClass && !!parentClass.classActions){
+            for (let i = 0; i < parentClass.classActions.length; i++){
+                newActions.push(parentClass.classActions[i])
+            }            
+        }
+        if (race.name.includes('Dragon')){
+            newActions.push(race.features.draconicAncestry.raceAction)
+        }
+        if (!!characterClass.classActions){
+            for (let i = 0; i < characterClass.classActions.length; i++){
+                newActions.push(characterClass.classActions[i])
+            }            
+        }
+
+        setActions(newActions)
+    }, [parentClass])
+
+    // useEffect(() => {
+    //     const fetchActionsData = () => {
+    //         Promise.all(
+    //             actions.map(actionId => logic.retrieveaction(actionId)
+    //                 .then(objectAction => objectAction))
+    //         ).then(fetchedData => {
+    //             const filteredData = fetchedData.filter(Boolean)
+    //             setActionsData(filteredData)
+    //         }).catch(error => {
+    //             console.error('Error fetching action:', error)
+    //             return null
+    //         })
+    //     }
+    //     fetchActionsData()
+    // }, [actions])
 
     const handleReturnClick = () => {
         event.preventDefault()
@@ -139,6 +178,8 @@ function ConfirmCharacter ({ onRetrunClick }) {
         return <>{cantripsDiv}{spellsDiv}</>
     }
 
+    console.log(actionsData)
+
     return <div>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -158,6 +199,8 @@ function ConfirmCharacter ({ onRetrunClick }) {
             { renderStats() }
 
             { renderSpells() }
+{/* 
+            { renderActions() } */}
         </form>
     </div>
 }

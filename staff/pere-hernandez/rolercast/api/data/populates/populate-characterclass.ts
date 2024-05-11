@@ -370,7 +370,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                         description: 'You pledged something unthinkable to an unspeakably ancient entity - which in return furnished you with powers of cerebral entropy and control.', 
                         spellcasting: new Spellcasting({ 
                             availableSpells: [new ObjectId('66335a87863710c59eae0f4f'), new ObjectId('66335a87863710c59eae0f71')] }), 
-                        classActions: [new ObjectId('663755d85297ed4f922e3a77')], parent: warlockClass._id })
+                        classActions: [new ObjectId('663755d85297ed4f922e3a77')],
+                        parent: warlockClass._id })
                 ])
             })
     )

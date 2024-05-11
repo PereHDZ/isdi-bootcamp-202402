@@ -18,7 +18,7 @@ type CharacterClassType = {
     spellcasting?: SpellcastingType,
     knownSpells?: [ObjectId],
     knownCantrips?: [ObjectId],
-    classAction?: [ObjectId],
+    classActions?: [ObjectId],
     parent?: ObjectId
 }
 

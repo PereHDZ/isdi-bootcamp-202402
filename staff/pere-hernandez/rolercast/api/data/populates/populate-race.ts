@@ -363,7 +363,8 @@ mongoose.connect('mongodb://localhost:27017/rolercast')
                             features: new Features({ 
                                 draconicAncestry: new DraconicAncestry({ 
                                     name: 'Draconic Ancestry', 
-                                    bonusesDescription: 'Resistance to Acid damage', raceAction: new ObjectId('6633655110163f6de2d4abee') }), 
+                                    bonusesDescription: 'Resistance to Acid damage', 
+                                    raceAction: new ObjectId('6633655110163f6de2d4abee') }), 
                                 acidBreath: new AcidBreath({ 
                                     name: 'Acid Breath', 
                                     bonusesDescription: 'Access to the Race Action Acid Breath' }) }), 
