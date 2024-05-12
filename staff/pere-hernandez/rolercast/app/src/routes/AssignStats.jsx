@@ -366,12 +366,15 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     }
 
     const renderSpellsData = () => {
-        return <div>
-            <h5 className='margin-left'>SPELL INHERITED FROM DRAGON ANCESTOR</h5>
-            <div className='dety-info margin-left'>
-                <p><strong>{spellsData[0].name}: </strong>{spellsData[0].description}</p>
+        if (characterClass.name === 'Draconic Bloodline'){
+            return <div>
+                <h5 className='margin-left'>SPELL INHERITED FROM DRAGON ANCESTOR</h5>
+                <div className='dety-info margin-left'>
+                    <p><strong>{spellsData[0].name}: </strong>{spellsData[0].description}</p>
+                </div>
             </div>
-        </div>
+        }
+
     }
 
     const handleDeityChange = (event) => {
@@ -424,9 +427,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         newSpells.push(event.target.value)
         setSpells(newSpells)
     }
-
-    console.log(spells)
-    console.log(spellsData)
 
     const renderSelectDeity = () => {
         if (characterClass.name.includes('Domain')){

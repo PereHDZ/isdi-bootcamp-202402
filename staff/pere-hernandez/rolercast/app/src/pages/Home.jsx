@@ -58,6 +58,7 @@ function Home({ onUserLoggedOut }) {
     const [actions, setActions] = useState([])
     const [background, setBackground] = useState(null)
     const [stats, setStats] = useState(null)
+    const [skills, setSkills] = useState(null)
     const [deity, setDeity] = useState(null)
     const [fightingStyle, setFightingStyle] = useState(null)
     const [archetype, setArchetype] = useState(null)
@@ -156,15 +157,23 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromSelectSubclass = () => navigate('/confirmClass')
 
-    const handleReturnFromAssignStats = () => navigate('/confirmBackground')
+    const handleReturnFromAssignStats = () => {
+        setStats(null)
 
-    const handleReturnFromAssignSkills = () => navigate('/stats')
+        navigate('/confirmBackground')
+    }
+
+    const handleReturnFromAssignSkills = () => {
+        setSkills(null)
+
+        navigate('/stats')
+    } 
 
     const handleRetrunFromConfirmCharacter = () => navigate('/skills')
 
     const handleReturnFromSelectClass = () => navigate('/selectRace')
 
-    const handleReturnFromSelectCantrips = () => navigate('/selectClass')
+    const handleReturnFromSelectCantrips = () => navigate('/skills')
 
     const handleReturnFromSelectSpells = () => navigate('/selectCantrips')
 
@@ -222,7 +231,7 @@ function Home({ onUserLoggedOut }) {
 
     const handleCantripsConfirmed = () => navigate('/selectSpells')
 
-    const handleSpellsConfirmed = () => navigate('/selectBackground')
+    const handleSpellsConfirmed = () => navigate('/confirmCharacter')
 
     const handleBackgroundSelected = () => navigate('/stats')    
 
@@ -230,7 +239,7 @@ function Home({ onUserLoggedOut }) {
 
     const handleStatsSelected = () => navigate('/skills')
 
-    const handleSkillsSelected = () => navigate('/confirmCharacter')
+    const handleSkillsSelected = () => navigate('/selectCantrips')
 
     return <>
     <RaceContext.Provider value={{setRace, race}}>

@@ -481,7 +481,7 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
 
     const renderConfirmButton = () => {
         if (checkedSkills.length === skillPoints){
-            if (characterClass.name === 'Knowledge Domain' || characterClass.name === 'Rogue' && checkedExpertises < expertisePoints){
+            if ((characterClass.name === 'Knowledge Domain' || characterClass.name === 'Rogue') && checkedExpertises.length < expertisePoints){
                 return <></>
             } else {
                 return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>

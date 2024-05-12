@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 function SelectSpells({ onReturn, onSpellsConfirmed }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
-    const { setSpells } = useSpells()
+    const { spells, setSpells } = useSpells()
 
     const [availableSpells, setAvailableSpells] = useState([])
     const [availableSpellsData, setAvailableSpellsData] = useState([])
@@ -53,19 +53,19 @@ function SelectSpells({ onReturn, onSpellsConfirmed }){
     }, [])
 
     useEffect(() => {
+        const newSelectedSpells = [...spells]
+
         if (race.name === 'Forest Gnome'){
-            const newSelectedSpells = [race.features.additionalSpell.spell]
-
-            setSpellsSelected(newSelectedSpells)
+            newSelectedSpells.push(race.features.additionalSpell.spell)
         }
-    }, [])
 
-    useEffect(() => {
         if (characterClass.name.includes('Domain')){
-            const newSelectedSpells = characterClass.knownSpells
-
-            setSpellsSelected(newSelectedSpells)
+            for (let i = 0; i < characterClass.knownSpells.length; i++){
+                newSelectedSpells.push(characterClass.knownSpells[i])
+            }            
         }
+
+        setSpellsSelected(newSelectedSpells)
     }, [])
 
     const handleCheckboxChange = (event) => {
