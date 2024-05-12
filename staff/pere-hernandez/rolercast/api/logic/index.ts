@@ -32,6 +32,8 @@ import retrieveArchetype from './retrieveArchetype.ts'
 import retrieveNaturalExplorers from './retrieveNaturalExplorers.ts'
 import retrieveNaturalExplorer from './retrieveNaturalExplorer.ts'
 
+import createCharacter from './createCharacter.ts'
+
 const logic = {
     users: null,
     races: null,
@@ -69,7 +71,9 @@ const logic = {
     retrieveArchetype,
 
     retrieveNaturalExplorers,
-    retrieveNaturalExplorer
+    retrieveNaturalExplorer,
+
+    createCharacter
 }
 
 export default logic

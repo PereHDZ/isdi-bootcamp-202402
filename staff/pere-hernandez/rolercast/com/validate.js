@@ -24,6 +24,9 @@ const validate = {
         if (typeof token !== 'string') throw new TypeError(`${explain} is not a string`)
         const { exp } = util.extractJwtPayload(token)
         if (exp * 1000 < Date.now()) throw new UnauthorizedError('session expired')
+    },
+    number(number, explain = 'number'){
+        if (typeof number !== 'number') throw new TypeError(`${explain} is not a number`)
     }
 };
 export default validate;
