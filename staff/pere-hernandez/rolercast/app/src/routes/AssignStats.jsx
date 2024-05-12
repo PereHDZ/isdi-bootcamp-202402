@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
-import { useRace, useCharacterClass, useStats, useSpells, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
+import { useRace, useCharacterClass, useStats, useHp, useSpells, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
 import logic from '../logic'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { setStats } = useStats()
+    const { hp, setHp } = useHp()
     const { spells, setSpells } = useSpells()
     const { setDeity } = useDeity()
     const { setFightingStyle } = useFightingstyle()
     const { setArchetype } = useArchetype()
     const { setNaturalExplorer } = useNaturalExplorer()
     const { instrument, setInstrument } = useInstrument()
+
+    const [hpBonus, setHpBonus] = useState(null)
 
     const [deities, setDeities] = useState([])
     const [chosenDeity, setChosenDeity] = useState(null)
@@ -76,6 +79,42 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
         onStatsSelected()
     }
+
+    useEffect(() => {
+        let newHpBonus
+
+        if(selectedStats.Constitution > 15){
+            newHpBonus = 5
+        } else if (selectedStats.Constitution > 13 && selectedStats.Constitution < 16){
+            newHpBonus = 4
+        } else if (selectedStats.Constitution > 11 && selectedStats.Constitution < 14){
+            newHpBonus = 3
+        } else if (selectedStats.Constitution > 9 && selectedStats.Constitution < 12){
+            newHpBonus = 2
+        } else {
+            newHpBonus = 1
+        }
+
+        setHpBonus(newHpBonus)
+    }, [selectedStats])
+
+    useEffect(() => {
+        if (!characterClass.parent){
+            setHp(characterClass.hp + hpBonus)
+        } else {
+            try {
+                logic.retrieveCharacterClass(characterClass.parent)
+                    .then(parentClass => {
+                        setHp(parentClass.hp + hpBonus)
+                    })
+            } catch (error) {
+                alert(error)
+            }
+        }
+    }, [hpBonus])
+
+    console.log('hpBonus', hpBonus)
+    console.log('hp', hp)
 
     useEffect(() => {
         if (characterClass.name.includes('Domain')){
@@ -174,6 +213,8 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             fetchSpellsData()
         }
     }, [spells])
+
+
 
     const handleStatIncrement = (stat) => {
         if (remainingStatPoints > 0 && selectedStats[stat] < maxValues[stat]){
@@ -590,7 +631,11 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
                     {Object.keys(selectedStats).map(renderStatInput)}
 
-                    <p>Remaining Points: {remainingStatPoints}/27</p>
+                    <div className='points'>
+                        <p>Remaining Points: {remainingStatPoints}/27</p>
+
+                        <p><strong>HP: </strong>{hp}</p>
+                    </div>
                 </div>
             </div>
 

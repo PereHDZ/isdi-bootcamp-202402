@@ -542,3 +542,8 @@ h4{
   margin-left: 4vw;
   margin-right: 4vw;
 }
+
+.points {
+  display: flex;
+  justify-content: space-around;
+}

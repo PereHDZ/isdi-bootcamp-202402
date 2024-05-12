@@ -27,6 +27,7 @@ const CantripsContext = createContext(null)
 const SpellsContext = createContext(null)
 const ActionsContext = createContext(null)
 const StatsContext = createContext(null)
+const HpContext = createContext(null)
 const DeityContext = createContext(null)
 const FightingStyleContext = createContext(null)
 const ArchetypeContext = createContext(null)
@@ -42,6 +43,7 @@ export const useCantrips = () => useContext(CantripsContext)
 export const useSpells = () => useContext(SpellsContext)
 export const useActions = () => useContext(ActionsContext)
 export const useStats = () => useContext(StatsContext)
+export const useHp = () => useContext(HpContext)
 export const useDeity = () => useContext(DeityContext)
 export const useFightingstyle = () => useContext(FightingStyleContext)
 export const useArchetype = () => useContext(ArchetypeContext)
@@ -59,6 +61,7 @@ function Home({ onUserLoggedOut }) {
     const [background, setBackground] = useState(null)
     const [stats, setStats] = useState(null)
     const [skills, setSkills] = useState(null)
+    const [hp, setHp] = useState(null)
     const [deity, setDeity] = useState(null)
     const [fightingStyle, setFightingStyle] = useState(null)
     const [archetype, setArchetype] = useState(null)
@@ -270,6 +273,7 @@ function Home({ onUserLoggedOut }) {
     <SpellsContext.Provider value={{setSpells, spells}}>
     <ActionsContext.Provider value={{setActions, actions}}>
     <StatsContext.Provider value={{setStats, stats}}>
+    <HpContext.Provider value={{setHp, hp}}>
     <DeityContext.Provider value={{setDeity, deity}}>
     <FightingStyleContext.Provider value={{setFightingStyle, fightingStyle}}>
     <ArchetypeContext.Provider value={{setArchetype, archetype}}>
@@ -318,6 +322,7 @@ function Home({ onUserLoggedOut }) {
     </ArchetypeContext.Provider>
     </FightingStyleContext.Provider>
     </DeityContext.Provider>
+    </HpContext.Provider>
     </StatsContext.Provider>
     </ActionsContext.Provider>
     </SpellsContext.Provider>
