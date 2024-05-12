@@ -127,7 +127,7 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
             return accumulator
         }, {})
 
-        const newProficiencies = { armour: armourObject, weapons: weaponsObject, proficiencies: proficienciesObject }
+        const newProficiencies = { armour: armourObject, weapons: weaponsObject, skills: proficienciesObject }
         const newExpertises = expertisesObject
 
         setProficiencies(newProficiencies)

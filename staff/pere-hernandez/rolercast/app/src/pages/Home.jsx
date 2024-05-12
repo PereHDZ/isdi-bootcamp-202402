@@ -244,6 +244,8 @@ function Home({ onUserLoggedOut }) {
             navigate('/selectCantrips')
         } else if (!!characterClass.parent && (characterClass.name === 'Nature Domain' || characterClass.name.includes('The '))){
             navigate('/selectCantrips')
+        } else  if (!characterClass.parent && !characterClass.spellcasting){
+            navigate('/confirmCharacter')
         } else {
             try {
                 logic.retrieveCharacterClass(characterClass.parent)

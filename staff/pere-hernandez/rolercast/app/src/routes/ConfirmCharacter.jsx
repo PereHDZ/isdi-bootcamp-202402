@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react'
 import logic from '../logic'
-import { useRace, useCharacterClass, useBackground, useStats, useCantrips, useSpells } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, useCantrips, useSpells, useInstrument, useDeity, useFightingstyle } from '../pages/Home'
 
 function ConfirmCharacter ({ onRetrunClick }) {
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { background } = useBackground()
     const { stats } = useStats()
+    const { proficiencies } = useProficiencies()
     const { cantrips } = useCantrips()
     const { spells } = useSpells()
+    const { instrument } = useInstrument()
+    const { deity } = useDeity()
+    const { fightingStyle } = useFightingstyle()
 
     const [parentRace, setParentRace] = useState(null)
     const [parentClass, setParentClass] = useState(null)
@@ -158,6 +162,36 @@ function ConfirmCharacter ({ onRetrunClick }) {
         </div>
     }
 
+    const renderProficiencies = () => {
+        const armourAttributes = Object.keys(proficiencies.armour)
+        const weaponsAttributes = Object.keys(proficiencies.weapons)
+        const skillsAttributes = Object.keys(proficiencies.skills)
+
+        const armourString = armourAttributes.join(', ')
+        const weaponsString = weaponsAttributes.join(', ')
+        const skillsString = skillsAttributes.join(', ')
+
+        return <div>
+            <div>
+                <h4>YOUR ARMOUR PROFICIENCIES</h4>
+
+                <p className='spell-p'>{armourString}</p>
+            </div>
+
+            <div>
+                <h4>YOUR WEAPON PROFICIENCIES</h4>
+
+                <p className='spell-p'>{weaponsString}</p>
+            </div>
+
+            <div>
+                <h4>YOUR SKILL PROFICIENCIES</h4>
+
+                <p className='spell-p'>{skillsString}</p>
+            </div>
+        </div>
+    }
+
     const renderSpells = () => {
         let cantripsDiv = <></>
         let spellsDiv = <></>
@@ -201,6 +235,32 @@ function ConfirmCharacter ({ onRetrunClick }) {
         return actionsDiv
     }
 
+    const renderOthers = () => {
+        if (characterClass.name === 'Bard'){
+            return <div>
+                <h4>YOUR INSTRUMENT</h4>
+
+                <p className='spell-p'>{instrument}</p>
+            </div>
+        }
+
+        if (characterClass.name.includes('Domain')){
+            return <div>
+            <h4>YOUR DEITY</h4>
+
+            <p className='spell-p'>{deity.name}</p>
+        </div>
+        }
+
+        if (characterClass.name === 'Fighter'){
+            return <div>
+            <h4>YOUR FIGHTING STYLE</h4>
+
+            <p className='spell-p'>{fightingStyle.name}</p>
+        </div>
+        }
+    }
+
     return <div>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -219,9 +279,13 @@ function ConfirmCharacter ({ onRetrunClick }) {
 
             { renderStats() }
 
+            { renderProficiencies() }
+
             { renderSpells() }
 
             { renderActions() }
+
+            { renderOthers() }
         </form>
     </div>
 }
