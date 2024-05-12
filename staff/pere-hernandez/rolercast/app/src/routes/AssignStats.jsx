@@ -65,6 +65,12 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const handleReturnClick = () => {
         event.preventDefault()
 
+        setInstrument(null)
+        setDeity(null)
+        setFightingStyle(null)
+        setArchetype(null)
+        setNaturalExplorer(null)
+
         onReturnClick()
     }
 

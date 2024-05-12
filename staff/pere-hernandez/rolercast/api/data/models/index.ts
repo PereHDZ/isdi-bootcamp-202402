@@ -3,6 +3,7 @@ import Archetype from './Archetype.ts'
 import Armour from './Armour.ts'
 import Background from './Background.ts'
 import Cantrip from './Cantrip.ts'
+import Character from './Character.ts'
 import CharacterClass from './CharacterClass.ts'
 import Deity from './Deity.ts'
 import Features from './Features.ts'
@@ -14,7 +15,8 @@ import SavingThrowProficiencies from './SavingThrowProficiencies.ts'
 import Skills from './Skills.ts'
 import Spell from './Spell.ts'
 import Spellcasting from './Spellcasting.ts'
+import Stats from './Stats.ts'
 import User from './User.ts'
 import Weapons from './Weapons.ts'
 
-export { Action, Archetype, Armour, Background, Cantrip, CharacterClass, Deity, Features, FightingStyle, NaturalExplorer, Proficiencies, Race, SavingThrowProficiencies, Skills, Spell, Spellcasting, User, Weapons }
+export { Action, Archetype, Armour, Background, Cantrip, Character, CharacterClass, Deity, Features, FightingStyle, NaturalExplorer, Proficiencies, Race, SavingThrowProficiencies, Skills, Spell, Spellcasting, Stats, User, Weapons }

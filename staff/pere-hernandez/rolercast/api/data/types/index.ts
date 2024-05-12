@@ -4,6 +4,7 @@ import ArmourType from './ArmourType'
 import BackgroundType from './BackgroundType'
 import CantripType from './CantripType'
 import CharacterClassType from './CharacterClassType'
+import CharacterType from './CharacterType'
 import DeityType from './DeityType'
 import FeaturesType from './FeaturesType'
 import FightingStyleType from './FightingStyleType'
@@ -14,7 +15,8 @@ import SavingThrowProficienciesType from './SavingThrowProficienciesType'
 import SkillsType from './SkillsType'
 import SpellcastingType from './SpellcastingType'
 import SpellType from './SpellType'
+import StatsType from './StatsType'
 import UserType from './UserType'
 import WeaponsType from './WeaponsType'
 
-export { ActionType, ArchetypeType, ArmourType, BackgroundType, CantripType, CharacterClassType, DeityType, FeaturesType, FightingStyleType, NaturalExplorerType, ProficienciesType, RaceType, SavingThrowProficienciesType, SkillsType, SpellcastingType, SpellType, UserType, WeaponsType }
+export { ActionType, ArchetypeType, ArmourType, BackgroundType, CantripType, CharacterClassType, CharacterType, DeityType, FeaturesType, FightingStyleType, NaturalExplorerType, ProficienciesType, RaceType, SavingThrowProficienciesType, SkillsType, SpellcastingType, SpellType, StatsType, UserType, WeaponsType }
