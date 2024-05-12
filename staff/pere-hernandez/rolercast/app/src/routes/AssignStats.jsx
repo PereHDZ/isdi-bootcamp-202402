@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useRace, useCharacterClass, useStats, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
+import { useRace, useCharacterClass, useStats, useSpells, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
 import logic from '../logic'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { setStats } = useStats()
+    const { spells, setSpells } = useSpells()
     const { setDeity } = useDeity()
     const { setFightingStyle } = useFightingstyle()
     const { setArchetype } = useArchetype()
@@ -23,6 +24,8 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     const [naturalExplorers, setNaturalExplorers] = useState([])
     const [chosenNaturalExplorer, setChosenNaturalExplorer] = useState(null)
+
+    const [spellsData, setSpellsData] = useState([])
     
     const [selectedStats, setSelectedStats] = useState({
         Strength: 8,
@@ -152,6 +155,25 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (spells.length > 0){
+            const fetchSpellsData = () => {
+                Promise.all(
+                    spells.map(spellId => logic.retrieveSpell(spellId)
+                        .then(objectSpell => objectSpell)
+                    )
+                ).then(fetchedData => {
+                    const filteredData = fetchedData.filter(Boolean)
+                    setSpellsData(filteredData)
+                }).catch(error => {
+                    console.error('Error fetching spell: ', error)
+                    return null
+                })
+            }
+            fetchSpellsData()
+        }
+    }, [spells])
 
     const handleStatIncrement = (stat) => {
         if (remainingStatPoints > 0 && selectedStats[stat] < maxValues[stat]){
@@ -343,6 +365,15 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         }
     }
 
+    const renderSpellsData = () => {
+        return <div>
+            <h5 className='margin-left'>SPELL INHERITED FROM DRAGON ANCESTOR</h5>
+            <div className='dety-info margin-left'>
+                <p><strong>{spellsData[0].name}: </strong>{spellsData[0].description}</p>
+            </div>
+        </div>
+    }
+
     const handleDeityChange = (event) => {
         try {
             logic.retrieveDeity(event.target.value)
@@ -386,6 +417,16 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const handleInstrumentChange = (event) => {
         setInstrument(event.target.value)
     }
+
+    const handleAncestorChange = (event) => {
+        const newSpells = []
+
+        newSpells.push(event.target.value)
+        setSpells(newSpells)
+    }
+
+    console.log(spells)
+    console.log(spellsData)
 
     const renderSelectDeity = () => {
         if (characterClass.name.includes('Domain')){
@@ -455,6 +496,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         if (characterClass.name === 'Bard'){
             return <div className='margin-left'>
                 <h5 className='deity-title'>SELECT YOUR INSTRUMENT</h5>
+
                 <select value={null} onChange={handleInstrumentChange}>
                     <option value={null}>Select Instrument</option>
                     <option value={'Hand Drum'}>Hand Drum</option>
@@ -462,6 +504,28 @@ function AssignStats({ onReturnClick, onStatsSelected }){
                     <option value={'Lute'}>Lute</option>
                     <option value={'Lyre'}>Lyre</option>
                     <option value={'Violin'}>Violin</option>
+                </select>
+            </div>
+        }
+    }
+
+    const renderSelectAncestor = () => {
+        if (characterClass.name === 'Draconic Bloodline'){
+            return <div className='margin-left'>
+                <h5 className='deity title'>SELECT YOUR DRAGON ANCESTOR</h5>
+
+                <select value={null} onChange={handleAncestorChange}>
+                    <option value={null}>Select Ancestor</option>
+                    <option value={'66335a87863710c59eae0f40'}>{'Red Dragon (Fire)'}</option>                    
+                    <option value={'66335a87863710c59eae0f5a'}>{'Black Dragon (Acid)'}</option>                    
+                    <option value={'66335a87863710c59eae0f75'}>{'Blue Dragon (Lightning)'}</option>                    
+                    <option value={'66335a87863710c59eae0f3c'}>{'White Dragon (Cold)'}</option>                    
+                    <option value={'66335a87863710c59eae0f6a'}>{'Green Dragon (Poison)'}</option>                    
+                    <option value={'66335a87863710c59eae0f4e'}>{'Gold Dragon (Fire)'}</option>                    
+                    <option value={'66335a87863710c59eae0f56'}>{'Silver Dragon (Cold)'}</option>                    
+                    <option value={'66335a87863710c59eae0f58'}>{'Bronze Dragon (Lightning)'}</option>                    
+                    <option value={'66335a87863710c59eae0f71'}>{'Copper Dragon (Acid)'}</option>                    
+                    <option value={'66335a87863710c59eae0f6f'}>{'Brass Dragon (Fire)'}</option>                                       
                 </select>
             </div>
         }
@@ -540,7 +604,9 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
             { renderSelectInstrument() }
 
-            {/* { renderSelectAncestor() } */}
+            { renderSelectAncestor() }
+
+            { spellsData.length > 0 && renderSpellsData()}
 
             <div className='select-button-div'>
                 { renderConfirmButton() }
