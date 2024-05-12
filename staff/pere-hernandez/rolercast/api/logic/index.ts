@@ -33,6 +33,7 @@ import retrieveNaturalExplorers from './retrieveNaturalExplorers.ts'
 import retrieveNaturalExplorer from './retrieveNaturalExplorer.ts'
 
 import createCharacter from './createCharacter.ts'
+import retrieveCharacters from './retrieveCharacters.ts'
 
 const logic = {
     users: null,
@@ -73,7 +74,8 @@ const logic = {
     retrieveNaturalExplorers,
     retrieveNaturalExplorer,
 
-    createCharacter
+    createCharacter,
+    retrieveCharacters
 }
 
 export default logic

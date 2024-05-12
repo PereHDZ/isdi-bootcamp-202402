@@ -1,6 +1,6 @@
 import { ObjectId, Schema } from 'mongoose'
 
-import { CharacterClass, ClassAction, User } from '../data/models/index.ts'
+import { CharacterClass, User } from '../data/models/index.ts'
 import { validate, errors } from 'com'
 import { SavingThrowProficienciesType, ProficienciesType, SpellcastingType } from '../data/types/index.ts'
 
