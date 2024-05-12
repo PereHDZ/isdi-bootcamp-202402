@@ -81,6 +81,7 @@ function ConfirmCharacterClass({ onReturnClick, onCharacterClassSelected }){
 
         return <div>
             <p><strong>Class Actions and other bonuses: </strong></p>
+            
             <ul>
                 {classActionsData.map(classAction => (
                     <li><strong>{classAction.name}: </strong>{classAction.description}</li>

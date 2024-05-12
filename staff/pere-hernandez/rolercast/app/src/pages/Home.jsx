@@ -20,12 +20,12 @@ import SelectSpells from '../routes/SelectSpells'
 import AssignSkills from "../routes/AssignSkills"
 import ConfirmCharacter from "../routes/ConfirmCharacter"
 
-
 const RaceContext = createContext(null)
 const CharacterClassContext = createContext(null)
 const BackgroundContext = createContext(null)
 const CantripsContext = createContext(null)
 const SpellsContext = createContext(null)
+const ActionsContext = createContext(null)
 const StatsContext = createContext(null)
 const DeityContext = createContext(null)
 const FightingStyleContext = createContext(null)
@@ -40,6 +40,7 @@ export const useCharacterClass = () => useContext(CharacterClassContext)
 export const useBackground = () => useContext(BackgroundContext)
 export const useCantrips = () => useContext(CantripsContext)
 export const useSpells = () => useContext(SpellsContext)
+export const useActions = () => useContext(ActionsContext)
 export const useStats = () => useContext(StatsContext)
 export const useDeity = () => useContext(DeityContext)
 export const useFightingstyle = () => useContext(FightingStyleContext)
@@ -54,6 +55,7 @@ function Home({ onUserLoggedOut }) {
     const [characterClass, setCharacterClass] = useState(null)
     const [cantrips, setCantrips] = useState([])
     const [spells, setSpells] = useState([])
+    const [actions, setActions] = useState([])
     const [background, setBackground] = useState(null)
     const [stats, setStats] = useState(null)
     const [deity, setDeity] = useState(null)
@@ -236,6 +238,7 @@ function Home({ onUserLoggedOut }) {
     <BackgroundContext.Provider value={{setBackground, background}}>
     <CantripsContext.Provider value={{setCantrips, cantrips}}>
     <SpellsContext.Provider value={{setSpells, spells}}>
+    <ActionsContext.Provider value={{setActions, actions}}>
     <StatsContext.Provider value={{setStats, stats}}>
     <DeityContext.Provider value={{setDeity, deity}}>
     <FightingStyleContext.Provider value={{setFightingStyle, fightingStyle}}>
@@ -286,6 +289,7 @@ function Home({ onUserLoggedOut }) {
     </FightingStyleContext.Provider>
     </DeityContext.Provider>
     </StatsContext.Provider>
+    </ActionsContext.Provider>
     </SpellsContext.Provider>
     </CantripsContext.Provider>
     </BackgroundContext.Provider>

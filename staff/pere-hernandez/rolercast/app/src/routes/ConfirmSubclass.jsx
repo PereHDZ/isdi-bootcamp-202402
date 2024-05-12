@@ -1,18 +1,33 @@
-import { useCharacterClass, useSpells } from '../pages/Home'
+import { useRace, useCharacterClass, useSpells, useActions } from '../pages/Home'
 import { useState, useEffect } from 'react'
 
 import logic from '../logic'
 
 function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
+    const { race } = useRace()
     const { characterClass } = useCharacterClass()
-    const { spells, setSpells } = useSpells()
+    const { setSpells } = useSpells()
+    const { actions, setActions } = useActions()
+
+    const [parentClass, setParentClass] = useState(null)
+
     const [spellsData, setSpellsData] = useState([])
+    const [actionsData, setActionsData] = useState([])
 
     useEffect(() => {
         if (!(characterClass)) {
             onReturnClick()
 
             return
+        }
+
+        if (characterClass.parent){
+            try {
+                logic.retrieveCharacterClass(characterClass.parent)
+                    .then(setParentClass)
+            } catch(error) {
+                alert(error)
+            }
         }
 
         if (!!characterClass.knownSpells){
@@ -34,6 +49,34 @@ function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
             fetchSpellsData()
         }
     }, [])
+
+    useEffect(() => {
+        const newActions = []
+
+        if (!!characterClass.classActions){
+            for (let i = 0; i < characterClass.classActions.length; i++){
+                newActions.push(characterClass.classActions[i])
+
+                setActions(newActions)
+            }            
+        }
+    }, [parentClass])
+
+    useEffect(() => {
+        const fetchActionsData = () => {
+            Promise.all(
+                actions.map(actionId => logic.retrieveAction(actionId)
+                    .then(objectAction => objectAction))
+            ).then(fetchedData => {
+                const filteredData = fetchedData.filter(Boolean)
+                setActionsData(filteredData)
+            }).catch(error => {
+                console.error('Error fetching action:', error)
+                return null
+            })
+        }
+        fetchActionsData()
+    }, [actions])
 
     const handleReturnClick = () => {
         event.preventDefault()
@@ -82,9 +125,19 @@ function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
         return <></>
     }
 
-    // const getActions = () => {
-        
-    // }
+    const getActions = () => {
+        if (actionsData.length > 0){
+            return <div>
+                <p><strong>Class Actions and other bonuses:</strong></p>
+
+                <ul>
+                    {actionsData.map(action => (
+                        <li><strong>{action.name}: </strong>{action.description}</li>
+                    ))}
+                </ul>
+            </div>
+        }
+    }
 
     return <section>
     <div className="return-div">
@@ -113,7 +166,7 @@ function ConfirmSubclass({ onReturnClick, onSubclassSelected }){
 
         { characterClass && getSpells() }
 
-        {/* { characterClass && getActions() } */}
+        { characterClass && getActions() }
 
     </div>
 
