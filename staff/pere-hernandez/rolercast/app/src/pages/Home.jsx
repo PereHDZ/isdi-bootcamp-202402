@@ -265,6 +265,28 @@ function Home({ onUserLoggedOut }) {
         }
     } 
 
+    const handleCharacterCreated = () => {
+        setRace(null)
+        setCharacterClass(null)
+        setCantrips([])
+        setSpells([])
+        setActions([])
+        setBackground(null)
+        setStats(null)
+        setSkills(null)
+        setHp(null)
+        setDeity(null)
+        setFightingStyle(null)
+        setArchetype(null)
+        setNaturalExplorer(null)
+        setInstrument(null)
+        setProficiencies(null)
+        setExpertises(null)
+
+        navigate("/*")
+
+    }
+
     return <>
     <RaceContext.Provider value={{setRace, race}}>
     <CharacterClassContext.Provider value={{setCharacterClass, characterClass}}>
@@ -312,7 +334,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/confirmBackground" element={<ConfirmBackground onReturnClick={handleReturnFromConfirmBackground} onBackgroundSelected={handleBackgroundSelected}/>}/>
             <Route path="/stats" element={<AssignStats onReturnClick={handleReturnFromAssignStats} onStatsSelected={handleStatsSelected}/>}/>
             <Route path="/skills" element={<AssignSkills onRetrunClick={handleReturnFromAssignSkills} onSkillsConfirmed={handleSkillsSelected}/>}/>
-            <Route path="/confirmCharacter" element={<ConfirmCharacter onRetrunClick={handleRetrunFromConfirmCharacter}/>}/>
+            <Route path="/confirmCharacter" element={<ConfirmCharacter onRetrunClick={handleRetrunFromConfirmCharacter} onCharacterCreated={handleCharacterCreated}/>}/>
         </Routes>
     </main>
     </ExpertisesContext.Provider>

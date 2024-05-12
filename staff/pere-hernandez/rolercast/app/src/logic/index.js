@@ -34,6 +34,8 @@ import retrieveArchetype from './retrieveArchetype.js'
 import retrieveNaturalExplorers from './retrieveNaturalExplorers.js'
 import retrieveNaturalExplorer from './retrieveNaturalExplorer.js'
 
+import createCharacter from './createCharacter.js'
+
 const logic = { 
     registerUser,
     loginUser,
@@ -69,7 +71,9 @@ const logic = {
     retrieveArchetype,
 
     retrieveNaturalExplorer,
-    retrieveNaturalExplorers
+    retrieveNaturalExplorers,
+
+    createCharacter
 }
 
 export default logic

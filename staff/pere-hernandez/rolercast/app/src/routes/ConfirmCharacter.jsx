@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import logic from '../logic'
-import { useRace, useCharacterClass, useBackground, useHp, useStats, useProficiencies, useExpertises, useCantrips, useSpells, useInstrument, useDeity, useFightingstyle } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useHp, useStats, useProficiencies, useExpertises, useCantrips, useSpells, useInstrument, useDeity, useFightingstyle, useArchetype, useNaturalExplorer } from '../pages/Home'
 
-function ConfirmCharacter ({ onRetrunClick }) {
+function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { background } = useBackground()
@@ -15,6 +15,8 @@ function ConfirmCharacter ({ onRetrunClick }) {
     const { instrument } = useInstrument()
     const { deity } = useDeity()
     const { fightingStyle } = useFightingstyle()
+    const { archetype } = useArchetype()
+    const { naturalExplorer } = useNaturalExplorer()
 
     const [parentRace, setParentRace] = useState(null)
     const [parentClass, setParentClass] = useState(null)
@@ -121,8 +123,42 @@ function ConfirmCharacter ({ onRetrunClick }) {
         onRetrunClick()
     }
 
-    console.log(actions)
-    console.log(actionsData)
+    const handleSubmit = event => {
+        event.preventDefault()
+        
+        const form = event.target
+
+        const name = form.name.value
+        let deityId = null
+        let fightingStyleId = null
+        let archetypeId = null
+        let naturalExplorerId = null
+
+        if (!!deity){
+            deityId = deity._id
+        }
+        if (!!fightingStyle){
+            fightingStyleId = fightingStyle._id
+        }
+        if (!!archetype){
+            archetypeId = archetype._id
+        }
+        if (!!naturalExplorer){
+            naturalExplorerId = naturalExplorer._id
+        }
+
+        try{
+            logic.createCharacter(name, race._id, characterClass._id, background._id, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deityId, fightingStyleId, archetypeId, naturalExplorerId)
+                .then(() => {
+                    form.reset()
+
+                    onCharacterCreated()
+                })
+                .catch(error => alert(error))
+        } catch (error) {
+            alert(error)
+        }
+    }
 
     const renderClassAndName = () => {
         return <div>
@@ -275,6 +311,16 @@ function ConfirmCharacter ({ onRetrunClick }) {
             <p className='spell-p'>{fightingStyle.name}</p>
         </div>
         }
+
+        if (characterClass.name === 'Ranger'){
+            return <div>
+                <h4>YOUR TYPE OF RANGER</h4>
+
+                <p className='spell-p'><strong>Your Favoured Enemy: </strong>{archetype.name}</p>
+                <p className='spell-p'><strong>Your Natural Explorer: </strong>{naturalExplorer
+                .name}</p>
+            </div>
+        }
     }
 
     return <div>
@@ -287,7 +333,7 @@ function ConfirmCharacter ({ onRetrunClick }) {
 
         <h1>CONFIRM YOUR CHARACTER</h1>
 
-        <form className='character-form'>
+        <form className='character-form' onSubmit={handleSubmit}>
             { renderClassAndName() }
 
             <div>
@@ -310,7 +356,7 @@ function ConfirmCharacter ({ onRetrunClick }) {
             { renderOthers() }
 
             <div className="select-button-div">
-                <button className="select-button">CREATE</button>
+                <button className="select-button" type='submit'>CREATE</button>
             </div>
         </form>
     </div>

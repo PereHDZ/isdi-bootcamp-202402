@@ -27,6 +27,11 @@ const character = new Schema ({
         ref: 'CharacterClass',
         required: true
     },
+    background: {
+        type: ObjectId,
+        ref: 'Background',
+        required: true
+    },
     hp: {
         type: Number,
         required: true

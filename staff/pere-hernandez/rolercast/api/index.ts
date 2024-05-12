@@ -957,9 +957,9 @@ mongoose.connect(MONGODB_URL)
 
                 const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
-                const { name, raceId, characterClassId, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deityId, fightingStyleId, archetypeId, naturalExplorerId } = req.body
+                const { name, raceId, characterClassId, backgroundId, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deityId, fightingStyleId, archetypeId, naturalExplorerId } = req.body
 
-                logic.createCharacter(userId as string, name, raceId, characterClassId, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deityId, fightingStyleId, archetypeId, naturalExplorerId)
+                logic.createCharacter(userId as string, name, raceId, characterClassId, backgroundId, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deityId, fightingStyleId, archetypeId, naturalExplorerId)
                     .then(() => res.status(201).send())
                     .catch(error => {
                         if (error instanceof SystemError) {

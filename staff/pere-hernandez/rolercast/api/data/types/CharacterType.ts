@@ -8,6 +8,7 @@ type CharacterType = {
     name: string,
     race: ObjectId,
     class: ObjectId,
+    background: ObjectId,
     hp: number,
     stats: StatsType,
     proficiencies: ProficienciesType,
