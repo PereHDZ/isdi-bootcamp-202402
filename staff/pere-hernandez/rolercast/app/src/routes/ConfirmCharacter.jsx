@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import logic from '../logic'
-import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, useExpertises, useCantrips, useSpells, useInstrument, useDeity, useFightingstyle } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useHp, useStats, useProficiencies, useExpertises, useCantrips, useSpells, useInstrument, useDeity, useFightingstyle } from '../pages/Home'
 
 function ConfirmCharacter ({ onRetrunClick }) {
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
     const { background } = useBackground()
+    const { hp } = useHp()
     const { stats } = useStats()
     const { proficiencies } = useProficiencies()
     const { expertises } = useExpertises()
@@ -289,8 +290,12 @@ function ConfirmCharacter ({ onRetrunClick }) {
         <form className='character-form'>
             { renderClassAndName() }
 
+            <div>
+                <h4><stron>HP: </stron>{hp}</h4>
+            </div>
+
             <label htmlFor='name' className='name-label'>Write your character name</label>
-            <input type='text' id='name'></input>
+            <input type='text' id='name' required></input>
 
             { renderStats() }
 
@@ -303,6 +308,10 @@ function ConfirmCharacter ({ onRetrunClick }) {
             { renderActions() }
 
             { renderOthers() }
+
+            <div className="select-button-div">
+                <button className="select-button">CREATE</button>
+            </div>
         </form>
     </div>
 }
