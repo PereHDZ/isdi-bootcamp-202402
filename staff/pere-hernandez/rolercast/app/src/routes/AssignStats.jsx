@@ -11,7 +11,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const { setFightingStyle } = useFightingstyle()
     const { setArchetype } = useArchetype()
     const { setNaturalExplorer } = useNaturalExplorer()
-    const { setInstrument } = useInstrument()
+    const { instrument, setInstrument } = useInstrument()
 
     const [deities, setDeities] = useState([])
     const [chosenDeity, setChosenDeity] = useState(null)
@@ -541,6 +541,14 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         } else if (characterClass.name === 'Ranger'){
             if (remainingStatPoints === 0 && !!chosenArchetype && chosenNaturalExplorer && !!plus1Modifier && plus2Modifier)
                 return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
+        } else if (characterClass.name === 'Bard'){
+            if (remainingStatPoints === 0 && !!instrument && !!plus1Modifier && plus2Modifier){
+                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
+            }
+        } else if (characterClass.name === 'Draconic Bloodline'){
+            if (remainingStatPoints === 0 && !!spells.length > 0 && !!plus1Modifier && plus2Modifier){
+                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
+            }
         } else {
             if (remainingStatPoints === 0 && !!plus1Modifier && plus2Modifier)
                 return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
