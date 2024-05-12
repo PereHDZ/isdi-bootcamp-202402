@@ -239,7 +239,26 @@ function Home({ onUserLoggedOut }) {
 
     const handleStatsSelected = () => navigate('/skills')
 
-    const handleSkillsSelected = () => navigate('/selectCantrips')
+    const handleSkillsSelected = () => {
+        if (!characterClass.parent && !!characterClass.spellcasting){
+            navigate('/selectCantrips')
+        } else if (!!characterClass.parent && (characterClass.name === 'Nature Domain' || characterClass.name.includes('The '))){
+            navigate('/selectCantrips')
+        } else {
+            try {
+                logic.retrieveCharacterClass(characterClass.parent)
+                    .then(parentClass => {
+                        if (!!parentClass.spellcasting){
+                            navigate('/selectCantrips')
+                        } else {
+                            navigate('/confirmCharacter')
+                        }
+                    })
+            } catch (error) {
+                alert(error)
+            }
+        }
+    } 
 
     return <>
     <RaceContext.Provider value={{setRace, race}}>

@@ -77,7 +77,11 @@ function SelectSpells({ onReturn, onSpellsConfirmed }){
                 newCheckedSpells = [...checkedSpells, selectedSpell]
 
                 setCheckedSpells(newCheckedSpells)
-                setSpellsSelected([...spellsSelected, selectedSpell])
+
+                const newSpellsSelected = [...spellsSelected, selectedSpell]
+                const filteredNewSpells = newSpellsSelected.filter((value, index) => newSpellsSelected.indexOf(value) === index)
+
+                setSpellsSelected(filteredNewSpells)
             } else {
                 event.target.checked = false
                 alert(`You can onlu select up to ${maxSpells} spells`)
@@ -86,8 +90,10 @@ function SelectSpells({ onReturn, onSpellsConfirmed }){
             newCheckedSpells = checkedSpells.filter(spell => spell !== selectedSpell)
             const newSpellsSelected = spellsSelected.filter(spell => spell !== selectedSpell)
 
+            const filteredNewSpells = newSpellsSelected.filter((value, index) => newCheckedSpells.indexOf(value) === index)
+
             setCheckedSpells(newCheckedSpells)
-            setSpellsSelected([...newSpellsSelected])
+            setSpellsSelected(filteredNewSpells)
         }
     }
     
@@ -100,7 +106,10 @@ function SelectSpells({ onReturn, onSpellsConfirmed }){
                     )
                 ).then(fetchedData => {
                     const filteredData = fetchedData.filter(Boolean)
-                    setAvailableSpellsData(filteredData)
+
+                    const nonDuplicateData = filteredData.filter((value, index) => filteredData.indexOf(value) === index)
+
+                    setAvailableSpellsData(nonDuplicateData)
                 }).catch(error => {
                     console.error('Error fetching spell:', error)
                     return null

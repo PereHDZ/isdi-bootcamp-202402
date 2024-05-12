@@ -98,7 +98,11 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
                 newCheckedCantrips = [...checkedCantrips, selectedCantrip]
 
                 setCheckedCantrips(newCheckedCantrips)
-                setCantripsSelected([...cantripsSelected, selectedCantrip])
+
+                const newCantripsSelected = [...cantripsSelected, selectedCantrip]
+                const filteredNewCantrips = newCantripsSelected.filter((value, index) => newCantripsSelected.indexOf(value) === index)
+
+                setCantripsSelected(filteredNewCantrips)
             } else {
                 event.target.checked = false
                 alert(`You can only select up to ${maxCantrips} cantrips`)
@@ -107,8 +111,10 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
             newCheckedCantrips = checkedCantrips.filter(cantrip => cantrip !== selectedCantrip)
             const newCantripsSelected = cantripsSelected.filter(cantrip => cantrip !== selectedCantrip)
 
+            const filteredNewCantrips = newCantripsSelected.filter((value, index) => newCantripsSelected.indexOf(value) === index)
+
             setCheckedCantrips(newCheckedCantrips)  
-            setCantripsSelected([...newCantripsSelected])
+            setCantripsSelected(filteredNewCantrips)
         }       
     }
 
@@ -122,7 +128,10 @@ function SelectCantrips({ onReturn, onCantripsConfirmed }){
                     )
                 ).then(fetchedData => {
                     const filteredData = fetchedData.filter(Boolean)
-                    setAvailableCantripsData(filteredData)
+
+                    const nonDuplicatedData = filteredData.filter((value, index) => filteredData.indexOf(value) === index)
+                    
+                    setAvailableCantripsData(nonDuplicatedData)
                 }).catch(error => {
                     console.error('Error fetching cantrip:', error);
                     return null

@@ -72,7 +72,7 @@ function ConfirmCharacter ({ onRetrunClick }) {
     }, [])
 
     useEffect(() => {
-        const newActions = []
+        const newActions = [...actions]
         
         if (!!characterClass.parent && !!parentClass && !!parentClass.classActions){
             for (let i = 0; i < parentClass.classActions.length; i++){
@@ -88,30 +88,35 @@ function ConfirmCharacter ({ onRetrunClick }) {
             }            
         }
 
-        setActions(newActions)
+        const filteredActions = newActions.filter((value, index) => newActions.indexOf(value) === index)
+
+        setActions(filteredActions)
     }, [parentClass])
 
-    // useEffect(() => {
-    //     const fetchActionsData = () => {
-    //         Promise.all(
-    //             actions.map(actionId => logic.retrieveaction(actionId)
-    //                 .then(objectAction => objectAction))
-    //         ).then(fetchedData => {
-    //             const filteredData = fetchedData.filter(Boolean)
-    //             setActionsData(filteredData)
-    //         }).catch(error => {
-    //             console.error('Error fetching action:', error)
-    //             return null
-    //         })
-    //     }
-    //     fetchActionsData()
-    // }, [actions])
+    useEffect(() => {
+        const fetchActionsData = () => {
+            Promise.all(
+                actions.map(actionId => logic.retrieveAction(actionId)
+                    .then(objectAction => objectAction))
+            ).then(fetchedData => {
+                const filteredData = fetchedData.filter(Boolean)
+                setActionsData(filteredData)
+            }).catch(error => {
+                console.error('Error fetching action:', error)
+                return null
+            })
+        }
+        fetchActionsData()
+    }, [actions])
 
     const handleReturnClick = () => {
         event.preventDefault()
 
         onRetrunClick()
     }
+
+    console.log(actions)
+    console.log(actionsData)
 
     const renderClassAndName = () => {
         return <div>
@@ -159,6 +164,7 @@ function ConfirmCharacter ({ onRetrunClick }) {
 
         if (cantrips.length > 0 ){
             const cantripNames = cantripsData.map(cantrip => cantrip.name).join(', ')
+
             cantripsDiv = <div>
                 <h4>YOUR CANTRIPS</h4>
 
@@ -168,6 +174,7 @@ function ConfirmCharacter ({ onRetrunClick }) {
 
         if (spells.length > 0 ){
             const spellNames = spellsData.map(spell => spell.name).join(', ')
+
             spellsDiv = <div>
                 <h4>YOUR SPELLS</h4>
 
@@ -178,7 +185,21 @@ function ConfirmCharacter ({ onRetrunClick }) {
         return <>{cantripsDiv}{spellsDiv}</>
     }
 
-    console.log(actionsData)
+    const renderActions = () => {
+        let actionsDiv = <></>
+
+        if (actionsData.length > 0){
+            const actionNames = actionsData.map(action => action.name).join(', ')
+
+            actionsDiv = <div>
+                <h4>YOUR ACTIONS</h4>
+
+                <p className='spell-p'>{actionNames}</p>
+            </div>
+        }
+
+        return actionsDiv
+    }
 
     return <div>
         <div className="return-div">
@@ -199,8 +220,8 @@ function ConfirmCharacter ({ onRetrunClick }) {
             { renderStats() }
 
             { renderSpells() }
-{/* 
-            { renderActions() } */}
+
+            { renderActions() }
         </form>
     </div>
 }
