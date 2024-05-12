@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import logic from '../logic'
-import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, useCantrips, useSpells, useInstrument, useDeity, useFightingstyle } from '../pages/Home'
+import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, useExpertises, useCantrips, useSpells, useInstrument, useDeity, useFightingstyle } from '../pages/Home'
 
 function ConfirmCharacter ({ onRetrunClick }) {
     const { race } = useRace()
@@ -8,6 +8,7 @@ function ConfirmCharacter ({ onRetrunClick }) {
     const { background } = useBackground()
     const { stats } = useStats()
     const { proficiencies } = useProficiencies()
+    const { expertises } = useExpertises()
     const { cantrips } = useCantrips()
     const { spells } = useSpells()
     const { instrument } = useInstrument()
@@ -192,6 +193,20 @@ function ConfirmCharacter ({ onRetrunClick }) {
         </div>
     }
 
+    const renderExpertises = () => {
+        if (Object.keys(expertises).length > 0){
+            const expertisesArray = Object.keys(expertises)
+
+            const expertisesString = expertisesArray.join(', ')
+
+            return <div>
+                <h4>YOUR EXPERTISES</h4>
+
+                <p className='spell-p'>{expertisesString}</p>
+            </div>
+        }         
+    }
+
     const renderSpells = () => {
         let cantripsDiv = <></>
         let spellsDiv = <></>
@@ -280,6 +295,8 @@ function ConfirmCharacter ({ onRetrunClick }) {
             { renderStats() }
 
             { renderProficiencies() }
+
+            { renderExpertises() }
 
             { renderSpells() }
 
