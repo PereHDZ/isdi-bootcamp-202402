@@ -188,11 +188,9 @@ function Home({ onUserLoggedOut }) {
 
     const handleReturnFromConfirmSubrace = () => {
         try {
-            retrieveRace(race.parent)
+            logic.retrieveRace(race.parent)
                 .then(parentRace => {
                     setRace(parentRace)
-
-                    console.log(race.name)
 
                     navigate('/selectSubrace')
                 })

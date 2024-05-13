@@ -1,8 +1,8 @@
-import logic from '../logic'
+import logic from '../../logic'
 
 import { useState, useEffect } from 'react'
 
-import { useRace } from '../pages/Home'
+import { useRace } from '../../pages/Home'
 
 import SelectSubraceComponent from './SelectSubraceComponent'
 
@@ -11,8 +11,16 @@ function SubraceList({ stamp }){
     const [subraces, setSubraces] = useState([])
 
     const loadSubraces = () => {
+        let raceId
+
+        if (race.id){
+            raceId = race.id
+        } else {
+            raceId = race._id
+        } 
+        
         try {
-            logic.retrieveSubracesFromRace(race._id)
+            logic.retrieveSubracesFromRace(raceId)
                 .then(setSubraces)
                 .catch(error => alert(error))
         } catch (error) {
@@ -25,7 +33,7 @@ function SubraceList({ stamp }){
     }, [stamp])
 
     return <section className='select-section'>
-        {subraces.map(subrace => <SelectSubraceComponent key={subrace.name} item={subrace}/>)}
+        {subraces.map(subrace => <SelectSubraceComponent key={subrace.id} item={subrace}/>)}
     </section>
 }
 

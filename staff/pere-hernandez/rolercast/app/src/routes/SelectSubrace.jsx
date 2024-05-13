@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import SubraceList from '../components/SubraceList'
+import SubraceList from '../components/selectSubraceComponents/SubraceList'
 
 function SelectSubrace({ onReturn }){
     const [subraces, setSubRaces] = useState(null)

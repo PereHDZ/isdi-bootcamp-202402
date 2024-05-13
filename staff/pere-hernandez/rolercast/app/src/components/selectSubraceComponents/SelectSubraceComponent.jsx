@@ -1,4 +1,4 @@
-import { useRace } from "../pages/Home"
+import { useRace } from "../../pages/Home"
 
 function SelectSubraceComponent({ item: subrace }) {
     const {setRace} = useRace()
