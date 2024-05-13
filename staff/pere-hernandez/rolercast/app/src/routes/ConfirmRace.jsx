@@ -1,6 +1,9 @@
 import { useRace } from '../pages/Home'
 import { useEffect } from 'react'
 
+import ReturnButton from '../components/commonComponents/ReturnButton'
+import RaceImage from '../components/confirmRaceComponents/RaceImage'
+
 function ConfirmRace({ onReturnClick, onRaceSelected }){
     const { race } = useRace()
 
@@ -78,22 +81,11 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
     }
 
     return <section>
-        <div className="return-div">
-            <button className="transparent-button" onClick={handleReturnClick}>
-                <img src="../../public/icons/return.png" className="icon"></img>
-            </button>
-            <h3 className="return">RETURN</h3>
-        </div>
+        <ReturnButton onReturnClicked={handleReturnClick}/>
 
-        <div className="select-atribute-article atribute-title full-width">
-            <div className="select-atribute-button">
-                <img src={`../../public/gallery/Race_Icons/Race_${race && race.name}.png`} className="select-button-icon" />
-            </div>
+        <RaceImage item={race}/>
 
-            <h2>{race && race.name}</h2>
-        </div>
-
-        <div className="display-info-div">
+        <article className="display-info-div">
 
             <p className="display-info-p">{race && race.description}</p>
             
@@ -105,7 +97,7 @@ function ConfirmRace({ onReturnClick, onRaceSelected }){
 
             { race && getFeatures() }
             
-        </div>
+        </article>
 
         <div className="select-button-div">
             <button className="select-button" onClick={handleSelectRaceClick}>SELECT</button>

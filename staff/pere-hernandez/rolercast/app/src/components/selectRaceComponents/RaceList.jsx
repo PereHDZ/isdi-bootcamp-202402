@@ -1,4 +1,4 @@
-import logic from '../logic'
+import logic from '../../logic'
 
 import { useState, useEffect } from 'react'
 
@@ -22,7 +22,7 @@ function RaceList({ stamp }){
     }, [stamp])
 
     return <section className='select-section'>
-        {races.map(race => <SelectRaceComponent key={race.name} item={race}/>)}
+        {races.map(race => <SelectRaceComponent key={race.id} item={race}/>)}
     </section>
 }
 

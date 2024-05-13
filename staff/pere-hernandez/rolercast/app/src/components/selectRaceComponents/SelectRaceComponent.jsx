@@ -1,4 +1,4 @@
-import { useRace } from "../pages/Home"
+import { useRace } from "../../pages/Home"
 
 function SelectRaceComponent({ item: race }) {
     const {setRace} = useRace()
