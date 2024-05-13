@@ -1,4 +1,4 @@
-import { useBackground } from '../pages/Home'
+import { useBackground } from '../../pages/Home'
 
 function SelectBackgroundComponent({ item: background }) {
     const {setBackground} = useBackground()
