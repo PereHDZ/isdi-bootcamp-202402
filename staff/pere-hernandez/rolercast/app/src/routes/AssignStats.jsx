@@ -119,9 +119,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         }
     }, [hpBonus])
 
-    console.log('hpBonus', hpBonus)
-    console.log('hp', hp)
-
     useEffect(() => {
         if (characterClass.name.includes('Domain')){
             try {

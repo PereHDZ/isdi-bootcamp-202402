@@ -17,8 +17,11 @@ import ConfirmBackground from '../routes/ConfirmBackground'
 import AssignStats from '../routes/AssignStats'
 import SelectCantrips from '../routes/SelectCantrips'
 import SelectSpells from '../routes/SelectSpells'
-import AssignSkills from "../routes/AssignSkills"
-import ConfirmCharacter from "../routes/ConfirmCharacter"
+import AssignSkills from '../routes/AssignSkills'
+import ConfirmCharacter from '../routes/ConfirmCharacter'
+
+import CharacterInfo from '../components/CharacterInfo'
+import Header from '../components/Header'
 
 const RaceContext = createContext(null)
 const CharacterClassContext = createContext(null)
@@ -74,6 +77,18 @@ function Home({ onUserLoggedOut }) {
     const [character, setCharacter] = useState(null)
     
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (race !== null){
+            if (!!race.parent){
+                navigate('/confirmSubRace')
+
+                return
+            }
+
+            navigate('/confirmRace')
+        }
+    }, [race])
     
     useEffect(() => {
         if (characterClass !== null){
@@ -106,18 +121,6 @@ function Home({ onUserLoggedOut }) {
     const handleCreateClick = () => navigate('/selectRace')
 
     const handleReturnFromSelectRace = () => navigate('/*')
-
-    useEffect(() => {
-        if (race !== null){
-            if (!!race.parent){
-                navigate('/confirmSubRace')
-
-                return
-            }
-
-            navigate('/confirmRace')
-        }
-    }, [race])
 
     const handleClassSelected = () => {
         try {
@@ -287,7 +290,6 @@ function Home({ onUserLoggedOut }) {
         setExpertises(null)
 
         navigate("/*")
-
     }
 
     return <>
@@ -307,20 +309,10 @@ function Home({ onUserLoggedOut }) {
     <ProficienciesContext.Provider value={{setProficiencies, proficiencies}}>
     <ExpertisesContext.Provider value={{setExpertises, expertises}}>
     <CharacterContext.Provider value={{setCharacter, character}}>
-    <main className="home-main">
-        <header>
-            <button className="transparent-button">
-                <img src="../../public/icons/navBar2.png" className="icon"></img>
-            </button>
+    <main className={`home-main ${character ? 'no-scroll' : ''}`}>
+        <Header onLogoutClick={handleLogoutClick}/>
 
-            <div className='header-logo-div'>
-                <h1>ROLERCAST</h1>  
-    
-                <img src='../../public/gallery/logo.png' className='header-logo'></img>
-            </div>
-
-            <button className="logout-button" onClick={handleLogoutClick}>Logout</button>
-        </header>
+        { !!character && <CharacterInfo/> }
 
         <Routes>
             <Route path="/*" element={<HomeRoute onCreateClick={handleCreateClick}/>}></Route>

@@ -24,6 +24,7 @@ function retrieveCharacters(userId: string): Promise<[{ id: string, author: stri
 
             return Character.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(characters => characters.reverse())
         })
 }
 

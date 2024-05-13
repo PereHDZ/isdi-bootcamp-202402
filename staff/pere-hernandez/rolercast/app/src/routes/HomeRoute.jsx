@@ -3,7 +3,7 @@ import CharacterList from "../components/CharacterList"
 function HomeRoute({ onCreateClick }) {
     const handleCreateCharacterClick = () => onCreateClick()
 
-    return <section>
+    return <section className="home-section">
         <CharacterList></CharacterList>
         
         <footer>

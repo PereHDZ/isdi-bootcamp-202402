@@ -135,16 +135,16 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
         let naturalExplorerId = null
 
         if (!!deity){
-            deityId = deity._id
+            deityId = deity.id
         }
         if (!!fightingStyle){
-            fightingStyleId = fightingStyle._id
+            fightingStyleId = fightingStyle.id
         }
         if (!!archetype){
-            archetypeId = archetype._id
+            archetypeId = archetype.id
         }
         if (!!naturalExplorer){
-            naturalExplorerId = naturalExplorer._id
+            naturalExplorerId = naturalExplorer.id
         }
 
         try{

@@ -11,6 +11,8 @@ function CharacterArticle({ item: character }) {
     const [characterClass, setCharacterClass] = useState(null)
     const [parentClass, setParentClass] = useState(null)
 
+    const [background, setBackground] = useState(null)
+
     const [author, setAuthor] = useState(null)
 
     const handleCharacterClick = () => {
@@ -33,6 +35,13 @@ function CharacterArticle({ item: character }) {
         }
 
         try {
+            logic.retrieveBackground(character.background)
+                .then(setBackground)
+        } catch(error) {
+            alert(error)
+        }
+
+        try {
             logic.retrieveUser(character.author)
                 .then(setAuthor)
         } catch (error) {
@@ -43,7 +52,7 @@ function CharacterArticle({ item: character }) {
     useEffect(() => {
         if (!!race && !!race.parent){
             try {
-                logic.retrieveCharacterClass(race.parent)
+                logic.retrieveRace(race.parent)
                     .then(setParentRace)
             } catch (error){
                 alert(error)
@@ -97,6 +106,8 @@ function CharacterArticle({ item: character }) {
                 <p><strong>Race: </strong>{!!race && race.name}</p>
 
                 <p><strong>Class: </strong>{ renderClass() }</p>
+
+                <p><strong>Background: </strong>{ !!background && background.name}</p>
             </div>
             
         </article>

@@ -1,9 +1,8 @@
 import { validate, errors } from 'com'
 
-function retrieveUser(targetUserId) {
+function retrieveLoggedUser() {
     //validation
     validate.token(sessionStorage.token)
-    validate.text(targetUserId, 'targetUserId', true)
 
     //logic
     const [, payloadB64] = sessionStorage.token.split('.')
@@ -14,7 +13,7 @@ function retrieveUser(targetUserId) {
 
     const { sub: userId } = payload
 
-    return fetch(`${import.meta.env.VITE_API_URL}/users/${targetUserId}`, {
+    return fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
         headers: {
             Authorization: `Bearer ${sessionStorage.token}`
         }
@@ -33,4 +32,4 @@ function retrieveUser(targetUserId) {
         })
 }
 
-export default retrieveUser
+export default retrieveLoggedUser
