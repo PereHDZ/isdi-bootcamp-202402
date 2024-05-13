@@ -35,6 +35,7 @@ const NaturalExplorerContext = createContext(null)
 const InstrumentContext = createContext(null)
 const ProficienciesContext = createContext(null)
 const ExpertisesContext = createContext(null)
+const CharacterContext = createContext(null)
 
 export const useRace = () => useContext(RaceContext)
 export const useCharacterClass = () => useContext(CharacterClassContext)
@@ -51,6 +52,7 @@ export const useNaturalExplorer = () => useContext(NaturalExplorerContext)
 export const useProficiencies = () => useContext(ProficienciesContext)
 export const useExpertises = () => useContext(ExpertisesContext)
 export const useInstrument = () => useContext(InstrumentContext)
+export const useCharacter = () => useContext(CharacterContext)
 
 function Home({ onUserLoggedOut }) {
     const [race, setRace] = useState(null)
@@ -69,6 +71,7 @@ function Home({ onUserLoggedOut }) {
     const [instrument, setInstrument] = useState(null)
     const [proficiencies, setProficiencies] = useState(null)
     const [expertises, setExpertises] = useState(null)
+    const [character, setCharacter] = useState(null)
     
     const navigate = useNavigate()
     
@@ -303,6 +306,7 @@ function Home({ onUserLoggedOut }) {
     <InstrumentContext.Provider value={{setInstrument, instrument}}>
     <ProficienciesContext.Provider value={{setProficiencies, proficiencies}}>
     <ExpertisesContext.Provider value={{setExpertises, expertises}}>
+    <CharacterContext.Provider value={{setCharacter, character}}>
     <main className="home-main">
         <header>
             <button className="transparent-button">
@@ -337,6 +341,7 @@ function Home({ onUserLoggedOut }) {
             <Route path="/confirmCharacter" element={<ConfirmCharacter onRetrunClick={handleRetrunFromConfirmCharacter} onCharacterCreated={handleCharacterCreated}/>}/>
         </Routes>
     </main>
+    </CharacterContext.Provider>
     </ExpertisesContext.Provider>
     </ProficienciesContext.Provider>
     </InstrumentContext.Provider>

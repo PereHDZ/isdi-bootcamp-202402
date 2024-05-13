@@ -3,7 +3,7 @@ import CharacterList from "../components/CharacterList"
 function HomeRoute({ onCreateClick }) {
     const handleCreateCharacterClick = () => onCreateClick()
 
-    return <main>
+    return <section>
         <CharacterList></CharacterList>
         
         <footer>
@@ -12,7 +12,7 @@ function HomeRoute({ onCreateClick }) {
                 <p>Create character</p>
             </button>
         </footer>
-    </main>
+    </section>
     
 
 }
