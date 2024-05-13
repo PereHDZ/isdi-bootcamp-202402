@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useCharacter } from '../pages/Home'
-import logic from '../logic'
+import { useCharacter } from '../../pages/Home'
+import logic from '../../logic'
 
 function CharacterArticle({ item: character }) {
     const {setCharacter} = useCharacter()
