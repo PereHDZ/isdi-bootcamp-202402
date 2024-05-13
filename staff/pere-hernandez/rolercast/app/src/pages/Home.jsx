@@ -20,8 +20,8 @@ import SelectSpells from '../routes/SelectSpells'
 import AssignSkills from '../routes/AssignSkills'
 import ConfirmCharacter from '../routes/ConfirmCharacter'
 
-import CharacterInfo from '../components/HomeComponents/CharacterInfo'
-import Header from '../components/HomeComponents/Header'
+import CharacterInfo from '../components/homeComponents/CharacterInfo'
+import Header from '../components/homeComponents/Header'
 
 const RaceContext = createContext(null)
 const CharacterClassContext = createContext(null)

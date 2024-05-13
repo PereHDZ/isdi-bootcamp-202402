@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useCharacter } from '../../pages/Home'
 
 import RenderClassAndName from './RenderClassAndName'
+import RenderStats from './RenderStats'
 
 function CharacterInfo() {
     const { character, setCharacter } = useCharacter()
@@ -145,41 +146,8 @@ function CharacterInfo() {
             }
         }
     }, [])
-
-    // useEffect(() => {
-    //     if (!!race && !!race.parent){
-    //         try {
-    //             logic.retrieveRace(race.parent)
-    //                 .then(setParentRace)
-    //         } catch (error){
-    //             alert(error)
-    //         }
-    //     }
-
-    //     if (!!characterClass && !!characterClass.parent){
-    //         try{
-    //             logic.retrieveCharacterClass(characterClass.parent)
-    //                 .then(setParentClass)
-    //         } catch (error) {
-    //             alert(error)
-    //         }
-    //     }
-    // }, [race, characterClass])
-
     
-    
-    const renderStats = () => {
-        return <div className='character-stats-div'>
-            {Object.keys(character.stats).map(stat => {
-                if (stat !== '_id'){
-                    return <div key={stat} className='center'>
-                        <img src={`../../public/gallery/Stats_Icons/${stat}.png`} alt={stat} className='small-stat-icon'/>
-                        <span>{character.stats[stat]}</span>
-                    </div>
-                }                
-            })}
-        </div>
-    }
+
 
     const renderProficiencies = () => {
         const armourAttributes = Object.keys(character.proficiencies.armour).filter(key => key !== '_id')
@@ -316,7 +284,7 @@ function CharacterInfo() {
 
             <RenderClassAndName item={character}/>
             
-            { renderStats() }
+            <RenderStats item={character}/>
 
             { renderProficiencies() }
 

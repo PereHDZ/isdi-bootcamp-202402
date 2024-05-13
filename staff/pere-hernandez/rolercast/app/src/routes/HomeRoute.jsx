@@ -1,4 +1,4 @@
-import CharacterList from "../components/HomeComponents/CharacterList"
+import CharacterList from "../components/homeComponents/CharacterList"
 
 function HomeRoute({ onCreateClick }) {
     const handleCreateCharacterClick = () => onCreateClick()
