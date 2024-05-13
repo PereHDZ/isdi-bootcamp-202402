@@ -7,6 +7,7 @@ import { useCharacter } from '../../pages/Home'
 import RenderClassAndName from './RenderClassAndName'
 import RenderStats from './RenderStats'
 import RenderProficiencies from './RenderProficiencies'
+import RenderExpertises from './RenderExpertises'
 
 function CharacterInfo() {
     const { character, setCharacter } = useCharacter()
@@ -146,23 +147,6 @@ function CharacterInfo() {
         }
     }, [])
 
-    const renderExpertises = () => {
-        if (!!character.expertises){
-            const skillsAttributes = Object.keys(character.expertises).filter(key => key !== '_id')
-
-            const skillsString = skillsAttributes.join(', ')
-    
-            return <div>    
-                <div className='center'>
-                    <h4>YOUR EXPERTISES</h4>
-    
-                    <p className='spell-p'>{skillsString}</p>
-                </div>
-            </div>
-        }
-
-    }
-
     const renderSpells = () => {
         let cantripsDiv = <></>
         let spellsDiv = <></>
@@ -255,7 +239,7 @@ function CharacterInfo() {
 
             <RenderProficiencies item={character}/>
 
-            { renderExpertises() }
+            <RenderExpertises item={character}/>
 
             { renderSpells() }
 
