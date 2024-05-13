@@ -1,4 +1,4 @@
-import CharacterClassList from "../components/CharacterClassList"
+import CharacterClassList from "../components/selectClassComponents/CharacterClassList"
 
 function SelectCharacterClass({ onReturn }){
     const handleReturnClick = () => onReturn()

@@ -1,4 +1,4 @@
-import { useCharacterClass } from "../pages/Home"
+import { useCharacterClass } from '../../pages/Home'
 
 function SelectCharacterClassComponent({ item: characterClass }) {
     const {setCharacterClass} = useCharacterClass()
