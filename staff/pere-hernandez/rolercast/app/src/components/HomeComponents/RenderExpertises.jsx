@@ -1,5 +1,5 @@
 function RenderExpertises ({item: character}) {
-    if (!!character.expertises){
+    if (Object.keys(character.expertises).length > 1){
         const skillsAttributes = Object.keys(character.expertises).filter(key => key !== '_id')
 
         const skillsString = skillsAttributes.join(', ')
@@ -11,6 +11,8 @@ function RenderExpertises ({item: character}) {
                 <p className='spell-p'>{skillsString}</p>
             </div>
         </div>
+    } else {
+        return <></>
     }
 }
 
