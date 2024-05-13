@@ -8,18 +8,13 @@ import RenderClassAndName from './RenderClassAndName'
 import RenderStats from './RenderStats'
 import RenderProficiencies from './RenderProficiencies'
 import RenderExpertises from './RenderExpertises'
+import RenderSpells from './RenderSpells'
 
 function CharacterInfo() {
     const { character, setCharacter } = useCharacter()
 
-    const [setRace] = useState(null)
-
     const [characterClass, setCharacterClass] = useState(null)
 
-    const [setBackground] = useState(null)
-
-    const [cantripsData, setCantripsData] = useState([])
-    const [spellsData, setSpellsData] = useState([])
     const [actionsData, setActionsData] = useState([])
 
     const [setAuthor] = useState(null)
@@ -35,23 +30,9 @@ function CharacterInfo() {
 
     useEffect(() => {
         try {
-            logic.retrieveRace(character.race)
-                .then(setRace)
-        } catch (error) {
-            alert(error)
-        }
-
-        try {
             logic.retrieveCharacterClass(character.class)
                 .then(setCharacterClass)
         } catch (error) {
-            alert(error)
-        }
-
-        try {
-            logic.retrieveBackground(character.background)
-                .then(setBackground)
-        } catch(error) {
             alert(error)
         }
 
@@ -60,38 +41,6 @@ function CharacterInfo() {
                 .then(setAuthor)
         } catch (error) {
             alert(error)
-        }
-
-        if (!!character.cantrips){
-            const fetchedCantripsData = () => {
-                Promise.all(
-                    character.cantrips.map(cantripId => logic.retrieveCantrip(cantripId)
-                        .then(objectCantrip => objectCantrip))
-                ).then(fetchedData => {
-                    const filteredData = fetchedData.filter(Boolean)
-                    setCantripsData(filteredData)
-                }).catch(error => {
-                    console.error('Error fetching cantrip: ', error)
-                    return null
-                })
-            }
-            fetchedCantripsData()
-        }
-
-        if (!!character.spells){
-            const fetchedSpellsData = () => {
-                Promise.all(
-                    character.spells.map(spellId => logic.retrieveSpell(spellId)
-                        .then(objectSpell => objectSpell))
-                ).then(fetchedData => {
-                    const filteredData = fetchedData.filter(Boolean)
-                    setSpellsData(filteredData)
-                }).catch(error => {
-                    console.error('Error fetching spell: ', error)
-                    return null
-                })
-            }
-            fetchedSpellsData()
         }
 
         if (!!character.actions){
@@ -146,33 +95,6 @@ function CharacterInfo() {
             }
         }
     }, [])
-
-    const renderSpells = () => {
-        let cantripsDiv = <></>
-        let spellsDiv = <></>
-
-        if (cantripsData.length > 0 ){
-            const cantripNames = cantripsData.map(cantrip => cantrip.name).join(', ')
-
-            cantripsDiv = <div className='center'>
-                <h4>YOUR CANTRIPS</h4>
-
-                <p className='spell-p'>{cantripNames}</p>
-            </div>
-        }
-
-        if (spellsData.length > 0 ){
-            const spellNames = spellsData.map(spell => spell.name).join(', ')
-
-            spellsDiv = <div className='center'>
-                <h4>YOUR SPELLS</h4>
-
-                <p className='spell-p'>{spellNames}</p>
-            </div>
-        }
-        
-        return <>{cantripsDiv}{spellsDiv}</>
-    }
 
     const renderActions = () => {
         let actionsDiv = <></>
@@ -241,7 +163,7 @@ function CharacterInfo() {
 
             <RenderExpertises item={character}/>
 
-            { renderSpells() }
+            <RenderSpells item={character}/>
 
             { renderActions() }
 
