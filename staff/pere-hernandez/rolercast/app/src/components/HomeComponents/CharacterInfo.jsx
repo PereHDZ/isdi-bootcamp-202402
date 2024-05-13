@@ -9,13 +9,12 @@ import RenderStats from './RenderStats'
 import RenderProficiencies from './RenderProficiencies'
 import RenderExpertises from './RenderExpertises'
 import RenderSpells from './RenderSpells'
+import RenderActions from './RenderActions'
 
 function CharacterInfo() {
     const { character, setCharacter } = useCharacter()
 
     const [characterClass, setCharacterClass] = useState(null)
-
-    const [actionsData, setActionsData] = useState([])
 
     const [setAuthor] = useState(null)
 
@@ -41,22 +40,6 @@ function CharacterInfo() {
                 .then(setAuthor)
         } catch (error) {
             alert(error)
-        }
-
-        if (!!character.actions){
-            const fetchedActionsData = () => {
-                Promise.all(
-                    character.actions.map(actionId => logic.retrieveAction(actionId)
-                        .then(objectAction => objectAction))
-                ).then(fetchedData => {
-                    const filteredData = fetchedData.filter(Boolean)
-                    setActionsData(filteredData)
-                }).catch(error => {
-                    console.error('Error fetching action: ', error)
-                    return null
-                })
-            }
-            fetchedActionsData()
         }
 
         if (!!character.deity){
@@ -95,22 +78,6 @@ function CharacterInfo() {
             }
         }
     }, [])
-
-    const renderActions = () => {
-        let actionsDiv = <></>
-
-        if (actionsData.length > 0){
-            const actionNames = actionsData.map(action => action.name).join(', ')
-
-            actionsDiv = <div className='center'>
-                <h4>YOUR ACTIONS</h4>
-
-                <p className='spell-p'>{actionNames}</p>
-            </div>
-        }
-
-        return actionsDiv
-    }
 
     const renderOthers = () => {
         if (!!characterClass && characterClass.instrument){
@@ -165,7 +132,7 @@ function CharacterInfo() {
 
             <RenderSpells item={character}/>
 
-            { renderActions() }
+            <RenderActions item={character}/>
 
             { renderOthers() }
         </div>
