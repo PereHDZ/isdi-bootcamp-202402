@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import SubclassList from '../components/SubclassList'
+import SubclassList from '../components/selectSubclassComponents/SubclassList'
 
 function SelectSubclass({ onReturn }){
     const [subclasses, setSubclasses] = useState(null)

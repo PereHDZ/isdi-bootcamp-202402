@@ -208,7 +208,7 @@ function Home({ onUserLoggedOut }) {
 
                     navigate('/selectSubclass')
                 })
-                .then(error => alert(error))
+                .catch(error => alert(error))
         } catch (error) {
             alert(error)
         }
