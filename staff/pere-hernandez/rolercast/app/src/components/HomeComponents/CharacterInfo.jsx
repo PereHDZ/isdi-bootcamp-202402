@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { useCharacter } from '../../pages/Home'
 
+import XButton from './XButton'
 import RenderClassAndName from './RenderClassAndName'
 import RenderStats from './RenderStats'
 import RenderProficiencies from './RenderProficiencies'
@@ -32,9 +33,7 @@ function CharacterInfo() {
 
     return <section className='character-info-section'>
         <div className='character-info-div'>
-            <button className='transparent-button end' onClick={handleXClick}>
-                <img src={`../../public/icons/IconoirXmark.png`} className='x-button'></img>
-            </button>
+            <XButton onXClicked={handleXClick}/>
 
             <RenderClassAndName item={character}/>
             
