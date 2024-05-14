@@ -12,6 +12,7 @@ import ArchetypeDropdown from '../components/assignStatsComponents/ArchetypeDrop
 import ChosenArchetype from '../components/assignStatsComponents/ChosenArchetype'
 import NaturalExplorerDropdown from '../components/assignStatsComponents/NaturalExplorerDropdow'
 import ChosenNaturalExplorer from '../components/assignStatsComponents/ChosenNaturalExplorer'
+import InstrumentDropdown from '../components/assignStatsComponents/InstrumentDropdow'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
@@ -305,36 +306,11 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     }
 
-    const handleInstrumentChange = (event) => {
-        setInstrument(event.target.value)
-    }
-
     const handleAncestorChange = (event) => {
         const newSpells = []
 
         newSpells.push(event.target.value)
         setSpells(newSpells)
-    }
-
-    const renderSelectNaturalExplorer = () => {
-        
-    }
-
-    const renderSelectInstrument = () => {
-        if (characterClass.name === 'Bard'){
-            return <div className='margin-left'>
-                <h5 className='deity-title'>SELECT YOUR INSTRUMENT</h5>
-
-                <select value={null} onChange={handleInstrumentChange}>
-                    <option value={null}>Select Instrument</option>
-                    <option value={'Hand Drum'}>Hand Drum</option>
-                    <option value={'Flute'}>Flute</option>
-                    <option value={'Lute'}>Lute</option>
-                    <option value={'Lyre'}>Lyre</option>
-                    <option value={'Violin'}>Violin</option>
-                </select>
-            </div>
-        }
     }
 
     const renderSelectAncestor = () => {
@@ -442,7 +418,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
             <ChosenNaturalExplorer item={ [characterClass, chosenNaturalExplorer] }/>
 
-            { renderSelectInstrument() }
+            <InstrumentDropdown item={ [characterClass, setInstrument] }/>
 
             { renderSelectAncestor() }
 
