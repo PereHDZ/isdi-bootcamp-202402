@@ -15,18 +15,18 @@ import ChosenNaturalExplorer from '../components/assignStatsComponents/ChosenNat
 import InstrumentDropdown from '../components/assignStatsComponents/InstrumentDropdow'
 import AncestorDropdown from '../components/assignStatsComponents/AncestorDropdown'
 import SpellFromAncestor from '../components/assignStatsComponents/SpellFromAncestor'
+import ConfirmButton from '../components/assignStatsComponents/ConfirmButton'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
-    const { setStats } = useStats()
     const { hp, setHp } = useHp()
     const { spells, setSpells } = useSpells()
     const { setDeity } = useDeity()
     const { setFightingStyle } = useFightingstyle()
     const { setArchetype } = useArchetype()
     const { setNaturalExplorer } = useNaturalExplorer()
-    const { instrument, setInstrument } = useInstrument()
+    const { setInstrument } = useInstrument()
 
     const [hpBonus, setHpBonus] = useState(null)
 
@@ -82,18 +82,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         setNaturalExplorer(null)
 
         onReturnClick()
-    }
-
-    const handleConfirmClick = () => {
-        event.preventDefault()
-
-        setStats(selectedStats)
-        setDeity(chosenDeity)
-        setFightingStyle(chosenFightingStyle)
-        setArchetype(chosenArchetype)
-        setNaturalExplorer(chosenNaturalExplorer)
-
-        onStatsSelected()
     }
 
     useEffect(() => {
@@ -296,30 +284,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         </div>
     }
 
-    const renderConfirmButton = () => {
-        if (characterClass.name === 'Fighter'){
-            if (remainingStatPoints === 0 && !!chosenFightingStyle && !!plus1Modifier && plus2Modifier)
-                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
-        } else if (characterClass.name.includes('Domain')){
-            if (remainingStatPoints === 0 && !!chosenDeity && !!plus1Modifier && plus2Modifier)
-                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
-        } else if (characterClass.name === 'Ranger'){
-            if (remainingStatPoints === 0 && !!chosenArchetype && chosenNaturalExplorer && !!plus1Modifier && plus2Modifier)
-                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
-        } else if (characterClass.name === 'Bard'){
-            if (remainingStatPoints === 0 && !!instrument && !!plus1Modifier && plus2Modifier){
-                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
-            }
-        } else if (characterClass.name === 'Draconic Bloodline'){
-            if (remainingStatPoints === 0 && !!spells.length > 0 && !!plus1Modifier && plus2Modifier){
-                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
-            }
-        } else {
-            if (remainingStatPoints === 0 && !!plus1Modifier && plus2Modifier)
-                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
-        }
-    }
-
     return <section>
         <div className="return-div">
             <button className="transparent-button" onClick={handleReturnClick}>
@@ -386,7 +350,17 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             { spellsData.length > 0 && <SpellFromAncestor item={ [characterClass, spellsData] }/> }
 
             <div className='select-button-div'>
-                { renderConfirmButton() }
+                <ConfirmButton 
+                item={ [
+                    remainingStatPoints, 
+                    plus1Modifier, 
+                    plus2Modifier, 
+                    selectedStats,
+                    chosenDeity, 
+                    chosenFightingStyle, 
+                    chosenArchetype, 
+                    chosenNaturalExplorer]}
+                onConfirmClick={onStatsSelected}/>
             </div>
         </div>
     </section>
