@@ -7,6 +7,7 @@ import ReturnButton from '../components/commonComponents/ReturnButton'
 import ClassAndNameInfo from '../components/confirmCharacterComponents/ClassAndNameInfo'
 import Stats from '../components/confirmCharacterComponents/Stats'
 import Proficiencies from '../components/confirmCharacterComponents/Proficiencies'
+import Expertises from '../components/confirmCharacterComponents/Expertises'
 
 function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
     const { race } = useRace()
@@ -166,20 +167,6 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
         }
     }
 
-    const renderExpertises = () => {
-        if (Object.keys(expertises).length > 0){
-            const expertisesArray = Object.keys(expertises)
-
-            const expertisesString = expertisesArray.join(', ')
-
-            return <div>
-                <h4>YOUR EXPERTISES</h4>
-
-                <p className='spell-p'>{expertisesString}</p>
-            </div>
-        }         
-    }
-
     const renderSpells = () => {
         let cantripsDiv = <></>
         let spellsDiv = <></>
@@ -278,7 +265,7 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
 
             <Proficiencies/>
 
-            { renderExpertises() }
+            <Expertises/>
 
             { renderSpells() }
 
