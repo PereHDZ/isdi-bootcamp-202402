@@ -10,6 +10,8 @@ import FightingStyleDropdown from '../components/assignStatsComponents/FightingS
 import ChosenFightingStyle from '../components/assignStatsComponents/ChosenFightingStyle'
 import ArchetypeDropdown from '../components/assignStatsComponents/ArchetypeDropdow'
 import ChosenArchetype from '../components/assignStatsComponents/ChosenArchetype'
+import NaturalExplorerDropdown from '../components/assignStatsComponents/NaturalExplorerDropdow'
+import ChosenNaturalExplorer from '../components/assignStatsComponents/ChosenNaturalExplorer'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
@@ -31,7 +33,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     const [chosenArchetype, setChosenArchetype] = useState(null)
 
-    const [naturalExplorers, setNaturalExplorers] = useState([])
     const [chosenNaturalExplorer, setChosenNaturalExplorer] = useState(null)
 
     const [spellsData, setSpellsData] = useState([])
@@ -124,20 +125,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             }
         }
     }, [hpBonus])
-
-    useEffect(() => {
-        if (characterClass.name === 'Ranger'){
-            try{
-                logic.retrieveNaturalExplorers()
-                    .then(newNaturalExplorers => {
-                        setNaturalExplorers(newNaturalExplorers)
-                    })
-                    .catch(error => alert(error))
-            } catch (error) {
-                alert(error)
-            }
-        }
-    }, [])
 
     useEffect(() => {
         if (spells.length > 0){
@@ -306,21 +293,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         </div>
     }
 
-    const renderArchetype = () => {
-        
-    }
-
-    const renderNaturalExplorer = () => {
-        if (characterClass.name === 'Ranger' && !!chosenNaturalExplorer){
-            return <div>
-                <h5 className='margin-left'>YOUR NATURAL EXPLORER</h5>
-                <div className='deity-info'>
-                    <p><strong>{chosenNaturalExplorer.name}: </strong>{chosenNaturalExplorer.description}</p>
-                </div>
-            </div>
-        }
-    }
-
     const renderSpellsData = () => {
         if (characterClass.name === 'Draconic Bloodline'){
             return <div>
@@ -331,18 +303,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             </div>
         }
 
-    }
-
-
-
-    const handleNaturalExplorerChange = (event) => {
-        try {
-            logic.retrieveNaturalExplorer(event.target.value)
-                .then(setChosenNaturalExplorer)
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
-        }
     }
 
     const handleInstrumentChange = (event) => {
@@ -357,19 +317,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     }
 
     const renderSelectNaturalExplorer = () => {
-        if (characterClass.name === 'Ranger'){
-            return <div className='margin-left'>
-                <h5 className='deity-title'>SELECT YOUR NATURAL EXPLORER</h5>
-                <select value={chosenNaturalExplorer} onChange={handleNaturalExplorerChange}>
-                    <option value={null}>Select Natural Explorer</option>
-                    { naturalExplorers.map(naturalExplorer => {
-                        return <option key={naturalExplorer._id} value={naturalExplorer._id}>{naturalExplorer.name}</option>
-                    })}
-                </select>
-            </div>
-        } else {
-            return <></>
-        }
+        
     }
 
     const renderSelectInstrument = () => {
@@ -490,9 +438,9 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
             <ChosenArchetype item={ [characterClass, chosenArchetype] }/>
 
-            { renderSelectNaturalExplorer() }
+            <NaturalExplorerDropdown item={ [characterClass, chosenNaturalExplorer, setChosenNaturalExplorer] }/>
 
-            { chosenNaturalExplorer && renderNaturalExplorer()}
+            <ChosenNaturalExplorer item={ [characterClass, chosenNaturalExplorer] }/>
 
             { renderSelectInstrument() }
 
