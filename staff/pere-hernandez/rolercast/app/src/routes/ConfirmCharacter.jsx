@@ -6,6 +6,7 @@ import { useRace, useCharacterClass, useBackground, useHp, useStats, useProficie
 import ReturnButton from '../components/commonComponents/ReturnButton'
 import ClassAndNameInfo from '../components/confirmCharacterComponents/ClassAndNameInfo'
 import Stats from '../components/confirmCharacterComponents/Stats'
+import Proficiencies from '../components/confirmCharacterComponents/Proficiencies'
 
 function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
     const { race } = useRace()
@@ -165,36 +166,6 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
         }
     }
 
-    const renderProficiencies = () => {
-        const armourAttributes = Object.keys(proficiencies.armour)
-        const weaponsAttributes = Object.keys(proficiencies.weapons)
-        const skillsAttributes = Object.keys(proficiencies.skills)
-
-        const armourString = armourAttributes.join(', ')
-        const weaponsString = weaponsAttributes.join(', ')
-        const skillsString = skillsAttributes.join(', ')
-
-        return <div>
-            <div>
-                <h4>YOUR ARMOUR PROFICIENCIES</h4>
-
-                <p className='spell-p'>{armourString}</p>
-            </div>
-
-            <div>
-                <h4>YOUR WEAPON PROFICIENCIES</h4>
-
-                <p className='spell-p'>{weaponsString}</p>
-            </div>
-
-            <div>
-                <h4>YOUR SKILL PROFICIENCIES</h4>
-
-                <p className='spell-p'>{skillsString}</p>
-            </div>
-        </div>
-    }
-
     const renderExpertises = () => {
         if (Object.keys(expertises).length > 0){
             const expertisesArray = Object.keys(expertises)
@@ -305,7 +276,7 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
 
             <Stats/>
 
-            { renderProficiencies() }
+            <Proficiencies/>
 
             { renderExpertises() }
 
