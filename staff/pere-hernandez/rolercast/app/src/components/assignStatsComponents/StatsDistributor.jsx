@@ -1,3 +1,5 @@
+import logic from '../../logic'
+
 import { useState, useEffect } from 'react'
 
 import { useCharacterClass, useStats, useHp } from '../../pages/Home'

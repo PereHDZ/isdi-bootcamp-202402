@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react'
 
 import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, useExpertises } from '../pages/Home'
 
+import ProficienciesCheckbox from '../components/assignSkillsComponents/ProficienciesCheckbox'
+import ExpertiseCheckbox from '../components/assignSkillsComponents/ExpertiseCheckbox'
 import ReturnButton from '../components/commonComponents/ReturnButton'
 import WeaponProficiencies from '../components/assignSkillsComponents/WeaponProficiencies'
 import ArmourProficiencies from '../components/assignSkillsComponents/ArmourProficiencies'
 import SkillProficiencies from '../components/assignSkillsComponents/SkillProficiencies'
 import Expertises from '../components/assignSkillsComponents/Expertises'
 import ConfirmButton from '../components/assignSkillsComponents/ConfirmButton'
-import ExpertiseCheckbox from '../components/assignSkillsComponents/ExpertiseCheckbox'
 
 function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
     const { race } = useRace()
@@ -363,54 +364,6 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
         </div>
     }
 
-    const renderAvailableSkills = () => {
-        return (
-            <div className='skills-div'>
-                {availableSkills.map(skill => (
-                    <div className='align-center' key={skill}>
-                        <input
-                            type='checkbox'
-                            value={skill}
-                            className='check-box-input'
-                            onChange={handleCheckboxChange}
-                            checked={checkedSkills.includes(skill)}
-                        />
-                        <label className='skill-check-label'>
-                            {skill} +{bonuses[allSkills.find(s => s.name === skill).stat]}
-                            </label>
-                    </div>
-                ))}
-            </div>
-        )
-    }
-
-
-    
-
-    const handleCheckboxChange = (event) => {
-        const selectedSkill = event.target.value
-        let newCheckedSkills = checkedSkills
-
-        if (event.target.checked){
-            if (checkedSkills.length < skillPoints){
-                newCheckedSkills = [...selectedSkills, selectedSkill]
-
-                setCheckedSkills(newCheckedSkills)
-                setSelectedSkills([...selectedSkills, selectedSkill])
-            } else {
-                event.target.checked = false
-                alert(`You can only select up to ${skillPoints} skills`)
-            }
-        } else {
-            newCheckedSkills = checkedSkills.filter(skill => skill !== selectedSkill)
-
-            const newSelectedSkills = selectedSkills.filter(skill => skill !== selectedSkill)
-
-            setCheckedSkills(newCheckedSkills)
-            setSelectedSkills([...newSelectedSkills])
-        }
-    }
-
     return <section>
         <ReturnButton onReturnClicked={handleReturnClick}/>
 
@@ -423,12 +376,27 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
 
                     { renderBonuses() }
 
-                    { renderAvailableSkills() }
+                    <ProficienciesCheckbox item={[
+                        skillPoints, 
+                        availableSkills, 
+                        checkedSkills, 
+                        bonuses, 
+                        selectedSkills, 
+                        allSkills, 
+                        setCheckedSkills,
+                        setSelectedSkills]}/>
                 </div>
             </div>
             
             <div className='stats-div'>
-                <ExpertiseCheckbox item={[expertisePoints, availableExpertises, checkedExpertises, bonuses, selectedExpertises, allSkills, setCheckedExpertises, setSelectedExpertises]}/>
+                <ExpertiseCheckbox item={[
+                    expertisePoints, 
+                    availableExpertises, checkedExpertises, 
+                    bonuses, 
+                    selectedExpertises, 
+                    allSkills, 
+                    setCheckedExpertises, 
+                    setSelectedExpertises]}/>
             </div>            
         </div>
 
