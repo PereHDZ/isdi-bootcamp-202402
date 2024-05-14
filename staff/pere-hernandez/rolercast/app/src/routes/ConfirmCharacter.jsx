@@ -9,6 +9,7 @@ import Stats from '../components/confirmCharacterComponents/Stats'
 import Proficiencies from '../components/confirmCharacterComponents/Proficiencies'
 import Expertises from '../components/confirmCharacterComponents/Expertises'
 import Spells from '../components/confirmCharacterComponents/Spells'
+import Actions from '../components/confirmCharacterComponents/Actions'
 
 function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
     const { race } = useRace()
@@ -30,7 +31,6 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
     const [parentClass, setParentClass] = useState(null)
 
     const [actions, setActions] = useState([])
-    const [actionsData, setActionsData] = useState([])
 
     useEffect(() => {
         const newActions = [...actions]
@@ -53,22 +53,6 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
 
         setActions(filteredActions)
     }, [parentClass])
-
-    useEffect(() => {
-        const fetchActionsData = () => {
-            Promise.all(
-                actions.map(actionId => logic.retrieveAction(actionId)
-                    .then(objectAction => objectAction))
-            ).then(fetchedData => {
-                const filteredData = fetchedData.filter(Boolean)
-                setActionsData(filteredData)
-            }).catch(error => {
-                console.error('Error fetching action:', error)
-                return null
-            })
-        }
-        fetchActionsData()
-    }, [actions])
 
     const handleReturnClick = () => {
         event.preventDefault()
@@ -111,22 +95,6 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
         } catch (error) {
             alert(error)
         }
-    }
-
-    const renderActions = () => {
-        let actionsDiv = <></>
-
-        if (actionsData.length > 0){
-            const actionNames = actionsData.map(action => action.name).join(', ')
-
-            actionsDiv = <div>
-                <h4>YOUR ACTIONS</h4>
-
-                <p className='spell-p'>{actionNames}</p>
-            </div>
-        }
-
-        return actionsDiv
     }
 
     const renderOthers = () => {
@@ -188,7 +156,7 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
 
             <Spells item={[setParentRace, setParentClass]}/>
 
-            { renderActions() }
+            <Actions item={actions}/>
 
             { renderOthers() }
 
