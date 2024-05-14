@@ -6,6 +6,7 @@ import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, 
 
 import ProficienciesCheckbox from '../components/assignSkillsComponents/ProficienciesCheckbox'
 import ExpertiseCheckbox from '../components/assignSkillsComponents/ExpertiseCheckbox'
+import Bonuses from '../components/assignSkillsComponents/Bonuses'
 import ReturnButton from '../components/commonComponents/ReturnButton'
 import WeaponProficiencies from '../components/assignSkillsComponents/WeaponProficiencies'
 import ArmourProficiencies from '../components/assignSkillsComponents/ArmourProficiencies'
@@ -24,7 +25,6 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
     const [inheritedWeapons, setInheritedWeapons] = useState([])
     const [inheritedArmour, setInheritedArmour] = useState([])
     const [inheritedSkills, setInheritedSkills] = useState([])
-
     const [inheritedExpertises, setInheritedExpertises] = useState([])
 
     const [availableSkills, setAvailableSkills] = useState([])
@@ -358,12 +358,6 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
         }
     }
 
-    const renderBonuses = () => {
-        return <div>
-            <p><strong>Your stat bonuses: </strong>Str: +{bonuses.Strength}, Dex: +{bonuses.Dexterity}, Cons: +{bonuses.Constitution}, Int: +{bonuses.Intelligence}, Wis: +{bonuses.Wisdom}, Char: +{bonuses.Charisma}</p>
-        </div>
-    }
-
     return <section>
         <ReturnButton onReturnClicked={handleReturnClick}/>
 
@@ -374,7 +368,7 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
                 <div className='distribute-stats margins'>
                     <span><strong>SELECT {skillPoints} SKILLS</strong></span>
 
-                    { renderBonuses() }
+                    <Bonuses item={bonuses}/>
 
                     <ProficienciesCheckbox item={[
                         skillPoints, 
