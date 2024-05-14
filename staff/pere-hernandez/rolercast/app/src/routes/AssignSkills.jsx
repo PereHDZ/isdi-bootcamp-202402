@@ -9,6 +9,7 @@ import WeaponProficiencies from '../components/assignSkillsComponents/WeaponProf
 import ArmourProficiencies from '../components/assignSkillsComponents/ArmourProficiencies'
 import SkillProficiencies from '../components/assignSkillsComponents/SkillProficiencies'
 import Expertises from '../components/assignSkillsComponents/Expertises'
+import ConfirmButton from '../components/assignSkillsComponents/ConfirmButton'
 
 function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
     const { race } = useRace()
@@ -457,18 +458,6 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
         }
     }
 
-    const renderConfirmButton = () => {
-        if (checkedSkills.length === skillPoints){
-            if ((characterClass.name === 'Knowledge Domain' || characterClass.name === 'Rogue') && checkedExpertises.length < expertisePoints){
-                return <></>
-            } else {
-                return <button className='select-button' onClick={handleConfirmClick}>CONFIRM</button>
-            }
-        } else {
-            return <></>
-        }
-    }
-
     return <section>
         <ReturnButton onReturnClicked={handleReturnClick}/>
 
@@ -501,7 +490,13 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
         </div>
 
         <div className='select-button-div'>
-            { renderConfirmButton() }
+            <ConfirmButton 
+            item={[
+                checkedSkills, 
+                skillPoints, 
+                checkedExpertises, 
+                expertisePoints]}
+            onConfirmClick={handleConfirmClick}/>
         </div>
     </section>
 }
