@@ -1,6 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useRace, useCharacterClass, useStats, useHp, useSpells, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
 import logic from '../logic'
+
+import { useEffect, useState } from 'react'
+
+import { useRace, useCharacterClass, useStats, useHp, useSpells, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
+
+import DeityDropdown from '../components/assignStatsComponents/DeityDropdow'
+import ChosenDeity from '../components/assignStatsComponents/ChosenDeity'
+import FightingStyleDropdown from '../components/assignStatsComponents/FightingStyleDropdow'
+import ChosenFightingStyle from '../components/assignStatsComponents/ChosenFightingStyle'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
@@ -16,10 +23,8 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     const [hpBonus, setHpBonus] = useState(null)
 
-    const [deities, setDeities] = useState([])
     const [chosenDeity, setChosenDeity] = useState(null)
 
-    const [fightingStyles, setFightingStyles] = useState([])
     const [chosenFightingStyle, setChosenFightingStyle] = useState(null)
 
     const [archetypes, setArchetypes] = useState([])
@@ -118,59 +123,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             }
         }
     }, [hpBonus])
-
-    useEffect(() => {
-        if (characterClass.name.includes('Domain')){
-            try {
-                logic.retrieveDeities()
-                    .then(retrievedDeities => {
-                        const laduguer = retrievedDeities.find(deity => deity.name === 'Laduguer')
-                        const vlaakith = retrievedDeities.find(deity => deity.name === 'Vlaakith')
-
-                        const filteredDeities = retrievedDeities.filter(deity => deity.name !== 'Laduguer' &&  deity.name !== 'Vlaakith')
-
-                        if (race.name === 'Duergar'){
-                            filteredDeities.push(laduguer)
-
-                            setDeities(filteredDeities)
-                        } else if (race.name === 'Seldarine Drow'){
-                            const seldarineDeities = filteredDeities.filter(deity => deity.name !== 'Lolth')
-
-                            setDeities(seldarineDeities)
-                        } else if (race.name === 'Githyanki'){
-                            filteredDeities.push(vlaakith)
-
-                            setDeities(filteredDeities)
-                        } else {
-                            setDeities(filteredDeities)
-                        }
-                    })
-                    .catch(error => alert(error))
-            } catch (error) {
-                alert(error)
-            }         
-        }
-    }, [])
-
-    useEffect(() => {
-        if (race.name === 'Lolth-Sworn Drow' && characterClass.name.includes('Domain')){
-            const lolth = deities.find(deity => deity.name === 'Lolth')
-
-            setChosenDeity(lolth)
-        }
-    }, [])
-
-    useEffect(() => {
-        if (characterClass.name === 'Fighter'){
-            try {
-                logic.retrieveFightingStyles()
-                    .then(setFightingStyles)
-                    .catch(error => alert(error))
-            } catch (error) {
-                alert(error)
-            }
-        }
-    }, [])
 
     useEffect(() => {
         if (characterClass.name === 'Ranger'){
@@ -365,28 +317,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         </div>
     }
 
-    const renderDeity = () => {
-        if (characterClass.name.includes('Domain') && !!chosenDeity){
-            return <div>
-                <h5 className='margin-left'>YOUR DEITY</h5>
-                <div className='deity-info'>
-                    <p><strong>{chosenDeity.name}: </strong>{chosenDeity.description}</p>
-                </div>                
-            </div>
-        }
-    }
-
-    const renderFightingStyle = () => {
-        if (characterClass.name === 'Fighter' && !!chosenFightingStyle){
-            return <div>
-                <h5 className='margin-left'>YOUR FIGHTING STYLE</h5>
-                <div className='deity-info'>
-                    <p><strong>{chosenFightingStyle.name}: </strong>{chosenFightingStyle.description}</p>
-                </div>                
-            </div>
-        }
-    }
-
     const renderArchetype = () => {
         if (characterClass.name === 'Ranger' && !!chosenArchetype){
             return <div>
@@ -421,26 +351,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     }
 
-    const handleDeityChange = (event) => {
-        try {
-            logic.retrieveDeity(event.target.value)
-                .then(setChosenDeity)
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
-        }
-    }
-
-    const handleFightingStyleChange = (event) => {
-        try {
-            logic.retrieveFightingStyle(event.target.value)
-                .then(setChosenFightingStyle)
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
-        }
-    }
-
     const handleArchetypeChange = (event) => {
         try {
             logic.retrieveArchetype(event.target.value)
@@ -472,36 +382,10 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         setSpells(newSpells)
     }
 
-    const renderSelectDeity = () => {
-        if (characterClass.name.includes('Domain')){
-            return <div className='margin-left'>
-                <h5 className='deity-title'>SELECT YOUR DEITY</h5>
-                <select value={chosenDeity} onChange={handleDeityChange}>
-                    <option value={null}>Select Deity</option>
-                    { deities.map(deity => {
-                        return <option key={deity._id} value={deity._id}>{deity.name}</option>
-                    })}
-                </select>
-            </div>
-        } else {
-            return <></>
-        }
-    } 
+    
 
     const renderSelectFightingStyle = () => {
-        if (characterClass.name === 'Fighter'){
-            return <div className='margin-left'>
-                <h5 className='deity-title'>SELECT YOUR FIGHTING STYLE</h5>
-                <select value={chosenFightingStyle} onChange={handleFightingStyleChange}>
-                    <option value={null}>Select Fighting Style</option>
-                    { fightingStyles.map(fightingStyle => {
-                        return <option key={fightingStyle._id} value={fightingStyle._id}>{fightingStyle.name}</option>
-                    })}
-                </select>
-            </div>
-        } else {
-            return <></>
-        }
+        
     } 
 
     const renderSelectArchetype = () => {
@@ -642,13 +526,13 @@ function AssignStats({ onReturnClick, onStatsSelected }){
                 </div>
             </div>
 
-            { renderSelectDeity() }
+            <DeityDropdown item={ [characterClass, race, chosenDeity, setChosenDeity] }/>
 
-            { chosenDeity && renderDeity() }
+            <ChosenDeity item={[chosenDeity, characterClass]}/>
 
-            { renderSelectFightingStyle() } 
+            <FightingStyleDropdown item={ [characterClass, chosenFightingStyle, setChosenFightingStyle] }/> 
 
-            { chosenFightingStyle && renderFightingStyle()}           
+            <ChosenFightingStyle item={ [characterClass, chosenFightingStyle] }/>         
 
             { renderSelectArchetype() }
 
