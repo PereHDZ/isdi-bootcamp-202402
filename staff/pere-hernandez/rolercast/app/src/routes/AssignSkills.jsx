@@ -4,6 +4,12 @@ import { useState, useEffect } from 'react'
 
 import { useRace, useCharacterClass, useBackground, useStats, useProficiencies, useExpertises } from '../pages/Home'
 
+import ReturnButton from '../components/commonComponents/ReturnButton'
+import WeaponProficiencies from '../components/assignSkillsComponents/WeaponProficiencies'
+import ArmourProficiencies from '../components/assignSkillsComponents/ArmourProficiencies'
+import SkillProficiencies from '../components/assignSkillsComponents/SkillProficiencies'
+import Expertises from '../components/assignSkillsComponents/Expertises'
+
 function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
@@ -349,34 +355,6 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
         }
     }
 
-    const renderInheritedWeapons = () => {
-        const p = inheritedWeapons.join(', ')
-        return <div>
-            <p><strong>Weapon proficiencies inherited from race or class: </strong>{p}</p>
-        </div>
-    }
-
-    const renderInheritedArmour = () => {
-        const p = inheritedArmour.join(', ')
-        return <div>
-            <p><strong>Armour proficiencies inherited from race or class: </strong>{p}</p>
-        </div>
-    }
-
-    const renderInheritedSkills = () => {
-        const p = inheritedSkills.join(', ')
-        return <div>
-            <p><strong>Skill proficiencies inherited from race or background: </strong>{p}</p>
-        </div>
-    }
-
-    const renderInheritedExpertises = () => {
-        const p = inheritedExpertises.join(', ')
-        return <div>
-            <p><strong>Expertises inherited from race or class: </strong>{p}</p>
-        </div>
-    }
-
     const renderBonuses = () => {
         return <div>
             <p><strong>Your stat bonuses: </strong>Str: +{bonuses.Strength}, Dex: +{bonuses.Dexterity}, Cons: +{bonuses.Constitution}, Int: +{bonuses.Intelligence}, Wis: +{bonuses.Wisdom}, Char: +{bonuses.Charisma}</p>
@@ -492,12 +470,7 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
     }
 
     return <section>
-        <div className="return-div">
-            <button className="transparent-button" onClick={handleReturnClick}>
-                <img src="../../public/icons/return.png" className="icon"></img>
-            </button>
-            <h3 className="return">RETURN</h3>
-        </div>
+        <ReturnButton onReturnClicked={handleReturnClick}/>
 
         <h1 className='home-title'>SELECT YOUR PROFICIENCIES</h1>
 
@@ -518,13 +491,13 @@ function AssignSkills ({ onRetrunClick, onSkillsConfirmed }){
         </div>
 
         <div className='margins'>
-            { inheritedWeapons.length > 0 && renderInheritedWeapons() }
+            <WeaponProficiencies item={inheritedWeapons}/>
 
-            { inheritedArmour.length > 0 && renderInheritedArmour() }
+            <ArmourProficiencies item={inheritedArmour}/>
 
-            { inheritedSkills.length > 0 && renderInheritedSkills() }
+            <SkillProficiencies item={inheritedSkills}/>
 
-            { inheritedExpertises.length > 0 && renderInheritedExpertises() }
+            <Expertises item={inheritedExpertises}/>
         </div>
 
         <div className='select-button-div'>
