@@ -13,6 +13,8 @@ import ChosenArchetype from '../components/assignStatsComponents/ChosenArchetype
 import NaturalExplorerDropdown from '../components/assignStatsComponents/NaturalExplorerDropdow'
 import ChosenNaturalExplorer from '../components/assignStatsComponents/ChosenNaturalExplorer'
 import InstrumentDropdown from '../components/assignStatsComponents/InstrumentDropdow'
+import AncestorDropdown from '../components/assignStatsComponents/AncestorDropdown'
+import SpellFromAncestor from '../components/assignStatsComponents/SpellFromAncestor'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
@@ -294,47 +296,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         </div>
     }
 
-    const renderSpellsData = () => {
-        if (characterClass.name === 'Draconic Bloodline'){
-            return <div>
-                <h5 className='margin-left'>SPELL INHERITED FROM DRAGON ANCESTOR</h5>
-                <div className='dety-info margin-left'>
-                    <p><strong>{spellsData[0].name}: </strong>{spellsData[0].description}</p>
-                </div>
-            </div>
-        }
-
-    }
-
-    const handleAncestorChange = (event) => {
-        const newSpells = []
-
-        newSpells.push(event.target.value)
-        setSpells(newSpells)
-    }
-
-    const renderSelectAncestor = () => {
-        if (characterClass.name === 'Draconic Bloodline'){
-            return <div className='margin-left'>
-                <h5 className='deity title'>SELECT YOUR DRAGON ANCESTOR</h5>
-
-                <select value={null} onChange={handleAncestorChange}>
-                    <option value={null}>Select Ancestor</option>
-                    <option value={'66335a87863710c59eae0f40'}>{'Red Dragon (Fire)'}</option>                    
-                    <option value={'66335a87863710c59eae0f5a'}>{'Black Dragon (Acid)'}</option>                    
-                    <option value={'66335a87863710c59eae0f75'}>{'Blue Dragon (Lightning)'}</option>                    
-                    <option value={'66335a87863710c59eae0f3c'}>{'White Dragon (Cold)'}</option>                    
-                    <option value={'66335a87863710c59eae0f6a'}>{'Green Dragon (Poison)'}</option>                    
-                    <option value={'66335a87863710c59eae0f4e'}>{'Gold Dragon (Fire)'}</option>                    
-                    <option value={'66335a87863710c59eae0f56'}>{'Silver Dragon (Cold)'}</option>                    
-                    <option value={'66335a87863710c59eae0f58'}>{'Bronze Dragon (Lightning)'}</option>                    
-                    <option value={'66335a87863710c59eae0f71'}>{'Copper Dragon (Acid)'}</option>                    
-                    <option value={'66335a87863710c59eae0f6f'}>{'Brass Dragon (Fire)'}</option>                                       
-                </select>
-            </div>
-        }
-    }
-
     const renderConfirmButton = () => {
         if (characterClass.name === 'Fighter'){
             if (remainingStatPoints === 0 && !!chosenFightingStyle && !!plus1Modifier && plus2Modifier)
@@ -420,9 +381,9 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
             <InstrumentDropdown item={ [characterClass, setInstrument] }/>
 
-            { renderSelectAncestor() }
+            <AncestorDropdown item={ [characterClass, setSpells] }/>
 
-            { spellsData.length > 0 && renderSpellsData()}
+            { spellsData.length > 0 && <SpellFromAncestor item={ [characterClass, spellsData] }/> }
 
             <div className='select-button-div'>
                 { renderConfirmButton() }
