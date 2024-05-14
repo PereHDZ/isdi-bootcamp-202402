@@ -8,6 +8,7 @@ import ClassAndNameInfo from '../components/confirmCharacterComponents/ClassAndN
 import Stats from '../components/confirmCharacterComponents/Stats'
 import Proficiencies from '../components/confirmCharacterComponents/Proficiencies'
 import Expertises from '../components/confirmCharacterComponents/Expertises'
+import Spells from '../components/confirmCharacterComponents/Spells'
 
 function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
     const { race } = useRace()
@@ -28,63 +29,8 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
     const [parentRace, setParentRace] = useState(null)
     const [parentClass, setParentClass] = useState(null)
 
-    const [cantripsData, setCantripsData] = useState([])
-    const [spellsData, setSpellsData] = useState([])
-
     const [actions, setActions] = useState([])
     const [actionsData, setActionsData] = useState([])
-
-    useEffect(() => {
-        if (race.parent){
-            try {
-                logic.retrieveRace(race.parent)
-                    .then(setParentRace)
-            } catch (error) {
-                alert(error)
-            }
-        }
-
-        if (characterClass.parent){
-            try {
-                logic.retrieveCharacterClass(characterClass.parent)
-                    .then(setParentClass)
-            } catch(error) {
-                alert(error)
-            }
-        }
-
-        if (cantrips.length > 0) {
-            const fetchCantripsData = () => {
-                Promise.all(
-                    cantrips.map(cantripId => logic.retrieveCantrip(cantripId)
-                        .then(objectCantrip => objectCantrip))
-                ).then(fetchedData => {
-                    const filteredData = fetchedData.filter(Boolean)
-                    setCantripsData(filteredData)
-                }).catch(error => {
-                    console.error('Error fetching cantrip:', error)
-                    return null
-                })
-            }
-            fetchCantripsData()
-        }
-
-        if (spells.length > 0) {
-            const fetchSpellsData = () => {
-                Promise.all(
-                    spells.map(spellId => logic.retrieveSpell(spellId)
-                        .then(objectSpell => objectSpell))
-                ).then(fetchedData => {
-                    const filteredData = fetchedData.filter(Boolean)
-                    setSpellsData(filteredData)
-                }).catch(error => {
-                    console.error('Error fetching cantrip:', error)
-                    return null
-                })
-            }
-            fetchSpellsData()
-        }
-    }, [])
 
     useEffect(() => {
         const newActions = [...actions]
@@ -167,33 +113,6 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
         }
     }
 
-    const renderSpells = () => {
-        let cantripsDiv = <></>
-        let spellsDiv = <></>
-
-        if (cantrips.length > 0 ){
-            const cantripNames = cantripsData.map(cantrip => cantrip.name).join(', ')
-
-            cantripsDiv = <div>
-                <h4>YOUR CANTRIPS</h4>
-
-                <p className='spell-p'>{cantripNames}</p>
-            </div>
-        }
-
-        if (spells.length > 0 ){
-            const spellNames = spellsData.map(spell => spell.name).join(', ')
-
-            spellsDiv = <div>
-                <h4>YOUR SPELLS</h4>
-
-                <p className='spell-p'>{spellNames}</p>
-            </div>
-        }
-        
-        return <>{cantripsDiv}{spellsDiv}</>
-    }
-
     const renderActions = () => {
         let actionsDiv = <></>
 
@@ -267,7 +186,7 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
 
             <Expertises/>
 
-            { renderSpells() }
+            <Spells item={[setParentRace, setParentClass]}/>
 
             { renderActions() }
 
