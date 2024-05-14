@@ -2,8 +2,10 @@ import logic from '../logic'
 
 import { useEffect, useState } from 'react'
 
-import { useRace, useCharacterClass, useStats, useHp, useSpells, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
+import { useRace, useCharacterClass, useSpells, useDeity, useFightingstyle, useArchetype, useNaturalExplorer, useInstrument } from '../pages/Home'
 
+import ReturnButton from '../components/commonComponents/ReturnButton'
+import StatsDistributor from '../components/assignStatsComponents/StatsDistributor'
 import DeityDropdown from '../components/assignStatsComponents/DeityDropdow'
 import ChosenDeity from '../components/assignStatsComponents/ChosenDeity'
 import FightingStyleDropdown from '../components/assignStatsComponents/FightingStyleDropdow'
@@ -20,15 +22,12 @@ import ConfirmButton from '../components/assignStatsComponents/ConfirmButton'
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
     const { characterClass } = useCharacterClass()
-    const { hp, setHp } = useHp()
     const { spells, setSpells } = useSpells()
     const { setDeity } = useDeity()
     const { setFightingStyle } = useFightingstyle()
     const { setArchetype } = useArchetype()
     const { setNaturalExplorer } = useNaturalExplorer()
     const { setInstrument } = useInstrument()
-
-    const [hpBonus, setHpBonus] = useState(null)
 
     const [chosenDeity, setChosenDeity] = useState(null)
 
@@ -39,7 +38,12 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     const [chosenNaturalExplorer, setChosenNaturalExplorer] = useState(null)
 
     const [spellsData, setSpellsData] = useState([])
-    
+
+    const [remainingStatPoints, setRemainingStatPoints] = useState(27)
+
+    const [plus2Modifier, setPlus2Modifier] = useState(null)
+    const [plus1Modifier, setPlus1Modifier] = useState(null)
+
     const [selectedStats, setSelectedStats] = useState({
         Strength: 8,
         Dexterity: 8,
@@ -48,29 +52,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         Wisdom: 8,
         Charisma: 8,
     })
-    
-    const [minValues, setMinValues] = useState({
-        Strength: 8,
-        Dexterity: 8,
-        Constitution: 8,
-        Intelligence: 8,
-        Wisdom: 8,
-        Charisma: 8,
-    })
-    
-    const [maxValues, setMaxValues] = useState({
-        Strength: 15,
-        Dexterity: 15,
-        Constitution: 15,
-        Intelligence: 15,
-        Wisdom: 15,
-        Charisma: 15,
-    })
-
-    const [remainingStatPoints, setRemainingStatPoints] = useState(27)
-
-    const [plus2Modifier, setPlus2Modifier] = useState(null)
-    const [plus1Modifier, setPlus1Modifier] = useState(null)
 
     const handleReturnClick = () => {
         event.preventDefault()
@@ -83,39 +64,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
         onReturnClick()
     }
-
-    useEffect(() => {
-        let newHpBonus
-
-        if(selectedStats.Constitution > 15){
-            newHpBonus = 5
-        } else if (selectedStats.Constitution > 13 && selectedStats.Constitution < 16){
-            newHpBonus = 4
-        } else if (selectedStats.Constitution > 11 && selectedStats.Constitution < 14){
-            newHpBonus = 3
-        } else if (selectedStats.Constitution > 9 && selectedStats.Constitution < 12){
-            newHpBonus = 2
-        } else {
-            newHpBonus = 1
-        }
-
-        setHpBonus(newHpBonus)
-    }, [selectedStats])
-
-    useEffect(() => {
-        if (!characterClass.parent){
-            setHp(characterClass.hp + hpBonus)
-        } else {
-            try {
-                logic.retrieveCharacterClass(characterClass.parent)
-                    .then(parentClass => {
-                        setHp(parentClass.hp + hpBonus)
-                    })
-            } catch (error) {
-                alert(error)
-            }
-        }
-    }, [hpBonus])
 
     useEffect(() => {
         if (spells.length > 0){
@@ -136,196 +84,20 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         }
     }, [spells])
 
-
-
-    const handleStatIncrement = (stat) => {
-        if (remainingStatPoints > 0 && selectedStats[stat] < maxValues[stat]){
-            const updatedStats = { ...selectedStats }
-            updatedStats[stat]++
-            setSelectedStats(updatedStats)
-            setRemainingStatPoints(remainingStatPoints - 1)
-        }
-    }
-
-    const handleStatDecrement = (stat) => {
-        if (remainingStatPoints < 27 && selectedStats[stat] > minValues[stat]){
-            const updatedStats = { ...selectedStats }
-            updatedStats[stat]--
-            setSelectedStats(updatedStats)
-            setRemainingStatPoints(remainingStatPoints + 1)
-        }          
-    }
-
-    const handlePlusOneDropdownChange = (e, modifier) => {
-        const selectedStat = e.target.value
-
-        let originalStats = {         
-            Strength: 8,
-            Dexterity: 8,
-            Constitution: 8,
-            Intelligence: 8,
-            Wisdom: 8,
-            Charisma: 8 
-        }
-        if (!!plus2Modifier)
-            originalStats[plus2Modifier] = originalStats[plus2Modifier] + 2
-
-        const originalMinValues = { ...originalStats }
-
-        const originalMaxValues = { 
-            Strength: 15,
-            Dexterity: 15,
-            Constitution: 15,
-            Intelligence: 15,
-            Wisdom: 15,
-            Charisma: 15  
-        }
-        if (!!plus2Modifier)
-            originalMaxValues[plus2Modifier] = originalMaxValues[plus2Modifier] + 2
-
-        if (modifier === 1 && selectedStat !== plus2Modifier) {
-            setPlus1Modifier(selectedStat)
-
-            const newStats = {...originalStats}
-            newStats[selectedStat]++
-            setSelectedStats(newStats)
-
-            const newMinValues = {...originalMinValues}
-            newMinValues[selectedStat]++
-            setMinValues(newMinValues)
-
-            const newMaxValues = {...originalMaxValues}
-            newMaxValues[selectedStat]++
-            setMaxValues(newMaxValues)
-
-            setRemainingStatPoints(27)
-        } else {
-            alert("One single stat can't get both bonuses. Please, select two different stats")
-
-            e.target.value = ''
-
-            setSelectedStats(originalStats)
-
-            setMinValues(originalMinValues)
-
-            setMaxValues(originalMaxValues)
-
-            setRemainingStatPoints(27)
-        }
-    }
-
-    const handlePlusTwoDropdownChange = (e, modifier) => {
-        const selectedStat = e.target.value
-
-        let originalStats = {         
-            Strength: 8,
-            Dexterity: 8,
-            Constitution: 8,
-            Intelligence: 8,
-            Wisdom: 8,
-            Charisma: 8 
-        }
-        if (!!plus2Modifier)
-            originalStats[plus2Modifier]++
-
-        const originalMinValues = { ...originalStats }
-
-        let originalMaxValues = { 
-            Strength: 15,
-            Dexterity: 15,
-            Constitution: 15,
-            Intelligence: 15,
-            Wisdom: 15,
-            Charisma: 15  
-        }
-        if (!!plus2Modifier)
-            originalMaxValues[plus2Modifier]++
-
-        if (modifier === 2 && selectedStat !== plus1Modifier) {
-            setPlus2Modifier(selectedStat)
-
-            const newStats = {...originalStats}
-            newStats[selectedStat] = newStats[selectedStat] + 2
-            setSelectedStats(newStats)
-
-            const newMinValues = {...originalMinValues}
-            newMinValues[selectedStat] = newMinValues[selectedStat] + 2
-            setMinValues(newMinValues)
-
-            const newMaxValues = {...originalMaxValues}
-            newMaxValues[selectedStat] = newMaxValues[selectedStat] + 2
-            setMaxValues(newMaxValues)
-
-            setRemainingStatPoints(27)
-        } else {
-            alert("One single stat can't get both bonuses. Please, select two different stats")
-
-            e.target.value = ''
-
-            setSelectedStats(originalStats)
-
-            setMinValues(originalMinValues)
-
-            setMaxValues(originalMaxValues)
-            
-            setRemainingStatPoints(27)
-        }
-    }   
-
-    const renderStatInput = (stat) => {
-        return <div key={stat} className='stat-div'>
-            <img src={`../../public/gallery/Stats_Icons/${stat}.png`} alt={stat}className='stats-icons'></img>
-            <label htmlFor={stat} className='stat-label'>{stat}:</label>
-            <div className='counter-div'>
-                <button type='button' onClick={() => handleStatIncrement(stat)}>+</button>
-                <span>{selectedStats[stat]}</span>
-                <button type='button' onClick={() => handleStatDecrement(stat)}>- </button>
-            </div>
-        </div>
-    }
-
     return <section>
-        <div className="return-div">
-            <button className="transparent-button" onClick={handleReturnClick}>
-                <img src="../../public/icons/return.png" className="icon"></img>
-            </button>
-            <h3 className="return">RETURN</h3>
-        </div>
+        <ReturnButton onReturnClicked={handleReturnClick}/>
 
         <h1 className='home-title'>DISTRIBUTE YOUR STATS</h1>
 
         <div className='stats-form'>
-            <div className='stats-div'>
-                <div className='distribute-stats'>
-                    <label>Assign +2</label>
-                    <select onChange={(e) => handlePlusTwoDropdownChange(e, 2)}>
-                        <option value="">Select Stat</option>
-                        {Object.keys(selectedStats).map((stat) => (
-                            <option key={stat} value={stat}>
-                                {stat}
-                            </option>
-                        ))}
-                    </select>
-
-                    <label>Assign +1</label>
-                    <select onChange={(e) => handlePlusOneDropdownChange(e, 1)}>
-                        <option value="">Select Stat</option>
-                        {Object.keys(selectedStats).map((stat) => (
-                            <option key={stat} value={stat}>
-                                {stat}
-                            </option>
-                        ))}
-                    </select>
-
-                    {Object.keys(selectedStats).map(renderStatInput)}
-
-                    <div className='points'>
-                        <p>Remaining Points: {remainingStatPoints}/27</p>
-
-                        <p><strong>HP: </strong>{hp}</p>
-                    </div>
-                </div>
-            </div>
+            <StatsDistributor item={ [
+                plus2Modifier, 
+                plus1Modifier, 
+                setPlus2Modifier, 
+                setPlus1Modifier, 
+                selectedStats, 
+                remainingStatPoints, 
+                setSelectedStats, setRemainingStatPoints] }/>
 
             <DeityDropdown item={ [characterClass, race, chosenDeity, setChosenDeity] }/>
 
