@@ -8,6 +8,8 @@ import DeityDropdown from '../components/assignStatsComponents/DeityDropdow'
 import ChosenDeity from '../components/assignStatsComponents/ChosenDeity'
 import FightingStyleDropdown from '../components/assignStatsComponents/FightingStyleDropdow'
 import ChosenFightingStyle from '../components/assignStatsComponents/ChosenFightingStyle'
+import ArchetypeDropdown from '../components/assignStatsComponents/ArchetypeDropdow'
+import ChosenArchetype from '../components/assignStatsComponents/ChosenArchetype'
 
 function AssignStats({ onReturnClick, onStatsSelected }){
     const { race } = useRace()
@@ -27,7 +29,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     const [chosenFightingStyle, setChosenFightingStyle] = useState(null)
 
-    const [archetypes, setArchetypes] = useState([])
     const [chosenArchetype, setChosenArchetype] = useState(null)
 
     const [naturalExplorers, setNaturalExplorers] = useState([])
@@ -123,18 +124,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
             }
         }
     }, [hpBonus])
-
-    useEffect(() => {
-        if (characterClass.name === 'Ranger'){
-            try{
-                logic.retrieveArchetypes()
-                    .then(setArchetypes)
-                    .catch(error => alert(error))
-            } catch (error) {
-                alert(error)
-            }
-        }
-    }, [])
 
     useEffect(() => {
         if (characterClass.name === 'Ranger'){
@@ -318,14 +307,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
     }
 
     const renderArchetype = () => {
-        if (characterClass.name === 'Ranger' && !!chosenArchetype){
-            return <div>
-                <h5 className='margin-left'>YOUR FAVOURED ENEMY</h5>
-                <div className='deity-info'>
-                    <p><strong>{chosenArchetype.name}: </strong>{chosenArchetype.description}</p>
-                </div>
-            </div>
-        }
+        
     }
 
     const renderNaturalExplorer = () => {
@@ -351,15 +333,7 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
     }
 
-    const handleArchetypeChange = (event) => {
-        try {
-            logic.retrieveArchetype(event.target.value)
-                .then(setChosenArchetype)
-                .catch(error => alert(error))
-        } catch (error) {
-            alert(error)
-        }
-    }
+
 
     const handleNaturalExplorerChange = (event) => {
         try {
@@ -381,28 +355,6 @@ function AssignStats({ onReturnClick, onStatsSelected }){
         newSpells.push(event.target.value)
         setSpells(newSpells)
     }
-
-    
-
-    const renderSelectFightingStyle = () => {
-        
-    } 
-
-    const renderSelectArchetype = () => {
-        if (characterClass.name === 'Ranger'){
-            return <div className='margin-left'>
-                <h5 className='deity-title'>SELECT YOUR FAVOURED ENEMY</h5>
-                <select value={chosenArchetype} onChange={handleArchetypeChange}>
-                    <option value={null}>Select Favoured Enemy</option>
-                    { archetypes.map(archetype => {
-                        return <option key={archetype._id} value={archetype._id}>{archetype.name}</option>
-                    })}
-                </select>
-            </div>
-        } else {
-            return <></>
-        }
-    } 
 
     const renderSelectNaturalExplorer = () => {
         if (characterClass.name === 'Ranger'){
@@ -534,9 +486,9 @@ function AssignStats({ onReturnClick, onStatsSelected }){
 
             <ChosenFightingStyle item={ [characterClass, chosenFightingStyle] }/>         
 
-            { renderSelectArchetype() }
+            <ArchetypeDropdown item={ [characterClass, chosenArchetype, setChosenArchetype] }/>
 
-            { chosenArchetype && renderArchetype() }
+            <ChosenArchetype item={ [characterClass, chosenArchetype] }/>
 
             { renderSelectNaturalExplorer() }
 
