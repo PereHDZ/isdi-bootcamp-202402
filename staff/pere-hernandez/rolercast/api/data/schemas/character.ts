@@ -22,7 +22,7 @@ const character = new Schema ({
         ref: 'Race',
         required: true
     },
-    class: {
+    characterClass: {
         type: ObjectId,
         ref: 'CharacterClass',
         required: true

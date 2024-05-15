@@ -7,7 +7,7 @@ type CharacterType = {
     author: ObjectId,
     name: string,
     race: ObjectId,
-    class: ObjectId,
+    characterClass: ObjectId,
     background: ObjectId,
     hp: number,
     stats: StatsType,
@@ -19,7 +19,7 @@ type CharacterType = {
     instrument?: string,
     deity?: ObjectId,
     fightingStyle?: ObjectId,
-    acrhetype?: ObjectId,
+    archetype?: ObjectId,
     naturalExplorer?: ObjectId,
 }
 

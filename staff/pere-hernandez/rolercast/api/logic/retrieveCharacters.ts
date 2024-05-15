@@ -12,7 +12,7 @@ const { SystemError, NotFoundError } = errors
 
 const { Types: { ObjectId } } = Schema
 
-function retrieveCharacters(userId: string): Promise<[{ id: string, author: string, name: string, race: ObjectId, class: ObjectId, background: ObjectId, hp: number, stats: StatsType, proficiencies: ProficienciesType, expertises?: SkillsType, cantrips?: [ObjectId], spells?: [ObjectId], actrions?: [ObjectId], instrument: string, deity: ObjectId, fightingStyle: ObjectId, archetype: ObjectId, naturalExplorer: ObjectId }] | { author: string, name: string, race: ObjectId, class: ObjectId, background: ObjectId, hp: number, stats: StatsType, proficiencies: ProficienciesType, expertises?: SkillsType, cantrips?: [ObjectId], spells?: [ObjectId], actrions?: [ObjectId], instrument: string, deity: ObjectId, fightingStyle: ObjectId, archetype: ObjectId, naturalExplorer: ObjectId }[]> {
+function retrieveCharacters(userId: string): Promise<[{ id: string, author: string, name: string, race: string, characterClass: string, background: string, hp: number, stats: StatsType, proficiencies: ProficienciesType, expertises?: SkillsType, cantrips?: string[], spells?: string[], actions?: string[], instrument: string, deity: string, fightingStyle: string, archetype: string, naturalExplorer: string }] | { author: string, name: string, race: string, characterClass: string, background: string, hp: number, stats: StatsType, proficiencies: ProficienciesType, expertises?: SkillsType, cantrips?: string[], spells?: string[], actions?: string[], instrument: string, deity: string, fightingStyle: string, archetype: string, naturalExplorer: string }[]> {
     //validation
     validate.text(userId, 'userId', true)
 
@@ -24,7 +24,28 @@ function retrieveCharacters(userId: string): Promise<[{ id: string, author: stri
 
             return Character.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
-                .then(characters => characters.reverse())
+                .then(characters => 
+                    characters.map<{ id, author, name, race, characterClass, background, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deity, fightingStyle, archetype, naturalExplorer }>(({ _id, author, name, race, characterClass, background, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deity, fightingStyle, archetype, naturalExplorer }) => ({
+                        id: _id.toString(),
+                        author, 
+                        name, 
+                        race, 
+                        characterClass, 
+                        background, 
+                        hp, 
+                        stats, 
+                        proficiencies, 
+                        expertises, 
+                        cantrips, 
+                        spells, 
+                        actions, 
+                        instrument, 
+                        deity, 
+                        fightingStyle, 
+                        archetype, 
+                        naturalExplorer
+                    })).reverse()
+                )
         })
 }
 

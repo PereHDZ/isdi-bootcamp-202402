@@ -35,7 +35,7 @@ async function createCharacter(userId: string, name: string, raceId: string, cha
             throw new NotFoundError('Background not found')
         }
 
-        await Character.create({ author: user._id, name, race: race._id, class: characterClass._id, background: background._id, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deity: deityId, fightingStyle: fightingStyleId, archetype: archetypeId, naturalExplorer: naturalExplorerId })
+        await Character.create({ author: user._id, name, race: race._id, characterClass: characterClass._id, background: background._id, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deity: deityId, fightingStyle: fightingStyleId, archetype: archetypeId, naturalExplorer: naturalExplorerId })
     } catch (error) {
         throw new SystemError(error.message)
     }
