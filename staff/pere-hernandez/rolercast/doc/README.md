@@ -8,12 +8,11 @@ Easily create your own Baldur's Gate 3 character
 
 ## Functional
 
-- List pre-generated characters
-- Choose pre-generated character
+- List generated characters
 - Create a character
-- Edit a character
 - Delete a character
-- Export a character sheet in PDF format
+
+ToDo: testing
 
 v.0.1
 - Publish characters
@@ -21,6 +20,7 @@ v.0.1
 - Request friendship
 - Share characters with friends
 - Add Level Progression
+- Export a character sheet in PDF format
 
 Future versions
 - Implement more role-playing games other than D&D
@@ -49,7 +49,6 @@ Future versions
 - React
 - Express
 - Node
-- Tailwind
 - Mongo
 
 ### Data model
@@ -60,6 +59,21 @@ User
 - email (string, required)
 - password (stirng, required)
 - avatar (png, optional)
+
+Action
+- name (string, required)
+- description (string, required)
+
+Archetype
+- name (string, required)
+- description (string, required)
+- proficiencies: (Proficiencies, optional)
+- knownCantrip: (Cantrip.id, optional)
+- knownSpell: (Spell.id, optional)
+
+Deity
+- name (string, required)
+- description (string, required)
 
 Weapons
 - daggers(number, optional)
@@ -94,7 +108,7 @@ Weapons
 - heavyCrossbows (number, optional)
 - longbows (number, optional)
 
-Armors
+Armour
 - lightArmour (number, optional)
 - mediumArmour (number, optional)
 - heavyArmour (number, optional)
@@ -129,7 +143,32 @@ Features
 - humanVersatility (HumanVersatility, optional)
 - feyAncestry (FeyAncestry, optional)
 - darkvision (Darkvision, optional)
-- ...
+- superiorDarkvision (SuperiorDarkvision, optional)
+- highElfCantrip (HighElfCantrip, optional)
+- fleetOfFoot (FleetOfFoot, optional)
+- drowMagic (DrowMagic, optional)
+- duergarMagic (DuergarMagic, optional)
+- halflingLuck (HalflingLuck, optional)
+- brave (Brave, optional)
+- strongheartResilience (StrongheartResilience, optional)
+- duergarResilience (DuergarResilience, optional)
+- dwarvenToughness (DwarvenToughness, optional)
+- gnomeCunning (GnomeCunning, optional)
+- additionalSpell (AdditionalSpell, optional)
+- stoneCamuflage (StoneCamuflage, optional)
+- hellishResistance (HellishResistance, optional)
+- tieflingMagic (TieflingMagic, optional)
+- astralKnowledge (AstralKnowledge, optional)
+- githyankiPsionics (GithyankiPsionics, optional)
+- draconicAncestry (DraconicAncestry, optional)
+- acidBreath (AcidBreath, optional)
+- lightningBreath (LightningBreath, optional)
+- fireBreath (FireBreath, optional)
+- poisonBreath (PoisonBreath, optional)
+- frostBreath (FrostBreath, optional)
+- dwarvenResilience (DwarvenResilience, optional)
+- savageAttacks (SavageAttacks, optional)
+- relentlessEndurance (RelentlessEndurance, optional)
 
 Cantrip
 - name (string, required)
@@ -148,33 +187,49 @@ Race
 - proficiencies (Proficencies, optional)
 - parent (Race.id, optional)
 
-Class (WIP)
+CharacterClass 
 - id (required)
 - name (string, required)
 - description (string, required)
 - hp (number, optional)
+- hpPerLevel (number, optional)
 - keyHabilites: (KeyHabilities, optional)
 - savingThrowProficiencies: (SavingThrowProficiencies, optional)
-- equipmentProficiencies (EquipmentProficiencies, optional)
-- skillProficiencies (SkillProficiencies, optional)
+- proficiencies: (Proficiencies, optional)
+- skillCount: (number, optional)
+- expertises: (Skills, optional)
+- spellcastingAbility (string, optional)
 - spellCasting (SpellCasting, optional)
+- knownSpells ([Spell.id], optional)
+- knownCantrips ([Cantrip.id], optional)
+- knownActions ([Action.id], optional)
 - parent (Class.id, optional)
 
 Background
 - id (required)
 - name (string, required)
 - description (string, required)
-- ([Skills, Skills], required)
+- skills: (Skill, required)
 
 Character
 - id (required)
-- creator (User.id, required)
+- author (User.id, required)
+- name (string, required)
 - race (Race.id, required)
-- class (Class.id, required)
-- name (string, optional)
-- stats (Stats)
-- proficiencies (Proficencies, optional)
-- carryingCapacity (number, required)
+- characterClass (CharacterClass.id, required)
+- background (Background.id, required)
+- hp (number, required)
+- stats (Stats, required)
+- proficiencies (Proficencies, required)
+- expertises (Skills, optional)
+- cantrips ([Cantrip.id], optional)
+- spells ([Spell.id], optional)
+- actions ([Action.id], optional)
+- instrument (string, optional)
+- deity (Deity.id, optional)
+- fightingStyle (FightingStyle.id, optional)
+- archetype (Archetype.id, optional)
+- naturalExplorer (NaturalExplorer.id, optional)
 
 Stats
 - strength (number, optional)
