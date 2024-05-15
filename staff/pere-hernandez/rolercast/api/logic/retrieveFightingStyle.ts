@@ -1,4 +1,4 @@
-import { FightingStyle, User } from '../data/models'
+import { FightingStyle, User } from '../data/models/index.ts'
 
 import { validate, errors } from 'com'
 

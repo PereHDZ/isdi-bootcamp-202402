@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import proficiencies from './proficiencies'
+import proficiencies from './proficiencies.ts'
 
 const { Schema } = mongoose
 

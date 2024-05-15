@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
-import savingThrowProficiencies from './savingThrowProficiencies'
-import proficiencies from './proficiencies'
-import spellcasting from './spellcasting'
-import skills from './skills'
+import savingThrowProficiencies from './savingThrowProficiencies.ts'
+import proficiencies from './proficiencies.ts'
+import spellcasting from './spellcasting.ts'
+import skills from './skills.ts'
 
 const { Schema } = mongoose
 

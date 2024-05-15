@@ -1,4 +1,4 @@
-import { Spell, User } from '../data/models'
+import { Spell, User } from '../data/models/index.ts'
 
 import { validate, errors } from 'com'
 

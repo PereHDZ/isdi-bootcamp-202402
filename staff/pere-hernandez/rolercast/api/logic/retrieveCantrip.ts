@@ -1,4 +1,4 @@
-import { Cantrip, User } from '../data/models'
+import { Cantrip, User } from '../data/models/index.ts'
 
 import { validate, errors } from 'com'
 

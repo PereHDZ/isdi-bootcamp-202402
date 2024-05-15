@@ -20,7 +20,7 @@ function RenderClassAndName ({ item: character}) {
         }
 
         try {
-            logic.retrieveCharacterClass(character.class)
+            logic.retrieveCharacterClass(character.characterClass)
                 .then(setCharacterClass)
         } catch (error) {
             alert(error)

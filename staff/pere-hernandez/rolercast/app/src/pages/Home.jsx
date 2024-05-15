@@ -128,7 +128,7 @@ function Home({ onUserLoggedOut }) {
                 .then(characterClasses => {
                     const classChildren = characterClasses.filter(classChild => {
                         if (!!classChild.parent){
-                            if(classChild.parent.toString() === characterClass._id)
+                            if(classChild.parent.toString() === characterClass.id)
                                 return classChild
                         }
                     })
@@ -220,7 +220,7 @@ function Home({ onUserLoggedOut }) {
                 .then(races => {
                     const raceChildren = races.filter(raceChild => {
                         if (!!raceChild.parent){
-                            if (raceChild.parent.toString() === race._id)
+                            if (raceChild.parent.toString() === race.id)
                                 return raceChild
                         }
                     })

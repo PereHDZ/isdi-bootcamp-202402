@@ -1,7 +1,7 @@
 import mongoose, { ObjectId } from 'mongoose'
-import stats from './stats'
-import proficiencies from './proficiencies'
-import skills from './skills'
+import stats from './stats.ts'
+import proficiencies from './proficiencies.ts'
+import skills from './skills.ts'
 
 const { Schema } = mongoose
 

@@ -20,7 +20,7 @@ function retrieveBackground(userId: string, backgroundId: string): Promise<{ id:
         .then (background => {
             if (!background) throw new NotFoundError('background not found')
 
-            return { name: background.name, description: background.description, skills: background.skills }
+            return { id: background._id.toString(), name: background.name, description: background.description, skills: background.skills }
         })
 }
 

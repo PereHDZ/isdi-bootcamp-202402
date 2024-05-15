@@ -1,4 +1,4 @@
-import { Action, User } from '../data/models'
+import { Action, User } from '../data/models/index.ts'
 
 import { validate, errors } from 'com'
 

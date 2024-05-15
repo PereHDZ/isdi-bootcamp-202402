@@ -1,4 +1,4 @@
-import { Deity, User } from '../data/models'
+import { Deity, User } from '../data/models/index.ts'
 import { validate, errors } from 'com'
 
 const { SystemError, NotFoundError } = errors

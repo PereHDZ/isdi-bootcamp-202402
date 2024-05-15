@@ -1,4 +1,4 @@
-import mongoose, { ObjectId, isObjectIdOrHexString } from 'mongoose'
+import mongoose from 'mongoose'
 
 import { validate, errors } from 'com'
 
@@ -9,8 +9,6 @@ import { FeaturesType, ProficienciesType } from '../data/types/index.ts'
 const { Schema } = mongoose
 
 const { SystemError, NotFoundError } = errors
-
-const { Types: { ObjectId } } = Schema
 
 function retrieveRaces(userId: string): Promise<[{ id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: string }] | { id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: string }[]> {
     //validation
