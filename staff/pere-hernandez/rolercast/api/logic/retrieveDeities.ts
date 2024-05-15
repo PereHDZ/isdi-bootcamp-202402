@@ -15,6 +15,13 @@ function retrieveDeities(userId: string):Promise<[{ id: string, name: string, de
 
             return Deity.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(deities => 
+                    deities.map<{ id, name, description }>(({ _id, name, description }) => ({
+                        id: _id.toString(),
+                        name,
+                        description
+                    }))
+                )
         })
 }
 

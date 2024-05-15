@@ -60,9 +60,9 @@ function DeityDropdown({ item: [characterClass, race,  chosenDeity, setChosenDei
         return <div className='margin-left'>
             <h5 className='deity-title'>SELECT YOUR DEITY</h5>
             <select value={chosenDeity} onChange={handleDeityChange}>
-                <option value={null}>Select Deity</option>
+                <option value={''}>Select Deity</option>
                 { deities.map(deity => {
-                    return <option key={deity._id} value={deity._id}>{deity.name}</option>
+                    return <option key={deity.id} value={deity.id}>{deity.name}</option>
                 })}
             </select>
         </div>
