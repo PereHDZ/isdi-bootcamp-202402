@@ -15,6 +15,13 @@ function retrieveFightingStyles(userId: string):Promise<[{ id: string, name: str
 
             return FightingStyle.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(fightingStyles => 
+                    fightingStyles.map<{ id, name, description }>(({ _id, name, description }) => ({
+                        id: _id.toString(),
+                        name,
+                        description
+                    }))
+                )
         })
 }
 

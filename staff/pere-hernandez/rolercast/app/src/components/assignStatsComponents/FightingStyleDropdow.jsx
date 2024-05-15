@@ -31,9 +31,9 @@ function FightingStyleDropdown ({ item: [characterClass, chosenFightingStyle, se
         return <div className='margin-left'>
             <h5 className='deity-title'>SELECT YOUR FIGHTING STYLE</h5>
             <select value={chosenFightingStyle} onChange={handleFightingStyleChange}>
-                <option value={null}>Select Fighting Style</option>
+                <option value={''}>Select Fighting Style</option>
                 { fightingStyles.map(fightingStyle => {
-                    return <option key={fightingStyle._id} value={fightingStyle._id}>{fightingStyle.name}</option>
+                    return <option key={fightingStyle.id} value={fightingStyle.id}>{fightingStyle.name}</option>
                 })}
             </select>
         </div>
