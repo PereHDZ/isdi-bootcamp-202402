@@ -170,6 +170,14 @@ Features
 - savageAttacks (SavageAttacks, optional)
 - relentlessEndurance (RelentlessEndurance, optional)
 
+Stats
+- strength (number, optional)
+- dexterity (number, optional)
+- constitution (number, optional)
+- intelligence (number, optional)
+- wisdom (number, optional)
+- charisma (number, optional)
+
 Cantrip
 - name (string, required)
 - description (string, required)
@@ -230,11 +238,3 @@ Character
 - fightingStyle (FightingStyle.id, optional)
 - archetype (Archetype.id, optional)
 - naturalExplorer (NaturalExplorer.id, optional)
-
-Stats
-- strength (number, optional)
-- dexterity (number, optional)
-- constitution (number, optional)
-- intelligence (number, optional)
-- wisdom (number, optional)
-- charisma (number, optional)
