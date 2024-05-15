@@ -35,7 +35,7 @@ function NaturalExplorerDropdown ({ item: [characterClass, chosenNaturalExplorer
             <select value={chosenNaturalExplorer} onChange={handleNaturalExplorerChange}>
                 <option value={null}>Select Natural Explorer</option>
                 { naturalExplorers.map(naturalExplorer => {
-                    return <option key={naturalExplorer._id} value={naturalExplorer._id}>{naturalExplorer.name}</option>
+                    return <option key={naturalExplorer.id} value={naturalExplorer.id}>{naturalExplorer.name}</option>
                 })}
             </select>
         </div>

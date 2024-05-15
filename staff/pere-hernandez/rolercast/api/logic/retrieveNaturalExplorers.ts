@@ -12,7 +12,7 @@ const { SystemError, NotFoundError } = errors
 
 const { Types: { ObjectId } } = Schema
 
-function retrieveNaturalExplorers(userId: string): Promise<[{ id: string, name: string, description: string, proficiencies?: ProficienciesType, knownSpell?: ObjectId }] | { id: string, name: string, description: string, proficiencies?: ProficienciesType, knownSpell?: ObjectId }[]> {
+function retrieveNaturalExplorers(userId: string): Promise<[{ id: string, name: string, description: string, proficiencies?: ProficienciesType, knownSpell?: string }] | { id: string, name: string, description: string, proficiencies?: ProficienciesType, knownSpell?: string }[]> {
     //validation
     validate.text(userId, 'userId', true)
 
@@ -24,6 +24,15 @@ function retrieveNaturalExplorers(userId: string): Promise<[{ id: string, name: 
 
             return NaturalExplorer.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(naturalExplorers => 
+                    naturalExplorers.map<{ id, name, description, proficiencies, knownSpell }>(({ _id, name, description, proficiencies, knownSpell}) => ({
+                        id: _id.toString(),
+                        name, 
+                        description, 
+                        proficiencies, 
+                        knownSpell
+                    }))
+                )
         })
 }
 

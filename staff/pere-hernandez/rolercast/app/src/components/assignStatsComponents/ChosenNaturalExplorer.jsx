@@ -1,4 +1,4 @@
-function ChosenNaturalExplorer ({ item: characterClass, chosenNaturalExplorer }){
+function ChosenNaturalExplorer ({ item: [characterClass, chosenNaturalExplorer] }){
     if (characterClass.name === 'Ranger' && !!chosenNaturalExplorer){
         return <div>
             <h5 className='margin-left'>YOUR NATURAL EXPLORER</h5>
