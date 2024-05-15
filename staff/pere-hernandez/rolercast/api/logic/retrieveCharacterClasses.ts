@@ -12,7 +12,7 @@ const { SystemError, NotFoundError } = errors
 
 const { Types: { ObjectId } } = Schema
 
-function retrieveCharacterClasses(userId: string): Promise<[{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: [string], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, skillCount?: number, spellcastingAbility?: string, spellcasting?: SpellcastingType, parent?: ObjectId }] | { name: string, description: string, hp?: number, hpPerLevel?: number, savingThrowProficiencies?: SavingThrowProficienciesType, keyAbilities?: [string], proficiencies?: ProficienciesType, spellcastingAbility?: string, spellcasting?: SpellcastingType, classActions?: [string], parent?: ObjectId }[]> {
+function retrieveCharacterClasses(userId: string): Promise<[{ id: string, name: string, description: string, hp?: number, hpPerLevel?: number, keyAbilities?: string[], savingThrowProficiencies?: SavingThrowProficienciesType, proficiencies?: ProficienciesType, skillCount?: number, spellcastingAbility?: string, spellcasting?: SpellcastingType, classActions: string[], parent?: string }] | { id: string, name: string, description: string, hp?: number, hpPerLevel?: number, savingThrowProficiencies?: SavingThrowProficienciesType, keyAbilities?: string[], proficiencies?: ProficienciesType, skillCount?: number, spellcastingAbility?: string, spellcasting?: SpellcastingType, classActions?: string[], parent?: string }[]> {
     //validation
     validate.text(userId, 'userId', true)
 
@@ -24,6 +24,21 @@ function retrieveCharacterClasses(userId: string): Promise<[{ id: string, name: 
 
             return CharacterClass.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(characterClasses => 
+                    characterClasses.map<{ id, name, description, hp, hpPerLevel, savingThrowProficiencies, keyAbilities, proficiencies, skillCount, spellcasting, classActions, parent }>(({ _id, name, description, hp, hpPerLevel, savingThrowProficiencies, keyAbilities, proficiencies, skillCount, spellcasting, classActions, parent }) => ({
+                        id: _id.toString(),
+                        name, 
+                        description, 
+                        hp, 
+                        hpPerLevel, savingThrowProficiencies, 
+                        keyAbilities, 
+                        proficiencies, 
+                        skillCount,
+                        spellcasting, 
+                        classActions, 
+                        parent
+                    }))
+                )
         })
 }
 
