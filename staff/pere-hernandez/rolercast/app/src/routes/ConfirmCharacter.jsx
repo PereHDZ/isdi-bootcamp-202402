@@ -86,7 +86,7 @@ function ConfirmCharacter ({ onRetrunClick, onCharacterCreated }) {
         }
 
         try{
-            logic.createCharacter(name, race._id, characterClass.id, background.id, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deityId, fightingStyleId, archetypeId, naturalExplorerId)
+            logic.createCharacter(name, race.id, characterClass.id, background.id, hp, stats, proficiencies, expertises, cantrips, spells, actions, instrument, deityId, fightingStyleId, archetypeId, naturalExplorerId)
                 .then(() => {
                     form.reset()
 

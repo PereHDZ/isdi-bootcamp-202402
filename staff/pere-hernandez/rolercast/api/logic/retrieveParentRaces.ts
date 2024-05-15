@@ -12,7 +12,7 @@ const { SystemError, NotFoundError } = errors
 
 const { Types: { ObjectId } } = Schema
 
-function retrieveParentRaces(userId: string): Promise<[{ id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }] | { id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: ObjectId }[]> {
+function retrieveParentRaces(userId: string): Promise<[{ id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: string }] | { id: string, name: string, description: string, speed?: number, features?: FeaturesType, proficiencies?: ProficienciesType, parent?: string }[]> {
     //validation
     validate.text(userId, 'userId', true)
 
@@ -24,6 +24,17 @@ function retrieveParentRaces(userId: string): Promise<[{ id: string, name: strin
 
             return Race.find({ parent: { $exists: false } }).lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(races => 
+                    races.map<{ id, name, description, speed, features, proficiencies, parent }>(({ _id, name, description, speed, features, proficiencies, parent }) => ({
+                        id: _id.toString(),
+                        name, 
+                        description, 
+                        speed, 
+                        features, 
+                        proficiencies, 
+                        parent
+                    }))
+                )
         })
 }
 
