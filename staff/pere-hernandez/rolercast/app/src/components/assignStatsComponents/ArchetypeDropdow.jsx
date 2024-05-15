@@ -33,7 +33,7 @@ function ArchetypeDropdown ({ item: [characterClass, chosenArchetype, setChosenA
             <select value={chosenArchetype} onChange={handleArchetypeChange}>
                 <option value={null}>Select Favoured Enemy</option>
                 { archetypes.map(archetype => {
-                    return <option key={archetype._id} value={archetype._id}>{archetype.name}</option>
+                    return <option key={archetype.id} value={archetype.id}>{archetype.name}</option>
                 })}
             </select>
         </div>

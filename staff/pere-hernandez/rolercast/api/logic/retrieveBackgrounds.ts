@@ -20,6 +20,14 @@ function retrieveBackgrounds(userId: string): Promise<[{ id: string, name: strin
 
             return Background.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(backgrounds => 
+                    backgrounds.map<{id, name, description, skills }>(({ _id, name, description, skills }) => ({
+                        id: _id.toString(),
+                        name, 
+                        description, 
+                        skills
+                    }))
+                )
         })
 }
 

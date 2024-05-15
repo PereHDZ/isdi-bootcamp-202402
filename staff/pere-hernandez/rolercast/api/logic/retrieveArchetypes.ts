@@ -24,6 +24,16 @@ function retrieveArchetypes(userId: string): Promise<[{ id: string, name: string
 
             return Archetype.find().lean().exec()
                 .catch(error => { throw new SystemError(error.message) })
+                .then(archetypes => 
+                    archetypes.map<{ id, name, description, proficiencies, knownCantrip, knownSpell}>(({ _id, name, description, proficiencies, knownCantrip, knownSpell}) => ({
+                        id: _id.toString(),
+                        name, 
+                        description, 
+                        proficiencies, 
+                        knownCantrip, 
+                        knownSpell
+                    }))
+                )
         })
 }
 
