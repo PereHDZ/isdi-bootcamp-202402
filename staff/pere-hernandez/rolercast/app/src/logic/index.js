@@ -37,6 +37,7 @@ import retrieveNaturalExplorer from './retrieveNaturalExplorer.js'
 
 import createCharacter from './createCharacter.js'
 import retrieveCharacters from './retrieveCharacters.js'
+import removeCharacter from './removeCharacter.js'
 
 const logic = { 
     registerUser,
@@ -77,7 +78,8 @@ const logic = {
     retrieveNaturalExplorers,
 
     createCharacter,
-    retrieveCharacters
+    retrieveCharacters,
+    removeCharacter
 }
 
 export default logic

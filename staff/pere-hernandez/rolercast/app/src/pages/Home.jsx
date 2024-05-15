@@ -23,6 +23,7 @@ import ConfirmCharacter from '../routes/ConfirmCharacter'
 import CharacterInfo from '../components/homeComponents/CharacterInfo'
 import Header from '../components/homeComponents/Header'
 
+const UserContext = createContext(null)
 const RaceContext = createContext(null)
 const CharacterClassContext = createContext(null)
 const BackgroundContext = createContext(null)
@@ -40,6 +41,7 @@ const ProficienciesContext = createContext(null)
 const ExpertisesContext = createContext(null)
 const CharacterContext = createContext(null)
 
+export const useUser = () => useContext(UserContext)
 export const useRace = () => useContext(RaceContext)
 export const useCharacterClass = () => useContext(CharacterClassContext)
 export const useBackground = () => useContext(BackgroundContext)
@@ -58,6 +60,7 @@ export const useInstrument = () => useContext(InstrumentContext)
 export const useCharacter = () => useContext(CharacterContext)
 
 function Home({ onUserLoggedOut }) {
+    const [user, setUser] = useState(null)
     const [race, setRace] = useState(null)
     const [characterClass, setCharacterClass] = useState(null)
     const [cantrips, setCantrips] = useState([])
@@ -77,6 +80,15 @@ function Home({ onUserLoggedOut }) {
     const [character, setCharacter] = useState(null)
     
     const navigate = useNavigate()
+
+    useEffect(() => {
+        try{
+            logic.retrieveLoggedUser()
+                .then(setUser)
+        } catch (error) {
+            alert(error)
+        }
+    }, [])
 
     useEffect(() => {
         if (race !== null){
@@ -291,6 +303,7 @@ function Home({ onUserLoggedOut }) {
     }
 
     return <>
+    <UserContext.Provider value={{setUser, user}}>
     <RaceContext.Provider value={{setRace, race}}>
     <CharacterClassContext.Provider value={{setCharacterClass, characterClass}}>
     <BackgroundContext.Provider value={{setBackground, background}}>
@@ -347,6 +360,7 @@ function Home({ onUserLoggedOut }) {
     </BackgroundContext.Provider>
     </CharacterClassContext.Provider>
     </RaceContext.Provider>
+    </UserContext.Provider>
     </>
 }
 

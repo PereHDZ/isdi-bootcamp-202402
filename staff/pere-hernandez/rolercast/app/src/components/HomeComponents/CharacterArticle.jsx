@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useCharacter } from '../../pages/Home'
+import { useUser, useCharacter } from '../../pages/Home'
 import logic from '../../logic'
 
-function CharacterArticle({ item: character }) {
+function CharacterArticle({ item: character, onCaracterDeleted }) {
+    const { user } = useUser()
     const {setCharacter} = useCharacter()
 
     const [race, setRace] = useState(null)
@@ -17,6 +18,18 @@ function CharacterArticle({ item: character }) {
 
     const handleCharacterClick = () => {
         setCharacter(character)
+    }
+
+    const handleDeleteClick = async (event) => {
+        event.stopPropagation()
+
+        try {
+            await logic.removeCharacter(character.id)
+        } catch (error) {
+            alert(error)
+        }
+
+        onCaracterDeleted()
     }
 
     useEffect(() => {
@@ -92,6 +105,14 @@ function CharacterArticle({ item: character }) {
         }
     }
 
+    const renderDeleteButton = () => {
+        if (!!author && author.username === user.username) {
+            return <button className='transparent-button block' onClick={handleDeleteClick}><img src='../../public/icons/MdiDeleteForever.png' className='delete-button'></img></button>
+        } else {
+            return <></>
+        }
+    }
+
     return <div>
         <h2 className='no-bottom'>{character.name}</h2>
         <article className='character-article' onClick={handleCharacterClick}>
@@ -109,6 +130,8 @@ function CharacterArticle({ item: character }) {
 
                 <p><strong>Background: </strong>{ !!background && background.name}</p>
             </div>
+
+            { renderDeleteButton() }
             
         </article>
     </div>

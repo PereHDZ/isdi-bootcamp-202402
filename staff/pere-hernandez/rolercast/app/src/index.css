@@ -629,3 +629,15 @@ h4{
   align-self: flex-end;
   margin-left: auto;
 }
+
+.delete-button {
+  display: block;
+  width: 40px;
+  align-self: flex-start;
+}
+
+.block {
+  display: block;
+  height: 40px;
+  padding: 5px;
+}

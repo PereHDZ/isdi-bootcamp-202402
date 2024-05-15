@@ -21,7 +21,7 @@ function CharacterList() {
     }, [])
 
     return <section className='character-list'>
-        {characters.map(character => <CharacterArticle key={character.name} item={character}/>)}
+        {characters.map(character => <CharacterArticle key={character.name} item={character} onCaracterDeleted={loadCharacters}/>)}
     </section>
 }
 
