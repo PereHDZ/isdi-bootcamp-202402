@@ -59,7 +59,7 @@ function SelectSpells({ onReturn, onSpellsConfirmed }){
             newSelectedSpells.push(race.features.additionalSpell.spell)
         }
 
-        if (characterClass.name.includes('Domain')){
+        if (characterClass.name.includes('Domain') && !!characterClass.knownSpells){
             for (let i = 0; i < characterClass.knownSpells.length; i++){
                 newSelectedSpells.push(characterClass.knownSpells[i])
             }            
